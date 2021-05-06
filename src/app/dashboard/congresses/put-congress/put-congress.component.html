@@ -1,0 +1,140 @@
+<div class="h-screen w-full flex overflow-hidden">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full mx-12 my-2 overflow-auto">
+
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Editar Congreso
+    </h2>
+
+
+    <div class="w-full pr-5 mt-6">
+      <form class="form-horizontal mx-auto">
+        <div class="flex flex-col mt-4">
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Nombre del congreso:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.name"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              name="name"/>
+          </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Reglamento del congreso:
+            </label>
+            <textarea
+              [(ngModel)]="modelCongress.regulations"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              name="regulations"
+              rows="5"></textarea>
+          </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Dirección web:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.address_web"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              name="address_web"/>
+          </div>
+
+        </div>
+
+        <div class="-mx-3 md:flex my-4">
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">
+              Fecha inicio:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.start_date"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="date"
+              name="start_date"
+              min="{{today}}"/>
+          </div>
+          <br>
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">
+              Fecha fin:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.end_date"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="date"
+              name="end_date"
+              min="{{today}}"/>
+          </div>
+        </div>
+        <div class="-mx-3 md:flex mb-2">
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">
+              Capacidad de ponentes:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.capacity_speakers"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="number"
+              min="1"
+              name="capacity_speakers">
+          </div>
+          <br>
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">
+              Capacidad de asistentes:
+            </label>
+            <input
+              [(ngModel)]="modelCongress.capacity_participants"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="number"
+              min="1"
+              name="capacity_participants">
+          </div>
+        </div>
+
+        <div class="-mx-3 md:flex mt-4" style="display: none">
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">
+              Estado del congreso:
+            </label>
+            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+              <input
+                *ngIf="modelCongress.status_congress == true" checked
+                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                type="checkbox"
+                name="status_congress"/>
+              <input
+                *ngIf="modelCongress.status_congress == false"
+                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                type="checkbox"
+                name="status_congress"/>
+              <label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300"></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col my-16">
+          <div class="flex">
+            <button routerLink="/dashboard/congresses"
+                    class="w-32 mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border">
+              Cancelar
+            </button>
+            <button
+              (click)="putCongress(congress.congress[0]._id)"
+              class="w-32 mx-auto focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

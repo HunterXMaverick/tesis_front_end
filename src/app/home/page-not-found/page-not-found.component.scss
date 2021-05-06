@@ -1,0 +1,9 @@
+.error-text {
+  font-size: 70px;
+}
+
+@media (min-width: 768px) {
+  .error-text {
+    font-size: 100px;
+  }
+}

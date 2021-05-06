@@ -1,0 +1,48 @@
+<div class="h-screen w-full flex overflow-hidden">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full mx-12 my-2 overflow-auto">
+
+    <div class="flex border-b justify-between">
+      <div>
+        <h2 class="py-4 text-2xl font-semibold text-gray-800">
+          Enlaces de congresos pasados
+        </h2>
+      </div>
+      <div *ngIf="dataUser.person.rol == 'Organizador'">
+        <button routerLink="../post-link"
+                class="focus:outline-none py-5 text-center text-gray-700 bg-white hover:text-black font-medium"
+        ><i class="fa fa-plus pr-2"></i>Crear enlace
+        </button>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mb-10 row-gap-5">
+      <div *ngFor="let link of links.links"
+           class="bg-white overflow-hidden hover:bg-gray-100 border border-gray-200 p-3">
+        <div class="m-2 text-sm">
+          <p class="text-right text-xs">{{link.date_event | date: 'dd/MM/yyyy'}}</p>
+          <div class="pb-8">
+            <h2 class="font-bold text-lg h-2">{{link.name}}</h2>
+          </div>
+          <div class="mt-5">
+            <img src="http://img.youtube.com/vi/xgcbZbI0AKk/0.jpg"/>
+          </div>
+        </div>
+        <div class="flex text-green-400 w-full text-right mt-4 justify-between">
+          <div class="flex">
+            <a *ngIf="dataUser.person.rol == 'Organizador' || dataUser.person.rol == 'Administrador'"
+               routerLink="../put-link/{{link._id}}" class="uppercase font-bold text-sm text-blue-400">Editar</a>
+            <a *ngIf="dataUser.person.rol == 'Organizador' || dataUser.person.rol == 'Administrador'"
+               (click)="deleteLink(link._id)"
+               class="uppercase font-bold text-sm text-red-400 cursor-pointer ml-2">Eliminar</a>
+          </div>
+          <a class="uppercase font-bold text-sm" href="{{link.link_video}}" target="_blank"><i
+            class="fa fa-link text-green-700"></i> Ir al
+            video</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

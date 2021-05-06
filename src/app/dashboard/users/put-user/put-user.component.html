@@ -1,0 +1,72 @@
+<div class="h-screen w-full flex overflow-hidden">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full mx-12 my-2 overflow-auto">
+
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Editar perfil
+    </h2>
+
+    <div class="w-full pr-5 mt-6">
+      <form class="form-horizontal mx-auto">
+        <div class="flex flex-col mt-4">
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Nombres:
+            </label>
+            <input
+              name="names"
+              [(ngModel)]="person.names"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Ej: Marco Antonio"
+            />
+          </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Apellidos:
+            </label>
+            <input
+              name="last_names"
+              [(ngModel)]="person.last_names"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Ej: Jumbo Estrada"
+            />
+          </div>
+
+          <div *ngIf="logUser.person.rol !== 'Asistente'" class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Teléfono:
+            </label>
+            <input
+              name="phone"
+              [(ngModel)]="person.phone"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Ej: 0999999999"
+              maxlength="10"
+            />
+          </div>
+
+        </div>
+        <div class="flex flex-col my-16">
+          <div class="flex">
+            <button routerLink="../../congresses"
+                    class="w-32 mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border">
+              Cancelar
+            </button>
+            <button
+              (click)="putUser()"
+              class="w-32 mx-auto focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

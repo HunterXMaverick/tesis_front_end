@@ -1,0 +1,116 @@
+<!--<div *ngIf="dataUser.person.rol !== 'Administrador'" class="h-screen w-full flex overflow-hidden">-->
+<div class="h-screen w-full flex overflow-hidden">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="mx-12 my-2 overflow-auto" *ngFor="let item of congress.congress">
+
+    <h2 *ngIf="dataUser.person.rol !== 'Administrador'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Congreso ~ {{item.name}}
+    </h2>
+
+    <h2 *ngIf="dataUser.person.rol == 'Administrador'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Datos del Congreso
+    </h2>
+
+    <div class="w-full mt-4">
+
+      <div *ngIf="dataUser.person.rol == 'Administrador'" class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5 text-justify">
+          <b>Título:</b> {{item.name}}
+        </label>
+      </div>
+
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5 text-justify">
+          <b>Reglamento:</b> {{item.regulations}}
+        </label>
+      </div>
+
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5">
+          <b>Dirección Web:</b><a class="text-blue-800 hover:text-blue-500" href="{{item.address_web}}"
+                                  target="_blank"> {{item.address_web}}</a>
+        </label>
+      </div>
+
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5">
+          <b>Fecha Inicio:</b> {{item.start_date | date: 'dd/MM/yyyy'}}
+        </label>
+      </div>
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5">
+          <b>Fecha Fin:</b> {{item.end_date | date: 'dd/MM/yyyy'}}
+        </label>
+      </div>
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5">
+          <b>Capacidad de Ponentes:</b> {{item.capacity_speakers}}
+        </label>
+      </div>
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5">
+          <b>Capacidad de Participantes:</b> {{item.capacity_participants}}
+        </label>
+      </div>
+      <div class="flex flex-col mt-4">
+        <label class="font-thin text-xl mr-5" *ngIf="item.status_congress == true">
+          <b>Estado: </b><i class="fas fa-check-circle text-1xl mr-2 text-green-700 font-thin"> Habilitado</i>
+        </label>
+        <label class="font-thin text-xl mr-5" *ngIf="item.status_congress == false">
+          <b>Estado: </b><i class="fas fa-times-circle text-1xl mr-2 text-red-700"> Inhabilitado</i>
+        </label>
+      </div>
+
+      <div *ngIf="dataUser.person.rol == 'Organizador' || dataUser.person.rol == 'Administrador'" class="mt-5 mr-5 text-center">
+        <button routerLink="/dashboard/put-congresses"
+                class=" focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-700 bg-white hover:bg-blue-400 hover:text-white font-medium border"
+        >Editar Congreso
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!--<div *ngIf="dataUser.person.rol == 'Administrador'" class="h-screen w-full flex overflow-hidden">-->
+<!--  <app-sidebar></app-sidebar>-->
+<!--  <div class="w-full mx-12 my-2 overflow-auto" *ngFor="let item of congress.congress">-->
+<!--    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">-->
+<!--      Datos del congreso-->
+<!--    </h2>-->
+<!--    <div class="w-full mt-8">-->
+<!--      <div class="flex flex-col mt-4">-->
+<!--        <label class="font-thin text-xl mr-5 text-justify">-->
+<!--          <b>Nombre:</b> {{item.name}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="flex flex-col mt-4">-->
+<!--        <label class="font-thin text-xl mr-5 text-justify">-->
+<!--          <b>Organizador:</b> {{dataOrganizer.last_names}} {{dataOrganizer.names}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="flex flex-col mt-4">-->
+<!--        <label class="font-thin text-xl mr-5 text-justify">-->
+<!--          <b>Correo electrónico del organizador:</b> {{dataOrganizer.email}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="flex flex-col mt-4">-->
+<!--        <label class="font-thin text-xl mr-5 text-justify">-->
+<!--          <b>Teléfono:</b> {{dataOrganizer.phone}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="flex flex-col mt-4">-->
+<!--        <label class="font-thin text-xl mr-5" *ngIf="item.status_congress == true">-->
+<!--          <b>Estado del congreso: </b><i class="fas fa-check-circle text-1xl mr-2 text-green-700 font-thin"> Habilitado</i>-->
+<!--        </label>-->
+<!--        <label class="font-thin text-xl mr-5" *ngIf="item.status_congress == false">-->
+<!--          <b>Estado del congreso: </b><i class="fas fa-times-circle text-1xl mr-2 text-red-700"> Inhabilitado</i>-->
+<!--        </label>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+

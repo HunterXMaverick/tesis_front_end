@@ -1,0 +1,66 @@
+<div class="h-screen w-full flex overflow-hidden">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full mx-12 my-2 overflow-auto">
+
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Crear enlace
+    </h2>
+
+    <div class="w-full pr-5 mt-6">
+      <form class="form-horizontal mx-auto">
+        <div class="flex flex-col mt-4">
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Nombre del congreso:
+            </label>
+            <input
+              [(ngModel)]="link.name"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              name="name"/>
+          </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Dirección web:
+            </label>
+            <input
+              [(ngModel)]="link.link_video"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="text"
+              name="link_video"/>
+          </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Fecha del evento:
+            </label>
+            <input
+              [(ngModel)]="link.date_event"
+              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              type="date"
+              name="date_event"
+              min="{{today}}"/>
+          </div>
+
+        </div>
+        <div class="flex flex-col my-16">
+          <div class="flex">
+            <button routerLink="/dashboard/links"
+                    class="w-32 mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border">
+              Cancelar
+            </button>
+            <button
+              (click)="postLink()"
+              class="w-32 mx-auto focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
