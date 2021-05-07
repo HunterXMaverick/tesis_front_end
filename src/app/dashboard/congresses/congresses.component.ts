@@ -1,24 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {CongressService} from '../../services/congress.service';
-import {PersonService} from '../../services/person.service';
+import { Component, OnInit } from "@angular/core";
+import { CongressService } from "../../services/congress.service";
+import { PersonService } from "../../services/person.service";
 
 @Component({
-  selector: 'app-congresses',
-  templateUrl: './congresses.component.html',
-  styleUrls: ['./congresses.component.scss']
+  selector: "app-congresses",
+  templateUrl: "./congresses.component.html",
+  styleUrls: ["./congresses.component.scss"],
 })
 export class CongressesComponent implements OnInit {
-
-  persons: any = []
-  congress: any = []
-  dataUser: any = []
-  dataOrganizer: any = []
+  persons: any = [];
+  congress: any = [];
+  dataUser: any = [];
+  dataOrganizer: any = [];
 
   constructor(
     private congressService: CongressService,
     private personService: PersonService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getCongress();
@@ -28,34 +26,36 @@ export class CongressesComponent implements OnInit {
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      res => {
+      (res) => {
         this.congress = res;
       },
-      err => console.error(err)
-    )
+      (err) => console.error(err)
+    );
   }
 
   getPersonByEmail() {
-    return this.personService.getUserByEmail(this.personService.email).subscribe(
-      res => {
-        this.dataUser = res
-      },
-      err => console.error(err)
-    )
+    return this.personService
+      .getUserByEmail(this.personService.email)
+      .subscribe(
+        (res: any) => {
+          this.dataUser = res.data;
+        },
+        (err) => console.error(err)
+      );
   }
 
   getOrganizer() {
     return this.personService.getUsers().subscribe(
-      res => {
-        this.persons = res
-        this.persons.persons.forEach(element => {
-            if (element.rol == 'Organizador') {
-              this.dataOrganizer = element
-            }
+      (res: any) => {
+        this.persons = res.data;
+
+        this.persons.forEach((element) => {
+          if (element.rol == "Organizador") {
+            this.dataOrganizer = element;
           }
-        )
+        });
       },
-      err => console.error(err)
-    )
+      (err) => console.error(err)
+    );
   }
 }

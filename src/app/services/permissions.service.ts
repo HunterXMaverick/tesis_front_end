@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Data} from '../models/data';
-import {Person} from '../models/person';
-import * as jwt_decode from 'jwt-decode';
+import { Injectable } from "@angular/core";
+import { Data } from "../models/data";
+import { Person } from "../models/person";
+import * as jwt_decode from "jwt-decode";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PermissionsService {
   data: Data;
