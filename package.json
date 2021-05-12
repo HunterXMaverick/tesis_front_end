@@ -1,6 +1,6 @@
 {
-  "name": "front-end",
-  "version": "0.0.0",
+  "name": "tesis_front_end",
+  "version": "1.0.0-RELEASE",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

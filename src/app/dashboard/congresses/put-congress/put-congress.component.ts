@@ -37,14 +37,14 @@ export class PutCongressComponent implements OnInit {
     return this.congressService.getCongress().subscribe(
       (res) => {
         this.congress = res;
-        this.modelCongress.name = this.congress.congress[0].name;
-        this.modelCongress.address_web = this.congress.congress[0].address_web;
-        this.modelCongress.start_date = this.congress.congress[0].start_date;
-        this.modelCongress.end_date = this.congress.congress[0].end_date;
-        this.modelCongress.regulations = this.congress.congress[0].regulations;
-        this.modelCongress.capacity_speakers = this.congress.congress[0].capacity_speakers;
-        this.modelCongress.capacity_participants = this.congress.congress[0].capacity_participants;
-        this.modelCongress.status_congress = this.congress.congress[0].status_congress;
+        this.modelCongress.name = this.congress.data[0].name;
+        this.modelCongress.address_web = this.congress.data[0].address_web;
+        this.modelCongress.start_date = this.congress.data[0].start_date;
+        this.modelCongress.end_date = this.congress.data[0].end_date;
+        this.modelCongress.regulations = this.congress.data[0].regulations;
+        this.modelCongress.capacity_speakers = this.congress.data[0].capacity_speakers;
+        this.modelCongress.capacity_participants = this.congress.data[0].capacity_participants;
+        this.modelCongress.status_congress = this.congress.data[0].status_congress;
         let separatorSD = this.modelCongress.start_date.split("T");
         let separatorED = this.modelCongress.end_date.split("T");
         this.modelCongress.start_date = separatorSD[0];
