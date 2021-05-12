@@ -21,6 +21,7 @@ export class CreateCongressComponent implements OnInit {
     regulations: "",
     capacity_speakers: 0,
     capacity_participants: 0,
+    knowledge_area: [],
     status_congress: true,
   };
 
@@ -38,6 +39,7 @@ export class CreateCongressComponent implements OnInit {
       this.modelCongress.start_date &&
       this.modelCongress.end_date &&
       this.modelCongress.regulations &&
+      this.modelCongress.knowledge_area &&
       this.modelCongress.capacity_speakers > 0 &&
       this.modelCongress.capacity_participants > 0
     ) {

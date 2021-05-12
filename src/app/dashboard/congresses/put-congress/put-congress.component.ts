@@ -21,6 +21,7 @@ export class PutCongressComponent implements OnInit {
     regulations: "",
     capacity_speakers: 0,
     capacity_participants: 0,
+    knowledge_area: [],
     status_congress: true,
   };
 
@@ -44,6 +45,7 @@ export class PutCongressComponent implements OnInit {
         this.modelCongress.regulations = this.congress.data[0].regulations;
         this.modelCongress.capacity_speakers = this.congress.data[0].capacity_speakers;
         this.modelCongress.capacity_participants = this.congress.data[0].capacity_participants;
+        this.modelCongress.knowledge_area = this.congress.data[0].knowledge_area;
         this.modelCongress.status_congress = this.congress.data[0].status_congress;
         let separatorSD = this.modelCongress.start_date.split("T");
         let separatorED = this.modelCongress.end_date.split("T");
@@ -61,6 +63,7 @@ export class PutCongressComponent implements OnInit {
       this.modelCongress.start_date &&
       this.modelCongress.end_date &&
       this.modelCongress.regulations &&
+      this.modelCongress.knowledge_area &&
       this.modelCongress.capacity_speakers > 0 &&
       this.modelCongress.capacity_participants > 0
     ) {
