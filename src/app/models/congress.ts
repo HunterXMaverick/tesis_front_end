@@ -11,6 +11,6 @@ export interface Congress {
   politics?: string;
   capacity_speakers: number;
   capacity_participants: number;
-  knowledge_area: Array<any>;
+  knowledge_area: string;
   status_congress: boolean;
 }

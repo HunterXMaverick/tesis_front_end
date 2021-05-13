@@ -21,7 +21,7 @@ export class PutCongressComponent implements OnInit {
     regulations: "",
     capacity_speakers: 0,
     capacity_participants: 0,
-    knowledge_area: [],
+    knowledge_area: "",
     status_congress: true,
   };
 
