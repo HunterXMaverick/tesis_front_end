@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { UsersComponent } from "./users/users.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 
 import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { PostulationsComponent } from "./postulations/postulations.component";
@@ -38,6 +39,6 @@ import { CreateCongressComponent } from "./congresses/create-congress/create-con
     CreateCongressComponent,
   ],
   exports: [SidebarComponent],
-  imports: [CommonModule, DashboardRoutingModule, FormsModule],
+  imports: [CommonModule, DashboardRoutingModule, FormsModule, CKEditorModule],
 })
 export class DashboardModule {}

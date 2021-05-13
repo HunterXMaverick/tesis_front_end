@@ -3,6 +3,7 @@ import { CongressService } from "../../../services/congress.service";
 import { Congress } from "../../../models/congress";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
+import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: "app-create-congress",
@@ -10,6 +11,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./create-congress.component.scss"],
 })
 export class CreateCongressComponent implements OnInit {
+  public Editor = ClassicEditor;
   congress: any = [];
   today = new Date().toISOString().split("T")[0];
 

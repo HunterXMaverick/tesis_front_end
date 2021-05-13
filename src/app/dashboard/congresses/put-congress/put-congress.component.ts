@@ -3,6 +3,7 @@ import { CongressService } from "../../../services/congress.service";
 import { Congress } from "../../../models/congress";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
+import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: "app-put-congress",
@@ -10,6 +11,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./put-congress.component.scss"],
 })
 export class PutCongressComponent implements OnInit {
+  public Editor = ClassicEditor;
   congress: any = [];
   today = new Date().toISOString().split("T")[0];
 
@@ -43,10 +45,14 @@ export class PutCongressComponent implements OnInit {
         this.modelCongress.start_date = this.congress.data[0].start_date;
         this.modelCongress.end_date = this.congress.data[0].end_date;
         this.modelCongress.regulations = this.congress.data[0].regulations;
-        this.modelCongress.capacity_speakers = this.congress.data[0].capacity_speakers;
-        this.modelCongress.capacity_participants = this.congress.data[0].capacity_participants;
-        this.modelCongress.knowledge_area = this.congress.data[0].knowledge_area;
-        this.modelCongress.status_congress = this.congress.data[0].status_congress;
+        this.modelCongress.capacity_speakers =
+          this.congress.data[0].capacity_speakers;
+        this.modelCongress.capacity_participants =
+          this.congress.data[0].capacity_participants;
+        this.modelCongress.knowledge_area =
+          this.congress.data[0].knowledge_area;
+        this.modelCongress.status_congress =
+          this.congress.data[0].status_congress;
         let separatorSD = this.modelCongress.start_date.split("T");
         let separatorED = this.modelCongress.end_date.split("T");
         this.modelCongress.start_date = separatorSD[0];

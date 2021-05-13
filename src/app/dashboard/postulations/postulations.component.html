@@ -20,7 +20,14 @@
       <div>
         <button
           routerLink="../post-postulation"
-          class="focus:outline-none py-5 text-center text-gray-700 bg-white hover:text-black font-medium"
+          class="
+            focus:outline-none
+            py-5
+            text-center text-gray-700
+            bg-white
+            hover:text-black
+            font-medium
+          "
         >
           <i class="fa fa-plus pr-2"></i>Generar proyecto
         </button>
@@ -37,18 +44,16 @@
         >
           <thead>
             <tr class="border-b-2 border-gray-200 bg-gray-200">
-              <th class="px-5 py-3 text-left text-sm text-gray-600 text-center">
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Título del proyecto
               </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600 text-center">
-                Resumen
-              </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600 text-center">
+              <th class="px-5 py-3 text-left text-sm text-gray-600">Resumen</th>
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Área de conocimiento
               </th>
               <th
                 *ngIf="dataUser.rol !== 'Ponente'"
-                class="px-5 py-3 text-left text-sm text-gray-600 text-center"
+                class="px-5 py-3 text-left text-sm text-gray-600"
               >
                 Acciones
               </th>
@@ -141,7 +146,16 @@
     </div>
     <div
       *ngFor="let element of userById"
-      class="w-full h-auto py-6 px-10 items-center bg-gray-200 rounded text-gray-800"
+      class="
+        w-full
+        h-auto
+        py-6
+        px-10
+        items-center
+        bg-gray-200
+        rounded
+        text-gray-800
+      "
     >
       <div *ngIf="personId === element._id">
         <div class="flex py-2">

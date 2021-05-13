@@ -13,7 +13,18 @@
             <label class="font-thin text-xl mr-5"> Nombre del congreso: </label>
             <input
               [(ngModel)]="modelCongress.name"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="text"
               name="name"
             />
@@ -23,20 +34,41 @@
             <label class="font-thin text-xl mr-5">
               Reglamento del congreso:
             </label>
-            <textarea
+            <ckeditor
+              [editor]="Editor"
               [(ngModel)]="modelCongress.regulations"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              type="text"
               name="regulations"
-              rows="5"
-            ></textarea>
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+            ></ckeditor>
           </div>
 
           <div class="flex flex-col mt-4">
             <label class="font-thin text-xl mr-5"> Dirección web: </label>
             <input
               [(ngModel)]="modelCongress.address_web"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="text"
               name="address_web"
             />
@@ -48,7 +80,18 @@
             <label class="font-thin text-xl mr-5"> Fecha inicio: </label>
             <input
               [(ngModel)]="modelCongress.start_date"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="date"
               name="start_date"
               min="{{ today }}"
@@ -59,7 +102,18 @@
             <label class="font-thin text-xl mr-5"> Fecha fin: </label>
             <input
               [(ngModel)]="modelCongress.end_date"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="date"
               name="end_date"
               min="{{ today }}"
@@ -73,7 +127,18 @@
             </label>
             <input
               [(ngModel)]="modelCongress.capacity_speakers"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="number"
               min="1"
               name="capacity_speakers"
@@ -86,7 +151,18 @@
             </label>
             <input
               [(ngModel)]="modelCongress.capacity_participants"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="number"
               min="1"
               name="capacity_participants"
@@ -99,7 +175,18 @@
             </label>
             <input
               [(ngModel)]="modelCongress.knowledge_area"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               type="array"
               name="knowledge_area"
             />
@@ -110,23 +197,64 @@
           <div class="md:w-1/2 px-3">
             <label class="font-thin text-xl mr-5"> Estado del congreso: </label>
             <div
-              class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
+              class="
+                relative
+                inline-block
+                w-10
+                mr-2
+                align-middle
+                select-none
+                transition
+                duration-200
+                ease-in
+              "
             >
               <input
                 *ngIf="modelCongress.status_congress == true"
                 checked
-                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                class="
+                  toggle-checkbox
+                  absolute
+                  block
+                  w-6
+                  h-6
+                  rounded-full
+                  bg-white
+                  border-4
+                  appearance-none
+                  focus:outline-none
+                  cursor-pointer
+                "
                 type="checkbox"
                 name="status_congress"
               />
               <input
                 *ngIf="modelCongress.status_congress == false"
-                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                class="
+                  toggle-checkbox
+                  absolute
+                  block
+                  w-6
+                  h-6
+                  rounded-full
+                  bg-white
+                  border-4
+                  appearance-none
+                  focus:outline-none
+                  cursor-pointer
+                "
                 type="checkbox"
                 name="status_congress"
               />
               <label
-                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300"
+                class="
+                  toggle-label
+                  block
+                  overflow-hidden
+                  h-6
+                  rounded-full
+                  bg-gray-300
+                "
               ></label>
             </div>
           </div>
@@ -136,13 +264,39 @@
           <div class="flex">
             <button
               routerLink="/dashboard/congresses"
-              class="w-32 mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border"
+              class="
+                w-32
+                mx-auto
+                focus:outline-none
+                py-2
+                px-5
+                rounded-lg
+                shadow-sm
+                text-center text-gray-600
+                bg-white
+                hover:bg-gray-100
+                font-medium
+                border
+              "
             >
               Cancelar
             </button>
             <button
               (click)="putCongress(congress.data[0]._id)"
-              class="w-32 mx-auto focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium"
+              class="
+                w-32
+                mx-auto
+                focus:outline-none
+                border border-transparent
+                py-2
+                px-5
+                rounded-lg
+                shadow-sm
+                text-center text-white
+                bg-blue-500
+                hover:bg-blue-600
+                font-medium
+              "
             >
               Guardar
             </button>
