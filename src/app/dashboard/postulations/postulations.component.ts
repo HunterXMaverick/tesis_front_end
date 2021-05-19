@@ -26,11 +26,12 @@ export class PostulationsComponent implements OnInit {
 
   getUserById(id: string) {
     return this.personService.getUserById(id).subscribe(
-      (res) => {
-        this.userById.push(res);
+      (res: any) => {
+        console.log(res.data)
+        this.userById.push(res.data)
       },
-      (err) => console.error(err)
-    );
+      err => console.error(err)
+    )
   }
 
   getPostulations() {
