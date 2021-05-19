@@ -2,33 +2,24 @@
   <app-sidebar></app-sidebar>
 
   <div class="w-full mx-12 my-2 overflow-auto">
-    <h2
-      *ngIf="dataUser.rol !== 'Ponente'"
-      class="py-4 text-2xl font-semibold text-gray-800 border-b"
-    >
+    <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Lista de Postulaciones
     </h2>
-    <div
-      class="flex border-b justify-between"
-      *ngIf="dataUser.rol == 'Ponente'"
-    >
+    <div class="flex border-b justify-between" *ngIf="dataUser.rol == 'Ponente'">
       <div>
         <h2 class="py-4 text-2xl font-semibold text-gray-800">
           Lista de proyectos
         </h2>
       </div>
       <div>
-        <button
-          routerLink="../post-postulation"
-          class="
+        <button routerLink="../post-postulation" class="
             focus:outline-none
             py-5
             text-center text-gray-700
             bg-white
             hover:text-black
             font-medium
-          "
-        >
+          ">
           <i class="fa fa-plus pr-2"></i>Generar proyecto
         </button>
       </div>
@@ -37,11 +28,7 @@
     <div class="py-6">
       <div class="inline-block shadow rounded-lg">
         <table
-          *ngIf="
-            (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
-            dataUser.rol == 'Organizador'
-          "
-        >
+          *ngIf="projectsSpeaker.length > 0 && dataUser.rol == 'Ponente'|| dataUser.rol == 'Organizador' || dataUser.rol == 'Revisor'">
           <thead>
             <tr class="border-b-2 border-gray-200 bg-gray-200">
               <th class="px-5 py-3 text-left text-sm text-gray-600">
@@ -51,10 +38,10 @@
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Área de conocimiento
               </th>
-              <th
-                *ngIf="dataUser.rol !== 'Ponente'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
+                Acciones
+              </th>
+              <th *ngIf="dataUser.rol == 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Acciones
               </th>
 
@@ -71,10 +58,8 @@
           </thead>
           <!--   BODY FOR ADMIN AND ORGANIZER   -->
           <tbody *ngIf="dataUser.rol !== 'Ponente'">
-            <tr
-              *ngFor="let postulation of postulations.postulations"
-              class="border-b border-gray-200 hover:bg-gray-100"
-            >
+            <!-- agregar un console en esta linea -->
+            <tr *ngFor="let postulation of postulations" class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ postulation.title_project }}</p>
               </td>
@@ -84,32 +69,23 @@
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
               </td>
-              <td
-                *ngIf="dataUser.rol !== 'Ponente'"
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
-                <button
-                  (click)="getUserId(postulation.person_id)"
-                  onclick="document.getElementById('myModal').showModal()"
-                  id="btn"
-                  class="tooltip appearance-none focus:outline-none mr-2"
-                >
+              <td *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-5 flex-1 text-sm text-center">
+                <button (click)="getUserId(postulation.person_id)"
+                  onclick="document.getElementById('myModal').showModal()" id="btn"
+                  class="tooltip appearance-none focus:outline-none mr-2">
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
                   <span class="tooltiptext">Datos del autor</span>
                 </button>
                 <button class="tooltip appearance-none focus:outline-none ml-2">
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
-                  <span class="tooltiptext">Elegir Archivo</span>
+                  <span class="tooltiptext">Archivo adjunto</span>
                 </button>
               </td>
             </tr>
           </tbody>
           <!--   TBODY FOR SPEAKER   -->
           <tbody *ngIf="dataUser.rol == 'Ponente'">
-            <tr
-              *ngFor="let project of projectsSpeaker"
-              class="border-b border-gray-200 hover:bg-gray-100"
-            >
+            <tr *ngFor="let project of projectsSpeaker" class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ project.title_project }}</p>
               </td>
@@ -122,8 +98,8 @@
               <td class="px-5 py-5 flex-1 text-sm text-center">
                 <button
                   class="tooltip appearance-none focus:outline-none ml-2"
-                  (click)="getFile(project.files)"
-                >
+                  >
+                  <!-- (click)="getFile(project.files)" -->
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
                   <span class="tooltiptext">Elegir PDF</span>
                 </button>
@@ -132,10 +108,7 @@
           </tbody>
         </table>
       </div>
-      <div
-        *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'"
-        class="w-full text-center"
-      >
+      <div *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'" class="w-full text-center">
         <p class="font-thin">No hay proyectos para mostrar</p>
       </div>
     </div>
@@ -151,27 +124,13 @@
         Datos del autor
       </div>
       <div class="h-auto pb-5 pr-2 text-2xl">
-        <i
-          onclick="document.getElementById('myModal').close();"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
+        <i onclick="document.getElementById('myModal').close();"
+          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
       </div>
     </div>
-    <div
-      *ngFor="let element of userById"
-      class="
-        w-full
-        h-auto
-        py-6
-        px-10
-        items-center
-        bg-gray-200
-        rounded
-        text-gray-800
-      "
-    >
+    <div *ngFor="let element of userById" class="w-fullh-autopy-6px-10items-centerbg-gray-200roundedtext-gray-800">
       <div *ngIf="personId === element._id">
-        <div class="flex py-2">
+        <div class="flex py-2"> 
           <h2 class="font-bold mr-3">Nombres:</h2>
           <p>{{ element.names }}</p>
         </div>
