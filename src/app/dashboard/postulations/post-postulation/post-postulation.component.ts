@@ -3,6 +3,8 @@ import { Postulation } from "../../../models/postulation";
 import { PostulationService } from "../../../services/postulation.service";
 import { PersonService } from "../../../services/person.service";
 import { CongressService } from "src/app/services/congress.service";
+import { FilesService } from "src/app/services/files.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 
@@ -12,22 +14,27 @@ import Swal from "sweetalert2";
   styleUrls: ["./post-postulation.component.scss"],
 })
 export class PostPostulationComponent implements OnInit {
+  postulation: FormGroup;
   dataUser: any = [];
   congress: any = [];
   knowledge_area: Array<string>;
-  postulation: Postulation = {
-    title_project: "",
-    summary_project: "",
-    knowledge_area: "",
-    person_id: "",
-  };
 
   constructor(
     private postulationService: PostulationService,
     private personService: PersonService,
     private congressService: CongressService,
-    private router: Router
-  ) {}
+    private filesService: FilesService,
+    private router: Router,
+    public fb: FormBuilder
+  ) {
+    this.postulation = this.fb.group({
+      title_project: ["", [Validators.required]],
+      summary_project: ["", [Validators.required]],
+      knowledge_area: ["", [Validators.required]],
+      files: [null, [Validators.required]],
+      person_id: ["", [Validators.required]],
+    });
+  }
 
   ngOnInit() {
     this.getPersonByEmail();
@@ -57,14 +64,15 @@ export class PostPostulationComponent implements OnInit {
 
   postPostulation() {
     if (
-      this.postulation.title_project &&
-      this.postulation.summary_project &&
-      this.postulation.knowledge_area
+      this.postulation.get("title_project").value &&
+      this.postulation.get("summary_project").value &&
+      this.postulation.get("knowledge_area").value &&
+      this.postulation.get("files").value
     ) {
-      this.postulation.person_id = this.dataUser._id;
-      let dataPostulation = {
-        postulation: this.postulation,
-      };
+      this.postulation.patchValue({
+        person_id: this.dataUser._id,
+      });
+
       Swal.fire({
         title: "¿Está seguro de generar el proyecto?",
         text: "¡No podrá editarlo una vez generado!",
@@ -75,21 +83,55 @@ export class PostPostulationComponent implements OnInit {
         confirmButtonText: "Enviar",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.postulationService.postPostulation(dataPostulation).subscribe(
-            (res) => {
-              this.router.navigate(["/dashboard/postulations"]);
-            },
-            (err) => {
-              console.error(err);
-            }
-          );
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "¡Registro Exitoso!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          const formData: any = new FormData();
+          formData.append("file", this.postulation.get("files").value);
+
+          this.filesService
+            .uploadFile("postulations", formData)
+            .then((response) => {
+              if (response.ok) {
+                this.postulation.patchValue({
+                  files: `${response.data.directory}/${response.data.name}`,
+                });
+              } else {
+                this.filesService
+                  .deleteFile(
+                    `${response.data.directory}`,
+                    `${response.data.name}`
+                  )
+                  .subscribe(
+                    (res: any) => {
+                      console.log(res.info);
+                    },
+                    (error) => {
+                      console.error(error);
+                    }
+                  );
+              }
+            })
+            .then(() => {
+              let dataPostulation = {
+                postulation: this.postulation.value,
+              };
+
+              this.postulationService
+                .postPostulation(dataPostulation)
+                .subscribe(
+                  (res) => {
+                    this.router.navigate(["/dashboard/postulations"]);
+                  },
+                  (error) => {
+                    console.error(error);
+                  }
+                );
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "¡Registro Exitoso!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
         }
       });
     } else {
@@ -101,5 +143,22 @@ export class PostPostulationComponent implements OnInit {
         timer: 1500,
       });
     }
+  }
+
+  getFile(fileName: string) {
+    let file = fileName.split("/");
+    return this.filesService.showFile(file[0], file[1]);
+
+    // var file = new Blob([this.filepath]);
+    //       this.fileURL = URL.createObjectURL(file);
+  }
+
+  handleFileInput(event: any) {
+    const file = (event.target as HTMLInputElement).files[0];
+
+    this.postulation.patchValue({
+      files: file,
+    });
+    this.postulation.get("files").updateValueAndValidity();
   }
 }

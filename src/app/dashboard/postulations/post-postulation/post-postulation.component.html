@@ -7,12 +7,11 @@
     </h2>
 
     <div class="w-full pr-5 mt-6">
-      <form class="form-horizontal mx-auto">
+      <form [formGroup]="postulation" class="form-horizontal mx-auto">
         <div class="flex flex-col mt-4">
           <div class="flex flex-col mt-4">
             <label class="font-thin text-xl mr-5"> Título: </label>
             <input
-              [(ngModel)]="postulation.title_project"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -26,14 +25,13 @@
                 focus:outline-none
               "
               type="text"
-              name="title_project"
+              formControlName="title_project"
             />
           </div>
 
           <div class="flex flex-col mt-4">
             <label class="font-thin text-xl mr-5"> Resumen: </label>
             <textarea
-              [(ngModel)]="postulation.summary_project"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -47,8 +45,8 @@
                 focus:outline-none
               "
               type="text"
-              name="summary_project"
               rows="5"
+              formControlName="summary_project"
             ></textarea>
           </div>
 
@@ -57,7 +55,6 @@
               Área de conocimiento:
             </label>
             <select
-              [(ngModel)]="postulation.knowledge_area"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -70,7 +67,7 @@
                 leading-tight
                 focus:outline-none
               "
-              name="knowledge_area"
+              formControlName="knowledge_area"
             >
               <option value="">Seleccione..</option>
               <option *ngFor="let area of knowledge_area" value="{{ area }}">
@@ -78,7 +75,28 @@
               </option>
             </select>
           </div>
+
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5"> Archivo PDF: </label>
+            <input
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              type="file"
+              (change)="handleFileInput($event)"
+            />
+          </div>
         </div>
+
         <div class="flex flex-col my-16">
           <div class="flex">
             <button
