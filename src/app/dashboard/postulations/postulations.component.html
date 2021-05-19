@@ -97,7 +97,7 @@
                 class="px-5 py-5 flex-1 text-sm text-center"
               >
                 <button
-                  (click)="getUserId(postulation.person_id)"
+                  (click)="getUserById(postulation.person_id)"
                   onclick="document.getElementById('myModal').showModal()"
                   id="btn"
                   class="tooltip appearance-none focus:outline-none mr-2"
@@ -165,57 +165,57 @@
         ></i>
       </div>
     </div>
+    <!-- *ngFor="let element of userById" -->
     <div
-      *ngFor="let element of userById"
       class="w-fullh-autopy-6px-10items-centerbg-gray-200roundedtext-gray-800"
     >
-      <div *ngIf="personId === element._id">
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nombres:</h2>
-          <p>{{ element.names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Apellidos:</h2>
-          <p>{{ element.last_names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Rol:</h2>
-          <p>{{ element.rol }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-          <p>{{ element.type_dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Número de identificación:</h2>
-          <p>{{ element.dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nivel académico:</h2>
-          <p>{{ element.level_academy }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Especialidad:</h2>
-          <p>{{ element.specialty }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Teléfono:</h2>
-          <p>{{ element.phone }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Correo electrónico:</h2>
-          <p>{{ element.email }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Estado:</h2>
-          <p *ngIf="element.status == true" class="text-green-700">
-            <i class="fas fa-check-circle text-1xl mr-2"></i>Habilitado
-          </p>
-          <p *ngIf="element.status == false" class="text-red-700">
-            <i class="fas fa-times-circle text-1xl mr-2"></i>Inhabilitado
-          </p>
-        </div>
+      <!-- <div *ngIf="personId === userData._id"> -->
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Nombres:</h2>
+        <p>{{ userData.names }}</p>
       </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Apellidos:</h2>
+        <p>{{ userData.last_names }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Rol:</h2>
+        <p>{{ userData.rol }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+        <p>{{ userData.type_dni }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Número de identificación:</h2>
+        <p>{{ userData.dni }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Nivel académico:</h2>
+        <p>{{ userData.level_academy }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Especialidad:</h2>
+        <p>{{ userData.specialty }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Teléfono:</h2>
+        <p>{{ userData.phone }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Correo electrónico:</h2>
+        <p>{{ userData.email }}</p>
+      </div>
+      <div class="flex py-2">
+        <h2 class="font-bold mr-3">Estado:</h2>
+        <p *ngIf="userData.status == true" class="text-green-700">
+          <i class="fas fa-check-circle text-1xl mr-2"></i>Habilitado
+        </p>
+        <p *ngIf="userData.status == false" class="text-red-700">
+          <i class="fas fa-times-circle text-1xl mr-2"></i>Inhabilitado
+        </p>
+      </div>
+      <!-- </div> -->
     </div>
   </div>
 </dialog>

@@ -11,6 +11,7 @@ import { FilesService } from "src/app/services/files.service";
 export class PostulationsComponent implements OnInit {
   postulations: any = [];
   userById: any = [];
+  userData: any;
   personId: any;
   dataUser: any = [];
   projectsSpeaker: any = [];
@@ -29,8 +30,9 @@ export class PostulationsComponent implements OnInit {
   getUserById(id: string) {
     return this.personService.getUserById(id).subscribe(
       (res: any) => {
-        console.log(res.data);
         this.userById.push(res.data);
+        this.userData = res.data;
+        console.log(this.userById);
       },
       (err) => console.error(err)
     );
@@ -44,6 +46,7 @@ export class PostulationsComponent implements OnInit {
           this.getUserById(element.person_id);
           if (element.person_id == this.dataUser._id) {
             this.projectsSpeaker.push(element);
+            console.log(this.projectsSpeaker);
           }
         });
       },
