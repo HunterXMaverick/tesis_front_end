@@ -68,9 +68,14 @@ export class PostulationsComponent implements OnInit {
 
   getFile(fileName: string) {
     let file = fileName.split("/");
-    window.open(
-      `http://localhost:3500/api/file/${file[0]}/${file[1]}`,
-      "_blank"
-    );
+
+    this.filesService
+      .showFile(file[0], file[1])
+      .then((response) => {
+        window.open(response, "_blank");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

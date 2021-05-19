@@ -99,14 +99,12 @@ export class PostPostulationComponent implements OnInit {
                     `${response.data.directory}`,
                     `${response.data.name}`
                   )
-                  .subscribe(
-                    (res: any) => {
-                      console.log(res.info);
-                    },
-                    (error) => {
-                      console.error(error);
-                    }
-                  );
+                  .then((response: any) => {
+                    console.log(response.info);
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                  });
               }
             })
             .then(() => {
@@ -143,14 +141,6 @@ export class PostPostulationComponent implements OnInit {
         timer: 1500,
       });
     }
-  }
-
-  getFile(fileName: string) {
-    let file = fileName.split("/");
-    return this.filesService.showFile(file[0], file[1]);
-
-    // var file = new Blob([this.filepath]);
-    //       this.fileURL = URL.createObjectURL(file);
   }
 
   handleFileInput(event: any) {
