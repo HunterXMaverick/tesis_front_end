@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { PostulationService } from "../../services/postulation.service";
 import { PersonService } from "../../services/person.service";
+import { FilesService } from "src/app/services/files.service";
 
 @Component({
   selector: "app-postulations",
@@ -16,7 +17,8 @@ export class PostulationsComponent implements OnInit {
 
   constructor(
     private postulationService: PostulationService,
-    private personService: PersonService
+    private personService: PersonService,
+    private filesService: FilesService
   ) {}
 
   ngOnInit() {
@@ -27,11 +29,11 @@ export class PostulationsComponent implements OnInit {
   getUserById(id: string) {
     return this.personService.getUserById(id).subscribe(
       (res: any) => {
-        console.log(res.data)
-        this.userById.push(res.data)
+        console.log(res.data);
+        this.userById.push(res.data);
       },
-      err => console.error(err)
-    )
+      (err) => console.error(err)
+    );
   }
 
   getPostulations() {
@@ -62,5 +64,13 @@ export class PostulationsComponent implements OnInit {
         },
         (err) => console.error(err)
       );
+  }
+
+  getFile(fileName: string) {
+    let file = fileName.split("/");
+    window.open(
+      `http://localhost:3500/api/file/${file[0]}/${file[1]}`,
+      "_blank"
+    );
   }
 }
