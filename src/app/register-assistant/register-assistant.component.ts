@@ -19,6 +19,7 @@ export class RegisterAssistantComponent implements OnInit {
     last_names: "",
     email: "",
     password: "",
+    title: "",
     status: true,
   };
 

@@ -18,7 +18,8 @@ export class NewReviewerComponent implements OnInit {
     names: "",
     last_names: "",
     level_academy: "",
-    specialty: "",
+    // specialty: "",
+    title: "",
     phone: "",
     email: "",
     password: "",
@@ -36,7 +37,8 @@ export class NewReviewerComponent implements OnInit {
       this.person.names &&
       this.person.last_names &&
       this.person.level_academy &&
-      this.person.specialty &&
+      // this.person.specialty &&
+      this.person.title &&
       this.person.phone &&
       this.person.email &&
       this.person.password

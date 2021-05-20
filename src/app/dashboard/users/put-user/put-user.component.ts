@@ -16,6 +16,7 @@ export class PutUserComponent implements OnInit {
     names: "",
     last_names: "",
     phone: "",
+    title : ""
   };
   logUser: any = [];
 
