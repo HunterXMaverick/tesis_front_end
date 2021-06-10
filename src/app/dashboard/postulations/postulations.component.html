@@ -13,9 +13,7 @@
       *ngIf="dataUser.rol == 'Ponente'"
     >
       <div>
-        <h2 class="py-4 text-2xl font-semibold text-gray-800">
-          Postulaciones
-        </h2>
+        <h2 class="py-4 text-2xl font-semibold text-gray-800">Postulaciones</h2>
       </div>
       <div>
         <button
@@ -71,8 +69,11 @@
               >
                 Subir PDF
               </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
-                Asignar fecha
+              <th
+                *ngIf="dataUser.person.rol !== 'Ponente'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
+                Rubrica
               </th>
             </tr>
           </thead>
