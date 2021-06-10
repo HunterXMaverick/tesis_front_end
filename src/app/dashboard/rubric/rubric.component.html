@@ -1,17 +1,17 @@
-<!--<div *ngIf="dataUser.person.rol !== 'Administrador'" class="h-screen w-full flex overflow-hidden">-->
+<!--<div *ngIf="dataUser.rol !== 'Administrador'" class="h-screen w-full flex overflow-hidden">-->
 <div class="h-screen w-full flex overflow-hidden">
   <app-sidebar></app-sidebar>
   <!-- 
   <div class="mx-12 my-2 overflow-auto" *ngFor="let item of congress.congress">
     <h2
-      *ngIf="dataUser.person.rol !== 'Administrador'"
+      *ngIf="dataUser.rol !== 'Administrador'"
       class="py-4 text-2xl font-semibold text-gray-800 border-b"
     >
       Congreso ~ {{ item.name }}
     </h2>
 
     <h2
-      *ngIf="dataUser.person.rol == 'Administrador'"
+      *ngIf="dataUser.rol == 'Administrador'"
       class="py-4 text-2xl font-semibold text-gray-800 border-b"
     >
       Datos del Congreso
@@ -19,7 +19,7 @@
 
     <div class="w-full mt-4">
       <div
-        *ngIf="dataUser.person.rol == 'Administrador'"
+        *ngIf="dataUser.rol == 'Administrador'"
         class="flex flex-col mt-4"
       >
         <label class="font-thin text-xl mr-5 text-justify">
@@ -74,8 +74,8 @@
 
       <div
         *ngIf="
-          dataUser.person.rol == 'Organizador' ||
-          dataUser.person.rol == 'Administrador'
+          dataUser.rol == 'Organizador' ||
+          dataUser.rol == 'Administrador'
         "
         class="mt-5 mr-5 text-center"
       >
@@ -124,8 +124,8 @@
 
       <div
         *ngIf="
-          dataUser.person.rol == 'Organizador' ||
-          dataUser.person.rol == 'Administrador'
+          dataUser.rol == 'Organizador' ||
+          dataUser.rol == 'Administrador'
         "
         class="mt-5 mr-5 text-center"
       >
