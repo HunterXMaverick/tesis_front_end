@@ -19,7 +19,7 @@ import { PutUserComponent } from "./users/put-user/put-user.component";
 import { NewReviewerComponent } from "./new-reviewer/new-reviewer.component";
 import { ReviewerComponent } from "./users/reviewer/reviewer.component";
 import { CreateCongressComponent } from "./congresses/create-congress/create-congress.component";
-import { RubricComponent } from './rubric/rubric.component';
+import { RubricComponent } from "./rubric/rubric.component";
 
 @NgModule({
   declarations: [
