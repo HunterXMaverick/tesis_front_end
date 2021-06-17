@@ -13,12 +13,12 @@ export class RubricService {
     this.url = this.server.obtainUrl();
   }
 
-  async postRubric(rubric: object) {
-    try {
-      return this.http.post(`${this.url}/postRubric`, rubric);
-    } catch (error) {
-      console.error(error);
-    }
+  postRubric(rubric: object) {
+    return this.http.post(
+      `${this.url}/postRubric`,
+      rubric,
+      this.server.obtainHeaders()
+    );
   }
 
   putRubric(id: string, rubric: object) {

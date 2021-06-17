@@ -47,17 +47,24 @@ export class RubricComponent {
   }
 
   saveRubric() {
+    let qualificationCriteriaTemp: Array<string> = [];
+
+    for (let index = 0; index < this.qualificationCriteria.length; index++) {
+      let element = this.qualificationCriteria.at(index).value;
+
+      qualificationCriteriaTemp.push(element.qualificationCriteria);
+    }
+
     let rubricData = {
-      rubric: this.rubric.getRawValue(),
+      rubric: {
+        qualificationCriteria: qualificationCriteriaTemp,
+        ratingRange: this.rubric.get("ratingRange").value,
+        reviewersRating: this.rubric.get("reviewersRating").value,
+      },
     };
 
-    console.log(this.rubric.getRawValue());
-
-    this.rubricService
-      .postRubric(rubricData)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => console.error(error));
+    this.rubricService.postRubric(rubricData).subscribe((response) => {
+      console.log(response);
+    });
   }
 }
