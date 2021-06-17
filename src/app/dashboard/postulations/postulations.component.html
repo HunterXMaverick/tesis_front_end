@@ -70,7 +70,7 @@
                 Subir PDF
               </th>
               <th
-                *ngIf="dataUser.person.rol !== 'Ponente'"
+                *ngIf="dataUser.rol !== 'Ponente'"
                 class="px-5 py-3 text-left text-sm text-gray-600"
               >
                 Rubrica
@@ -168,7 +168,7 @@
     </div>
     <!-- *ngFor="let element of userById" -->
     <div
-      class="w-fullh-autopy-6px-10items-centerbg-gray-200roundedtext-gray-800"
+      class="w-fullh-autopy-6px-10items-centerbg-gray-200 rounded text-gray-800"
     >
       <!-- <div *ngIf="personId === userData._id"> -->
       <div class="flex py-2">
