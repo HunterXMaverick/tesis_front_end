@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RubricService } from "src/app/services/rubric.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-rubric",
@@ -65,6 +66,15 @@ export class RubricComponent {
 
     this.rubricService.postRubric(rubricData).subscribe((response) => {
       console.log(response);
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Creación exitosa",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      this.router.navigate(["/dashboard/congresses"]);
     });
   }
 }

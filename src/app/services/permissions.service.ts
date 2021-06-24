@@ -32,6 +32,12 @@ export class PermissionsService {
   decodeToken(token: string): boolean {
     const decoded = jwt_decode(token);
     if (decoded) {
+      let userData = {
+        email: decoded.email,
+        rol: decoded.rol,
+      };
+      sessionStorage.setItem("_user-data", JSON.stringify(userData));
+
       this.token = token || null;
       this.personLogin = decoded.email || null;
       return true;
