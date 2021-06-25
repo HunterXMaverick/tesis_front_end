@@ -1,7 +1,7 @@
-<div class="h-screen w-full flex overflow-hidden">
+<div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full mx-12 my-2 overflow-auto">
+  <div class="w-9/12 p-8">
     <div class="flex border-b justify-between">
       <div>
         <h2 class="py-4 text-2xl font-semibold text-gray-800">
@@ -11,7 +11,14 @@
       <div *ngIf="dataUser.rol == 'Organizador'">
         <button
           routerLink="../post-link"
-          class="focus:outline-none py-5 text-center text-gray-700 bg-white hover:text-black font-medium"
+          class="
+            focus:outline-none
+            py-5
+            text-center text-gray-700
+            bg-white
+            hover:text-black
+            font-medium
+          "
         >
           <i class="fa fa-plus pr-2"></i>Crear enlace
         </button>
@@ -23,7 +30,13 @@
     >
       <div
         *ngFor="let link of links"
-        class="bg-white overflow-hidden hover:bg-gray-100 border border-gray-200 p-3"
+        class="
+          bg-white
+          overflow-hidden
+          hover:bg-gray-100
+          border border-gray-200
+          p-3
+        "
       >
         <div class="m-2 text-sm">
           <p class="text-right text-xs">
@@ -51,7 +64,13 @@
                 dataUser.rol == 'Organizador' || dataUser.rol == 'Administrador'
               "
               (click)="deleteLink(link._id)"
-              class="uppercase font-bold text-sm text-red-400 cursor-pointer ml-2"
+              class="
+                uppercase
+                font-bold
+                text-sm text-red-400
+                cursor-pointer
+                ml-2
+              "
               >Eliminar</a
             >
           </div>

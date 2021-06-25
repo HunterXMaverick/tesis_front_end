@@ -1,8 +1,7 @@
-<!--<div *ngIf="dataUser.rol !== 'Administrador'" class="h-screen w-full flex overflow-hidden">-->
-<div class="h-screen w-full flex overflow-hidden">
+<div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full overflow-auto" *ngFor="let item of congress.data">
+  <div class="w-9/12 p-8" *ngFor="let item of congress.data">
     <div class="mx-12 my-2 px-4 rounded border-2">
       <h2
         *ngIf="dataUser.rol !== 'Administrador'"
@@ -76,8 +75,7 @@
 
         <div
           *ngIf="
-            dataUser.rol == 'Organizador' ||
-            dataUser.rol == 'Administrador'
+            dataUser.rol == 'Organizador' || dataUser.rol == 'Administrador'
           "
           class="mt-5 mr-5 text-center"
         >
@@ -91,8 +89,7 @@
               shadow-sm
               text-center text-gray-700
               bg-white
-              hover:bg-blue-400
-              hover:text-white
+              hover:bg-blue-400 hover:text-white
               font-medium
               border
             "
@@ -140,8 +137,7 @@
               shadow-sm
               text-center text-gray-700
               bg-white
-              hover:bg-blue-400
-              hover:text-white
+              hover:bg-blue-400 hover:text-white
               font-medium
               border
             "
