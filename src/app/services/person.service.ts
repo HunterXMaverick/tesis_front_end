@@ -56,4 +56,8 @@ export class PersonService {
       this.server.obtainHeaders()
     );
   }
+
+  getReviewers(){
+    return this.http.get(`${this.url}/getReviewers`, this.server.obtainHeaders());
+  }
 }

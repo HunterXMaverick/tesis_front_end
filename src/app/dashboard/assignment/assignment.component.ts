@@ -23,6 +23,7 @@ export class AssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCongress();
+    this.getUsers();
   }
 
   getCongress() {
@@ -44,5 +45,7 @@ export class AssignmentComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+
+  
 
 }

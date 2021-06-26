@@ -11,8 +11,7 @@
         <div class="-mx-3 md:flex my-4">
           <div class="md:w-1/2 px-3">
             <label class="font-thin text-xl mr-5">Revisor</label>
-            <select
-              class="
+            <select class="
                 focus:border-blue-500
                 appearance-none
                 border
@@ -22,13 +21,10 @@
                 px-3
                 text-gray-700
                 leading-tight
-                focus:outline-none
-              "
-              formControlName="users"
-            >
+                focus:outline-none">
               <option value="">Seleccione..</option>
               <option *ngFor="let user of users" value="{{ user }}">
-                {{ user }}
+                {{ user.names }} {{ user.last_names }}
               </option>
             </select>
           </div>
@@ -37,8 +33,7 @@
             <label class="font-thin text-xl mr-5">
               Área de conocimiento:
             </label>
-            <select
-              class="
+            <select class="
                 focus:border-blue-500
                 appearance-none
                 border
@@ -49,9 +44,7 @@
                 text-gray-700
                 leading-tight
                 focus:outline-none
-              "
-              formControlName="knowledge_area"
-            >
+              " formControlName="knowledge_area">
               <option value="">Seleccione..</option>
               <option *ngFor="let area of knowledge_area" value="{{ area }}">
                 {{ area }}
