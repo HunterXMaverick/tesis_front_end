@@ -10,7 +10,7 @@
                 class="mb-5 text-left text-gray-600 font-bold text-4xl mb-10 flex"
               >
                 <i class="fas fa-user py-2 mr-5"></i>
-                <h1 class="">Registro del Asistente</h1>
+                <h1 class="">Registro del Participante</h1>
               </div>
               <div class="mb-5 text-gray-700">
                 <label class="font-bold mb-1 block"
@@ -83,6 +83,73 @@
                   placeholder="Ej: Jumbo Estrada"
                 />
               </div>
+
+              <div class="mb-5 text-gray-700">
+                <label class="font-bold mb-1 block">Nivel académico:</label>
+                <div class="relative">
+                  <select
+                    name="level_academy"
+                    [(ngModel)]="person.level_academy"
+                    class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none"
+                  >
+                    <option value="">Seleccione..</option>
+                    <option>Segundo Nivel</option>
+                    <option>Tercer Nivel</option>
+                    <option>Masterado</option>
+                  </select>
+                  <div
+                    class="absolute right-0 bottom-0 top-0 px-3 py-2 text-gray-600"
+                  >
+                    <i class="fas fa-angle-down"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="mb-5 text-gray-700">
+                <label class="font-bold mb-1 block">Titulo:</label>
+                <div class="relative">
+                  <select
+                    name="speciality"
+                    [(ngModel)]="person.specialty"
+                    class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none"
+                  >
+                    <option value="">Seleccione..</option>
+                    <option>Medicina</option>
+                    <option>Economía</option>
+                    <option>Deportes</option>
+                    <option>Educación</option>
+                  </select>
+                  <div
+                    class="absolute right-0 bottom-0 top-0 px-3 py-2 text-gray-600"
+                  >
+                    <i class="fas fa-angle-down"></i>
+                  </div>
+                </div>
+              </div> -->
+               
+              <div class="mb-5">
+                <label class="font-bold mb-1 text-gray-700 block">Título:</label>
+                <input
+                  name="title"
+                  [(ngModel)]="person.title"
+                  type="text"
+                  class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                  placeholder="Ej: Ing. Sistemas"/>
+              </div>
+
+              <div class="mb-5">
+                <label class="font-bold mb-1 text-gray-700 block"
+                  >Teléfono:</label
+                >
+                <input
+                  name="phone"
+                  [(ngModel)]="person.phone"
+                  type="text"
+                  class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                  placeholder="Ej: 0999999999"
+                  maxlength="10"
+                />
+              </div>
+
               <div class="mb-5">
                 <label class="font-bold mb-1 text-gray-700 block"
                   >Correo electrónico:</label

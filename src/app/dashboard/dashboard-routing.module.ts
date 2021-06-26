@@ -15,6 +15,7 @@ import { PutUserComponent } from "./users/put-user/put-user.component";
 import { NewReviewerComponent } from "./new-reviewer/new-reviewer.component";
 import { ReviewerComponent } from "./users/reviewer/reviewer.component";
 import { RubricComponent } from "./rubric/rubric.component";
+import { AssignmentComponent } from './assignment/assignment.component';
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: "new-reviewer", component: NewReviewerComponent },
   { path: "reviewer", component: ReviewerComponent },
   { path: "rubric", component: RubricComponent },
+  { path: "assignment", component: AssignmentComponent },
 ];
 
 @NgModule({
