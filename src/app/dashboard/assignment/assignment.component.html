@@ -1,43 +1,65 @@
-<div class="h-screen w-full flex overflow-hidden">
-    <app-sidebar></app-sidebar>
+<div class="flex">
+  <app-sidebar></app-sidebar>
 
-    <div class="w-full mx-12 my-2 overflow-auto">
-        <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
-            Asignación de Revisores
-        </h2>
+  <div class="w-9/12 p-8">
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Asignación de Revisores
+    </h2>
 
-        <div class="w-full pr-5 mt-6">
-            <form class="form-horizontal mx-auto">
-                <div class="-mx-3 md:flex my-4">
-                    <div class="md:w-1/2 px-3">
-                        <label class="font-thin text-xl mr-5">Revisor</label>
-                        <select
-                            class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                            formControlName="users">
-                            <option value="">Seleccione..</option>
-                            <option *ngFor="let user of users" value="{{ user }}">
-                                {{ user }}
-                            </option>
-                        </select>
-                    </div>
+    <div class="w-full pr-5 mt-6">
+      <form class="form-horizontal mx-auto">
+        <div class="-mx-3 md:flex my-4">
+          <div class="md:w-1/2 px-3">
+            <label class="font-thin text-xl mr-5">Revisor</label>
+            <select
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              formControlName="users"
+            >
+              <option value="">Seleccione..</option>
+              <option *ngFor="let user of users" value="{{ user }}">
+                {{ user }}
+              </option>
+            </select>
+          </div>
 
-
-                    <div class="flex flex-col mt-4">
-                        <label class="font-thin text-xl mr-5">
-                            Área de conocimiento:
-                        </label>
-                        <select
-                            class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                            formControlName="knowledge_area">
-                            <option value="">Seleccione..</option>
-                            <option *ngFor="let area of knowledge_area" value="{{ area }}">
-                                {{ area }}
-                            </option>
-                        </select>
-                    </div>
-
-                </div>
-            </form>
+          <div class="flex flex-col mt-4">
+            <label class="font-thin text-xl mr-5">
+              Área de conocimiento:
+            </label>
+            <select
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              formControlName="knowledge_area"
+            >
+              <option value="">Seleccione..</option>
+              <option *ngFor="let area of knowledge_area" value="{{ area }}">
+                {{ area }}
+              </option>
+            </select>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>
