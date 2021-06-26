@@ -13,25 +13,35 @@ export class PermissionsService {
   private rol: string;
 
   constructor() {
-    this.token = null;
+    let sessionToken: string = sessionStorage.getItem("_token");
+    if (
+      sessionToken !== "" &&
+      sessionToken !== null &&
+      sessionToken !== undefined
+    ) {
+      this.token = sessionToken;
+    } else {
+      this.token = null;
+    }
     this.personLogin = null;
   }
 
-  decodeTokenRol(token: string): boolean {
-    const decoded = jwt_decode(token);
-    if (decoded) {
-      this.token = token || null;
-      this.personLogin = decoded || null;
-      this.rol = this.personLogin.rol;
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // decodeTokenRol(token: string): boolean {
+  //   const decoded = jwt_decode(token);
+  //   if (decoded) {
+  //     this.token = token || null;
+  //     this.personLogin = decoded || null;
+  //     this.rol = this.personLogin.rol;
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   decodeToken(token: string): boolean {
     const decoded = jwt_decode(token);
     if (decoded) {
+      sessionStorage.setItem("_token", token);
       this.token = token || null;
       this.personLogin = decoded.email || null;
       return true;
@@ -40,17 +50,17 @@ export class PermissionsService {
     }
   }
 
-  public isAuthenticated(): boolean {
-    return this.token === null;
-  }
+  // public isAuthenticated(): boolean {
+  //   return this.token === null;
+  // }
 
   obtainToken(): string {
     return this.token;
   }
 
-  destroyToken(): void {
-    this.token = null;
-  }
+  // destroyToken(): void {
+  //   this.token = null;
+  // }
 
   obtainPersonLogin(): object {
     return this.personLogin;

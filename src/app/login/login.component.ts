@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { PermissionsService } from "../services/permissions.service";
 import { PersonService } from "../services/person.service";
-import { Data } from "../models/data";
 import Swal from "sweetalert2";
 
 @Component({
@@ -34,7 +33,8 @@ export class LoginComponent implements OnInit {
     let email = this.loginData.get("email").value,
       password = this.loginData.get("password").value,
       rol = this.loginData.get("rol").value,
-      path = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+      path =
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
       dataLogin = {
         person: {
           email,
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     ) {
       if (validate) {
         this.personServices.login(dataLogin).subscribe(
-          (data: Data) => {
+          (data: any) => {
             if (data.ok == true) {
               if (this.permissions.decodeToken(data.token)) {
                 Swal.fire({
@@ -59,6 +59,25 @@ export class LoginComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500,
                 });
+
+                this.personServices.getUserByEmail(data.data.email).subscribe(
+                  (res: any) => {
+                    let userData = {
+                      _id: res.data._id,
+                      email: res.data.email,
+                      last_names: res.data.last_names,
+                      names: res.data.names,
+                      rol: res.data.rol,
+                    };
+
+                    sessionStorage.setItem(
+                      "_user-data",
+                      JSON.stringify(userData)
+                    );
+                  },
+                  (err) => console.error(err)
+                );
+
                 this.router.navigate(["dashboard/congresses"]);
               } else {
                 email = "";

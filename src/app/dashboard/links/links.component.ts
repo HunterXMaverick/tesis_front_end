@@ -17,11 +17,13 @@ export class LinksComponent implements OnInit {
     private linksService: LinksService,
     private personService: PersonService,
     private router: Router
-  ) {}
+  ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem("_user-data"));
+  }
 
   ngOnInit() {
     this.getLinks();
-    this.getUserByEmail();
+    // this.getUserByEmail();
   }
 
   getLinks() {

@@ -27,6 +27,7 @@ export class PostPostulationComponent implements OnInit {
     private router: Router,
     public fb: FormBuilder
   ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem("_user-data"));
     this.postulation = this.fb.group({
       title_project: ["", [Validators.required]],
       summary_project: ["", [Validators.required]],
@@ -37,7 +38,7 @@ export class PostPostulationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPersonByEmail();
+    // this.getPersonByEmail();
     this.getCongress();
   }
 

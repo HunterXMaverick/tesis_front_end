@@ -1,7 +1,7 @@
-<div class="h-screen w-full flex overflow-hidden">
+<div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full mx-12 my-2 overflow-auto">
+  <div class="w-9/12 p-8">
     <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Lista de Participantes
     </h2>
@@ -12,27 +12,57 @@
           <thead>
             <tr>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm text-gray-600"
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-sm text-gray-600
+                "
               >
                 Usuario
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-sm text-gray-600"
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-center text-sm text-gray-600
+                "
               >
                 Núm. de Identificación
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm text-gray-600"
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-sm text-gray-600
+                "
               >
                 Correo electrónico
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-sm text-gray-600"
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-center text-sm text-gray-600
+                "
               >
                 Rol
               </th>
               <th
-                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-sm text-gray-600"
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-center text-sm text-gray-600
+                "
               >
                 Habilitado / Inhabilitado
               </th>
@@ -114,23 +144,64 @@
                 class="px-5 py-5 border-b border-gray-200 text-sm text-center"
               >
                 <div
-                  class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
+                  class="
+                    relative
+                    inline-block
+                    w-10
+                    mr-2
+                    align-middle
+                    select-none
+                    transition
+                    duration-200
+                    ease-in
+                  "
                 >
                   <input
                     (click)="disableEnableUser(user._id, (user.status = false))"
                     type="checkbox"
                     *ngIf="user.status == true"
                     checked
-                    class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                    class="
+                      toggle-checkbox
+                      absolute
+                      block
+                      w-6
+                      h-6
+                      rounded-full
+                      bg-white
+                      border-4
+                      appearance-none
+                      focus:outline-none
+                      cursor-pointer
+                    "
                   />
                   <input
                     (click)="disableEnableUser(user._id, (user.status = true))"
                     type="checkbox"
                     *ngIf="user.status == false"
-                    class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none focus:outline-none cursor-pointer"
+                    class="
+                      toggle-checkbox
+                      absolute
+                      block
+                      w-6
+                      h-6
+                      rounded-full
+                      bg-white
+                      border-4
+                      appearance-none
+                      focus:outline-none
+                      cursor-pointer
+                    "
                   />
                   <label
-                    class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300"
+                    class="
+                      toggle-label
+                      block
+                      overflow-hidden
+                      h-6
+                      rounded-full
+                      bg-gray-300
+                    "
                   ></label>
                 </div>
               </td>

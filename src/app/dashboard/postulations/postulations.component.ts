@@ -20,10 +20,12 @@ export class PostulationsComponent implements OnInit {
     private postulationService: PostulationService,
     private personService: PersonService,
     private filesService: FilesService
-  ) {}
+  ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem("_user-data"));
+  }
 
   ngOnInit() {
-    this.getUserByEmail();
+    // this.getUserByEmail();
     this.getPostulations();
   }
 
