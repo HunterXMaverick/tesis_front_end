@@ -26,9 +26,9 @@
               "
               formControlName="users"
             >
-              <option value="">Seleccione..</option>
+              <option value="999">Seleccione...</option>
               <option *ngFor="let user of users" value="{{ user }}">
-                {{ user }}
+                {{ user.names }} {{ user.last_names }}
               </option>
             </select>
           </div>

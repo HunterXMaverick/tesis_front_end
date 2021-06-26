@@ -16,7 +16,18 @@ export class LoginGuard implements CanActivate {
   userLogin: any;
 
   constructor(private router: Router, private permissions: PermissionsService) {
-    this.userLogin = this.permissions.obtainPersonLogin();
+    // this.userLogin = this.permissions.obtainPersonLogin();
+
+    let sessionToken: string = sessionStorage.getItem("_token");
+    if (
+      sessionToken !== "" &&
+      sessionToken !== null &&
+      sessionToken !== undefined
+    ) {
+      this.userLogin = true;
+    } else {
+      this.userLogin = false;
+    }
   }
 
   canActivate(

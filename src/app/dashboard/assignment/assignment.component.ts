@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { PersonService } from "../../services/person.service";
 import { CongressService } from "src/app/services/congress.service";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-
 @Component({
-  selector: 'app-assignment',
-  templateUrl: './assignment.component.html',
-  styleUrls: ['./assignment.component.scss']
+  selector: "app-assignment",
+  templateUrl: "./assignment.component.html",
+  styleUrls: ["./assignment.component.scss"],
 })
 export class AssignmentComponent implements OnInit {
   postulation: FormGroup;
@@ -23,6 +22,7 @@ export class AssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCongress();
+    this.getUsers();
   }
 
   getCongress() {
@@ -38,11 +38,10 @@ export class AssignmentComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data;
-        
+        this.users = res.data[1];
+        console.log(res.data);
       },
       (err) => console.error(err)
     );
   }
-
 }

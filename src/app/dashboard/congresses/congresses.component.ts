@@ -29,7 +29,6 @@ export class CongressesComponent {
     return this.congressService.getCongress().subscribe(
       (res) => {
         this.congress = res;
-        console.log(res);
       },
       (err) => console.error(err)
     );
