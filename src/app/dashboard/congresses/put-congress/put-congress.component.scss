@@ -5,3 +5,7 @@
 .toggle-checkbox:checked + .toggle-label {
   background-color: #68d391;
 }
+
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 300px;
+}

@@ -1,30 +1,18 @@
-import { Injectable } from "@angular/core";
-import { Data } from "../models/data";
-import { Person } from "../models/person";
-import * as jwt_decode from "jwt-decode";
+import { Injectable } from '@angular/core';
+import { Data } from '../models/data';
+import { Person } from '../models/person';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class PermissionsService {
-  data: Data;
-  private token: string;
-  private personLogin: Person;
-  private rol: string;
+  data!: Data;
+  private token!: string;
+  private personLogin!: Person;
+  private rol!: string;
 
-  constructor() {
-    let sessionToken: string = sessionStorage.getItem("_token");
-    if (
-      sessionToken !== "" &&
-      sessionToken !== null &&
-      sessionToken !== undefined
-    ) {
-      this.token = sessionToken;
-    } else {
-      this.token = null;
-    }
-    this.personLogin = null;
-  }
+  constructor() {}
 
   // decodeTokenRol(token: string): boolean {
   //   const decoded = jwt_decode(token);
@@ -39,10 +27,19 @@ export class PermissionsService {
   // }
 
   decodeToken(token: string): boolean {
-    const decoded = jwt_decode(token);
+    const decoded: any = jwt_decode(token);
     if (decoded) {
-      sessionStorage.setItem("_token", token);
-      this.token = token || null;
+      let userData = {
+        _id: decoded._id,
+        email: decoded.email,
+        last_names: decoded.last_names,
+        names: decoded.names,
+        rol: decoded.rol,
+      };
+
+      sessionStorage.setItem('_user-data', JSON.stringify(userData));
+
+      this.token = token;
       this.personLogin = decoded.email || null;
       return true;
     } else {

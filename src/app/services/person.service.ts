@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebService } from "./web.service";
-import { Observable } from "rxjs";
-import { Data } from "../models/data";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebService } from './web.service';
+import { Observable } from 'rxjs';
+import { Data } from '../models/data';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class PersonService {
   private url: string;
-  email: string;
+  email!: string;
 
   constructor(private http: HttpClient, private server: WebService) {
     this.url = this.server.obtainUrl();
@@ -41,8 +41,17 @@ export class PersonService {
     );
   }
 
-  getUserByEmail(email: string) {
-    return this.http.get(`${this.url}/getPersonByEmail/${email}`);
+  /**
+   * Function to fetch user by email hosted in the database
+   * @returns User object
+   */
+  async getUserByEmail(email: string): Promise<any> {
+    try {
+      return this.http.get(`${this.url}/getPersonByEmail/${email}`);
+    } catch (error) {
+      // console.error(error);
+      console.error('hola user');
+    }
   }
 
   getUsers() {

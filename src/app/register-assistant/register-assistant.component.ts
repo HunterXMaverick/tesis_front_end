@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { PersonService } from "../services/person.service";
-import { Person } from "../models/person";
-import { Router } from "@angular/router";
-import Swal from "sweetalert2";
+import { Component, OnInit } from '@angular/core';
+import { PersonService } from '../services/person.service';
+import { Person } from '../models/person';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-register-assistant",
-  templateUrl: "./register-assistant.component.html",
-  styleUrls: ["./register-assistant.component.scss"],
+  selector: 'app-register-assistant',
+  templateUrl: './register-assistant.component.html',
+  styleUrls: ['./register-assistant.component.scss'],
 })
 export class RegisterAssistantComponent implements OnInit {
   viewPassword = true;
   person: Person = {
-    rol: "Asistente",
-    type_dni: "",
-    dni: "",
-    names: "",
-    last_names: "",
-    email: "",
-    password: "",
-    title: "",
+    rol: 'Asistente',
+    type_dni: '',
+    dni: '',
+    names: '',
+    last_names: '',
+    email: '',
+    password: '',
+    title: '',
     status: true,
   };
 
@@ -27,7 +27,7 @@ export class RegisterAssistantComponent implements OnInit {
 
   ngOnInit() {}
 
-  postPerson(ci) {
+  postPerson(ci: any) {
     if (
       this.person.type_dni &&
       this.person.dni &&
@@ -39,10 +39,11 @@ export class RegisterAssistantComponent implements OnInit {
       let dataPerson = {
         person: this.person,
       };
-      let pathEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+      let pathEmail =
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
       let pathOnlyLetters = /^[ñA-ZñÑáéíóúÁÉÍÓÚa-z _]*$/;
       let pathLettersAndInt = /^[A-Z0-9]{10}$/;
-      let validateEmail = pathEmail.test(dataPerson.person.email);
+      let validateEmail = pathEmail.test(dataPerson.person.email!);
       let validateNames = pathOnlyLetters.test(dataPerson.person.names);
       let validateLastNames = pathOnlyLetters.test(
         dataPerson.person.last_names
@@ -50,18 +51,18 @@ export class RegisterAssistantComponent implements OnInit {
       let validateCI = this.validationDniCI(ci);
       if (validateNames && validateLastNames) {
         if (validateEmail) {
-          if (this.person.type_dni == "Cédula") {
+          if (this.person.type_dni == 'Cédula') {
             if (validateCI) {
               this.personService.postPerson(dataPerson).subscribe(
                 (res) => {
                   Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Registro exitoso",
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Registro exitoso',
                     showConfirmButton: false,
                     timer: 1500,
                   });
-                  this.router.navigate(["/login"]);
+                  this.router.navigate(['/login']);
                 },
                 (err) => {
                   console.error(err);
@@ -69,28 +70,28 @@ export class RegisterAssistantComponent implements OnInit {
               );
             } else {
               Swal.fire({
-                position: "top-end",
-                icon: "warning",
-                title: "Por favor, ingrese una cédula válida",
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Por favor, ingrese una cédula válida',
                 showConfirmButton: false,
                 timer: 1500,
               });
             }
-          } else if (this.person.type_dni == "Pasaporte") {
+          } else if (this.person.type_dni == 'Pasaporte') {
             let validatePassport = pathLettersAndInt.test(
-              dataPerson.person.dni
+              dataPerson.person.dni!
             );
             if (validatePassport) {
               this.personService.postPerson(dataPerson).subscribe(
                 (res) => {
                   Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Registro Exitoso",
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Registro Exitoso',
                     showConfirmButton: false,
                     timer: 1500,
                   });
-                  this.router.navigate(["/login"]);
+                  this.router.navigate(['/login']);
                 },
                 (err) => {
                   console.error(err);
@@ -98,9 +99,9 @@ export class RegisterAssistantComponent implements OnInit {
               );
             } else {
               Swal.fire({
-                position: "top-end",
-                icon: "warning",
-                title: "Por favor, ingrese un pasaporte válido",
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Por favor, ingrese un pasaporte válido',
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -108,34 +109,34 @@ export class RegisterAssistantComponent implements OnInit {
           }
         } else {
           Swal.fire({
-            position: "top-end",
-            icon: "warning",
-            title: "Por favor, ingrese un correo válido",
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Por favor, ingrese un correo válido',
             showConfirmButton: false,
             timer: 1500,
           });
         }
       } else {
         Swal.fire({
-          position: "top-end",
-          icon: "warning",
-          title: "Por favor, ingresar solo letras en nombres y apellidos",
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Por favor, ingresar solo letras en nombres y apellidos',
           showConfirmButton: false,
           timer: 1500,
         });
       }
     } else {
       Swal.fire({
-        position: "top-end",
-        icon: "warning",
-        title: "Debes completar todos los datos",
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Debes completar todos los datos',
         showConfirmButton: false,
         timer: 1500,
       });
     }
   }
 
-  validationDniCI(ci) {
+  validationDniCI(ci: any) {
     if (ci.length === 10) {
       const digitRegion = ci.substring(0, 2);
       if (digitRegion >= String(0) && digitRegion <= String(24)) {
@@ -186,17 +187,17 @@ export class RegisterAssistantComponent implements OnInit {
           digitValidator = 0;
         }
         if (digitValidator === latestDigit) {
-          console.log("Cédula válida");
+          console.log('Cédula válida');
           return true;
         } else {
           return false;
         }
       } else {
-        console.log("Cédula no válida");
+        console.log('Cédula no válida');
         return false;
       }
     } else {
-      console.log("Cédula con más de 10 dígitos");
+      console.log('Cédula con más de 10 dígitos');
       return false;
     }
   }
