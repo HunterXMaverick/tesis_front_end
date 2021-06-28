@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebService } from "./web.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebService } from './web.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class RubricService {
   private url: string;
-  email: string;
+  email!: string;
 
   constructor(private http: HttpClient, private server: WebService) {
     this.url = this.server.obtainUrl();

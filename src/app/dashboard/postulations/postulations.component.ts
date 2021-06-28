@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { PostulationService } from "../../services/postulation.service";
-import { PersonService } from "../../services/person.service";
-import { FilesService } from "src/app/services/files.service";
+import { Component, OnInit } from '@angular/core';
+import { PostulationService } from '../../services/postulation.service';
+import { PersonService } from '../../services/person.service';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
-  selector: "app-postulations",
-  templateUrl: "./postulations.component.html",
-  styleUrls: ["./postulations.component.scss"],
+  selector: 'app-postulations',
+  templateUrl: './postulations.component.html',
+  styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
   postulations: any = [];
@@ -21,7 +21,7 @@ export class PostulationsComponent implements OnInit {
     private personService: PersonService,
     private filesService: FilesService
   ) {
-    this.dataUser = JSON.parse(sessionStorage.getItem("_user-data"));
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class PostulationsComponent implements OnInit {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
         this.postulations = res.data;
-        this.postulations.forEach((element) => {
+        this.postulations.forEach((element: any) => {
           this.getUserById(element.person_id);
           if (element.person_id == this.dataUser._id) {
             this.projectsSpeaker.push(element);
@@ -60,24 +60,24 @@ export class PostulationsComponent implements OnInit {
     this.personId = id;
   }
 
-  getUserByEmail() {
-    return this.personService
-      .getUserByEmail(this.personService.email)
-      .subscribe(
-        (res: any) => {
-          this.dataUser = res.data;
-        },
-        (err) => console.error(err)
-      );
-  }
+  // getUserByEmail() {
+  //   return this.personService
+  //     .getUserByEmail(this.personService.email)
+  //     .subscribe(
+  //       (res: any) => {
+  //         this.dataUser = res.data;
+  //       },
+  //       (err) => console.error(err)
+  //     );
+  // }
 
   getFile(fileName: string) {
-    let file = fileName.split("/");
+    let file = fileName.split('/');
 
     this.filesService
       .showFile(file[0], file[1])
       .then((response) => {
-        window.open(response, "_blank");
+        window.open(response, '_blank');
       })
       .catch((error) => {
         console.error(error);

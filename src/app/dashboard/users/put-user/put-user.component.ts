@@ -1,21 +1,21 @@
-import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { PersonService } from "../../../services/person.service";
-import Swal from "sweetalert2";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { FilesService } from "src/app/services/files.service";
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PersonService } from '../../../services/person.service';
+import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
-  selector: "app-put-user",
-  templateUrl: "./put-user.component.html",
-  styleUrls: ["./put-user.component.scss"],
+  selector: 'app-put-user',
+  templateUrl: './put-user.component.html',
+  styleUrls: ['./put-user.component.scss'],
 })
 export class PutUserComponent {
   user: FormGroup;
   idUser: string;
   dataUser: any = [];
   logUser: any = [];
-  profile_picture_url: string = "";
+  profile_picture_url: string = '';
 
   constructor(
     private router: ActivatedRoute,
@@ -25,9 +25,9 @@ export class PutUserComponent {
     public fb: FormBuilder
   ) {
     this.user = this.fb.group({
-      names: ["", [Validators.required]],
-      last_names: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
+      names: ['', [Validators.required]],
+      last_names: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
       profile_picture: [null],
     });
     this.idUser = this.router.snapshot.params.id;
@@ -60,46 +60,49 @@ export class PutUserComponent {
     });
   }
 
-  getUserByEmail() {
-    return this.personService
-      .getUserByEmail(this.personService.email)
-      .subscribe((res: any) => {
-        this.logUser = res.data;
-      });
-  }
+  // getUserByEmail() {
+  //   return this.personService
+  //     .getUserByEmail(this.personService.email)
+  //     .subscribe((res: any) => {
+  //       this.logUser = res.data;
+  //     });
+  // }
 
   putUser() {
-    if (this.logUser.rol == "Asistente") {
+    if (this.logUser.rol == 'Asistente') {
       this.user.setValue({
-        phone: "0999999999",
+        phone: '0999999999',
       });
     }
     if (this.user.valid) {
       let pathOnlyLetters = /^[ñA-ZñÑáéíóúÁÉÍÓÚa-z _]*$/;
       let pathPhone = /^0[0-9]{1}[0-9]{8}$/;
-      let validateNames = pathOnlyLetters.test(this.user.get("names").value);
+      let validateNames = pathOnlyLetters.test(this.user.get('names')!.value);
       let validateLastNames = pathOnlyLetters.test(
-        this.user.get("last_names").value
+        this.user.get('last_names')!.value
       );
-      let validatePhone = pathPhone.test(this.user.get("phone").value);
+      let validatePhone = pathPhone.test(this.user.get('phone')!.value);
 
       if (validateNames && validateLastNames) {
         if (validatePhone) {
           Swal.fire({
-            title: "¿Está seguro de actualizar los datos ingresados?",
-            icon: "warning",
+            title: '¿Está seguro de actualizar los datos ingresados?',
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Confirmar",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar',
           }).then((result) => {
             if (result.isConfirmed) {
-              if (this.profile_picture_url == "") {
+              if (this.profile_picture_url == '') {
                 const formData: any = new FormData();
-                formData.append("file", this.user.get("profile_picture").value);
+                formData.append(
+                  'file',
+                  this.user.get('profile_picture')!.value
+                );
 
                 this.filesService
-                  .uploadFile("images", formData)
+                  .uploadFile('images', formData)
                   .then((response) => {
                     if (response.ok) {
                       this.user.patchValue({
@@ -128,16 +131,16 @@ export class PutUserComponent {
                       .putPerson(this.idUser, dataPerson)
                       .subscribe(
                         (res) => {
-                          this.routerLink.navigate(["/dashboard/congresses"]);
+                          this.routerLink.navigate(['/dashboard/congresses']);
                         },
                         (err) => {
                           console.error(err);
                         }
                       );
                     Swal.fire({
-                      position: "top-end",
-                      icon: "success",
-                      title: "Actualización exitosa",
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Actualización exitosa',
                       showConfirmButton: false,
                       timer: 1500,
                     });
@@ -149,16 +152,16 @@ export class PutUserComponent {
 
                 this.personService.putPerson(this.idUser, dataPerson).subscribe(
                   (res) => {
-                    this.routerLink.navigate(["/dashboard/congresses"]);
+                    this.routerLink.navigate(['/dashboard/congresses']);
                   },
                   (err) => {
                     console.error(err);
                   }
                 );
                 Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: "Actualización exitosa",
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Actualización exitosa',
                   showConfirmButton: false,
                   timer: 1500,
                 });
@@ -167,27 +170,27 @@ export class PutUserComponent {
           });
         } else {
           Swal.fire({
-            position: "top-end",
-            icon: "warning",
-            title: "Por favor, ingrese un teléfono válido",
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Por favor, ingrese un teléfono válido',
             showConfirmButton: false,
             timer: 1500,
           });
         }
       } else {
         Swal.fire({
-          position: "top-end",
-          icon: "warning",
-          title: "Por favor, ingresar solo letras en nombres y apellidos",
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Por favor, ingresar solo letras en nombres y apellidos',
           showConfirmButton: false,
           timer: 1500,
         });
       }
     } else {
       Swal.fire({
-        position: "top-end",
-        icon: "warning",
-        title: "Debes completar todos los datos",
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Debes completar todos los datos',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -195,11 +198,11 @@ export class PutUserComponent {
   }
 
   handleFileInput(event: any) {
-    const file = (event.target as HTMLInputElement).files[0];
+    const file = (event.target as HTMLInputElement).files![0];
 
     this.user.patchValue({
       profile_picture: file,
     });
-    this.user.get("profile_picture").updateValueAndValidity();
+    this.user.get('profile_picture')!.updateValueAndValidity();
   }
 }

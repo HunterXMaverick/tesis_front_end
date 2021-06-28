@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { PersonService } from "../../services/person.service";
-import Swal from "sweetalert2";
+import { Component, OnInit } from '@angular/core';
+import { PersonService } from '../../services/person.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.scss"],
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  photo: any = "";
+  photo: any = '';
   users: any = [];
-  status: boolean;
+  status: boolean = false;
 
   dataUserLog: any = [];
 
@@ -37,17 +37,17 @@ export class UsersComponent implements OnInit {
     this.personService.disableEnablePerson(id, dataPerson).subscribe((res) => {
       if (status == true) {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Usuario habilitado",
+          position: 'top-end',
+          icon: 'success',
+          title: 'Usuario habilitado',
           showConfirmButton: false,
           timer: 1500,
         });
       } else {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Usuario inhabilitado",
+          position: 'top-end',
+          icon: 'success',
+          title: 'Usuario inhabilitado',
           showConfirmButton: false,
           timer: 1500,
         });
@@ -58,11 +58,8 @@ export class UsersComponent implements OnInit {
   getPersonByEmail() {
     return this.personService
       .getUserByEmail(this.personService.email)
-      .subscribe(
-        (res: any) => {
-          this.dataUserLog = res.data;
-        },
-        (err) => console.error(err)
-      );
+      .then((res) => {
+        this.dataUserLog = res.data;
+      });
   }
 }

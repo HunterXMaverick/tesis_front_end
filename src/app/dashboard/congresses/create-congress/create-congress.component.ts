@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { CongressService } from "../../../services/congress.service";
 import { Congress } from "../../../models/congress";
 import { Router } from "@angular/router";
@@ -10,7 +10,7 @@ import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
   templateUrl: "./create-congress.component.html",
   styleUrls: ["./create-congress.component.scss"],
 })
-export class CreateCongressComponent implements OnInit {
+export class CreateCongressComponent {
   public Editor = ClassicEditor;
   congress: any = [];
   today = new Date().toISOString().split("T")[0];
@@ -31,8 +31,6 @@ export class CreateCongressComponent implements OnInit {
     private congressService: CongressService,
     private router: Router
   ) {}
-
-  ngOnInit() {}
 
   postCongress() {
     if (

@@ -1,83 +1,69 @@
-<div class="flex">
+<div class="flex overflow-hidden">
   <app-sidebar></app-sidebar>
 
-  <div class="w-9/12 p-8">
-    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
-      Editar Congreso
-    </h2>
+  <div class="w-full p-8">
+    <div
+      class="
+        py-4
+        text-2xl
+        font-semibold
+        text-gray-800
+        border-b
+        flex
+        items-center
+      "
+    >
+      <i class="fas fa-edit mr-2"></i>
+      <p>Editar Congreso</p>
+    </div>
 
-    <div class="w-full pr-5 mt-6">
-      <form class="form-horizontal mx-auto">
-        <div class="flex flex-col mt-4">
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5"> Nombre del congreso: </label>
-            <input
-              [(ngModel)]="modelCongress.name"
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-              type="text"
-              name="name"
-            />
-          </div>
-
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5">
-              Reglamento del congreso:
-            </label>
-            <ckeditor
-              [editor]="Editor"
-              [(ngModel)]="modelCongress.regulations"
-              name="regulations"
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-            ></ckeditor>
-          </div>
-
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5"> Dirección web: </label>
-            <input
-              [(ngModel)]="modelCongress.address_web"
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-              type="text"
-              name="address_web"
-            />
-          </div>
+    <form class="w-full flex">
+      <div class="w-1/2 m-2 p-2 flex flex-col">
+        <div class="flex flex-col py-2">
+          <label class="font-thin text-md"> Nombre del congreso: </label>
+          <input
+            [(ngModel)]="modelCongress.name"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="text"
+            name="name"
+          />
         </div>
 
-        <div class="-mx-3 md:flex my-4">
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5"> Fecha inicio: </label>
+        <div class="flex flex-col py-2">
+          <label class="font-thin text-md"> Dirección web: </label>
+          <input
+            [(ngModel)]="modelCongress.address_web"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="text"
+            name="address_web"
+          />
+        </div>
+
+        <div class="flex py-2">
+          <div class="w-1/2 mx-2 flex flex-col">
+            <label class="font-thin text-md"> Fecha inicio: </label>
             <input
               [(ngModel)]="modelCongress.start_date"
               class="
@@ -97,9 +83,9 @@
               min="{{ today }}"
             />
           </div>
-          <br />
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5"> Fecha fin: </label>
+
+          <div class="w-1/2 mx-2 flex flex-col">
+            <label class="font-thin text-md"> Fecha finalización: </label>
             <input
               [(ngModel)]="modelCongress.end_date"
               class="
@@ -120,11 +106,10 @@
             />
           </div>
         </div>
-        <div class="-mx-3 md:flex mb-2">
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5">
-              Capacidad de ponentes:
-            </label>
+
+        <div class="flex py-2">
+          <div class="w-1/2 mx-2 flex flex-col">
+            <label class="font-thin text-md"> Capacidad de ponentes: </label>
             <input
               [(ngModel)]="modelCongress.capacity_speakers"
               class="
@@ -144,11 +129,9 @@
               name="capacity_speakers"
             />
           </div>
-          <br />
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5">
-              Capacidad de asistentes:
-            </label>
+
+          <div class="w-1/2 mx-2 flex flex-col">
+            <label class="font-thin text-md"> Capacidad de asistentes: </label>
             <input
               [(ngModel)]="modelCongress.capacity_participants"
               class="
@@ -168,34 +151,101 @@
               name="capacity_participants"
             />
           </div>
-          <br />
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5">
-              Área de Conocimiento:
-            </label>
-            <input
-              [(ngModel)]="modelCongress.knowledge_area"
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-              type="array"
-              name="knowledge_area"
-            />
-          </div>
         </div>
+
+        <div class="flex flex-col py-2">
+          <label class="font-thin text-md flex">
+            <p class="mr-1">Áreas de Conocimiento:</p>
+            <p class="text-sm">(Separa cada área con una coma)</p>
+          </label>
+          <input
+            [(ngModel)]="modelCongress.knowledge_area"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="array"
+            name="knowledge_area"
+          />
+        </div>
+      </div>
+
+      <div class="w-1/2 m-2 p-2 flex flex-col">
+        <div class="flex flex-col">
+          <label class="font-thin text-md"> Reglamento: </label>
+          <ckeditor
+            [editor]="Editor"
+            [(ngModel)]="modelCongress.regulations"
+            name="regulations"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+          ></ckeditor>
+        </div>
+
+        <div class="flex justify-between items-center mt-8">
+          <button
+            routerLink="/dashboard/congresses"
+            class="
+              w-32
+              focus:outline-none
+              py-1
+              px-4
+              rounded-lg
+              shadow-sm
+              text-center text-gray-600
+              bg-white
+              hover:bg-gray-100
+              font-medium
+              border
+            "
+          >
+            Cancelar
+          </button>
+
+          <button
+            (click)="putCongress(congress.data[0]._id)"
+            class="
+              w-32
+              focus:outline-none
+              border border-transparent
+              py-1
+              px-4
+              rounded-lg
+              shadow-sm
+              text-center text-white
+              bg-blue-500
+              hover:bg-blue-600
+              font-medium
+            "
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+
+      <!-- <div class="flex flex-col mt-4"></div>
 
         <div class="-mx-3 md:flex mt-4" style="display: none">
           <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5"> Estado del congreso: </label>
+            <label class="font-thin text-md mr-5"> Estado del congreso: </label>
             <div
               class="
                 relative
@@ -260,49 +310,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col my-16">
-          <div class="flex">
-            <button
-              routerLink="/dashboard/congresses"
-              class="
-                w-32
-                mx-auto
-                focus:outline-none
-                py-2
-                px-5
-                rounded-lg
-                shadow-sm
-                text-center text-gray-600
-                bg-white
-                hover:bg-gray-100
-                font-medium
-                border
-              "
-            >
-              Cancelar
-            </button>
-            <button
-              (click)="putCongress(congress.data[0]._id)"
-              class="
-                w-32
-                mx-auto
-                focus:outline-none
-                border border-transparent
-                py-2
-                px-5
-                rounded-lg
-                shadow-sm
-                text-center text-white
-                bg-blue-500
-                hover:bg-blue-600
-                font-medium
-              "
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+   -->
+    </form>
   </div>
 </div>
