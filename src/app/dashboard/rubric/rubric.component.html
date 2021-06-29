@@ -1,11 +1,69 @@
 <div class="flex">
-  <!-- *ngIf="dataUser.rol !== 'Organizador'" -->
   <app-sidebar></app-sidebar>
+  <!-- [formGroup]="rubric" -->
+  <form class="w-9/12 p-8">
+    <div class="py-4 text-gray-600 font-bold text-4xl flex items-center">
+      <i class="fas fa-user py-2 mr-5"></i>
+      <h1>Rúbrica</h1>
+    </div>
 
-  <form class="w-9/12 p-8" [formGroup]="rubric">
-    <h3>Rúbrica:</h3>
+    <hr />
 
-    <div
+    <div class="py-8 flex items-center">
+      <h1 class="mx-4 w-1/3">Parámetro de evaluación</h1>
+      <input
+        class="
+          focus:border-blue-500
+          appearance-none
+          border
+          rounded
+          w-1/3
+          py-2
+          px-3
+          text-gray-700
+          leading-tight
+          focus:outline-none
+        "
+        type="text"
+        placeholder="Criterio"
+        [(ngModel)]="inputCriteria"
+      />
+      <button (click)="addQualificationCriteria()" class="w-1/3">Añadir</button>
+    </div>
+
+    <hr />
+
+    <div class="py-8 w-full">
+      <table class="border-2">
+        <thead class="bg-gray-200">
+          <tr>
+            <td class="w-full text-center">Parámetros de evaluación</td>
+            <td class="w-full text-center">Acciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of qualificationCriterias; let i = index">
+            <td class="w-full">
+              {{ data }}
+            </td>
+            <td class="w-full flex justify-between px-12 text-center">
+              <button (click)="updateQualificationCriteria(i)" class="px-4">
+                editar
+              </button>
+              <button (click)="deleteQualificationCriteria(i)" class="px-4">
+                borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="w-full justify-center">
+      <button (click)="saveRubric()">Guardar</button>
+    </div>
+
+    <!-- <div
       formArrayName="qualificationCriteria"
       *ngFor="let control of qualificationCriteria.controls; index as i"
     >
@@ -32,9 +90,7 @@
       </div>
     </div>
     <button (click)="addCriteria()">+ Añadir</button>
-
     <hr />
-
     <label>Rango de calificación:</label><br />
     <div class="py-1">
       <input
@@ -55,7 +111,6 @@
         "
       /><span class="ml-2 text-gray-700">0 - 10</span>
     </div>
-
     <div class="py-1">
       <input
         id="0-100"
@@ -75,8 +130,7 @@
         "
       /><span class="ml-2 text-gray-700">0 - 100</span>
     </div>
-
     <br />
-    <button (click)="saveRubric()">Guardar Rúbrica</button>
+    <button (click)="saveRubric()">Guardar Rúbrica</button> -->
   </form>
 </div>

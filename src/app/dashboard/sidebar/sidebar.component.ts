@@ -31,13 +31,12 @@ export class SidebarComponent {
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      (res: any) => {
-        if (res.data.length == 0) {
+      async (res: any) => {
+        if ((await res.data.length) == 0) {
           this.congressCreated = false;
-        } else if (res.data.length >= 1) {
+        } else if ((await res.data.length) >= 1) {
           this.congressCreated = true;
         }
-        console.log(this.congressCreated);
       },
       (err) => console.error(err)
     );

@@ -1,7 +1,7 @@
 <div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full p-2">
+  <div class="w-full p-8">
     <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Asignación de Revisores
     </h2>
@@ -11,7 +11,8 @@
         <div class="-mx-3 md:flex my-4">
           <div class="md:w-1/2 px-3">
             <label class="font-thin text-xl mr-5">Revisor</label>
-            <select class="
+            <select
+              class="
                 focus:border-blue-500
                 appearance-none
                 border
@@ -21,7 +22,9 @@
                 px-3
                 text-gray-700
                 leading-tight
-                focus:outline-none">
+                focus:outline-none
+              "
+            >
               <option value="">Seleccione..</option>
               <option *ngFor="let user of users" value="{{ user }}">
                 {{ user.names }} {{ user.last_names }}
@@ -33,7 +36,8 @@
             <label class="font-thin text-xl mr-5">
               Área de conocimiento:
             </label>
-            <select class="
+            <select
+              class="
                 focus:border-blue-500
                 appearance-none
                 border
@@ -44,7 +48,10 @@
                 text-gray-700
                 leading-tight
                 focus:outline-none
-              " formControlName="knowledge_area">
+              "
+              [(ngModel)]="selected_knowledge_area"
+              name="selected_knowledge_area"
+            >
               <option value="">Seleccione..</option>
               <option *ngFor="let area of knowledge_area" value="{{ area }}">
                 {{ area }}
@@ -53,7 +60,9 @@
           </div>
 
           <div class="w-1/2 flex justify-end">
-            <button routerLink="/dashboard/assignment" class="
+            <button
+              routerLink="/dashboard/assignment"
+              class="
                 focus:outline-none
                 py-1
                 px-4
@@ -64,27 +73,28 @@
                 hover:bg-blue-400 hover:text-white
                 font-medium
                 border
-                mr-2">
+                mr-2
+              "
+              (click)="postAssignment()"
+            >
               Asignar
             </button>
           </div>
         </div>
       </form>
 
-
       <h2>Lista de Asignados</h2>
       <ul class="heroes">
         <li>
-          <span class="badge">   </span> 
+          <span class="badge"> </span>
         </li>
       </ul>
 
       <ul class="heroes">
         <li>
-          <span class="badge">  </span> 
+          <span class="badge"> </span>
         </li>
       </ul>
-
     </div>
   </div>
 </div>

@@ -1,66 +1,69 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from "@angular/forms";
-import { Router } from "@angular/router";
-import { RubricService } from "src/app/services/rubric.service";
-import Swal from "sweetalert2";
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { RubricService } from 'src/app/services/rubric.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-rubric",
-  templateUrl: "./rubric.component.html",
-  styleUrls: ["./rubric.component.scss"],
+  selector: 'app-rubric',
+  templateUrl: './rubric.component.html',
+  styleUrls: ['./rubric.component.scss'],
 })
 export class RubricComponent {
-  rubric: FormGroup = new FormGroup({});
+  qualificationCriterias: Array<string> = [];
+  inputCriteria: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private rubricService: RubricService,
-    private router: Router
-  ) {
-    this.rubric = this.fb.group({
-      qualificationCriteria: this.fb.array([]),
-      ratingRange: ["", Validators.required],
-      reviewersRating: ["", Validators.required],
-    });
-    this.addCriteria();
+  constructor(private rubricService: RubricService, private router: Router) {}
+
+  addQualificationCriteria() {
+    const limitCriteria: number = 5;
+
+    if (this.inputCriteria !== '') {
+      if (this.qualificationCriterias.length + 1 <= limitCriteria) {
+        this.qualificationCriterias.push(this.inputCriteria);
+        this.inputCriteria = '';
+      } else {
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Máximo 5 criterios por congreso.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Agregue un criterio para continuar.',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   }
 
-  get qualificationCriteria(): FormArray {
-    return this.rubric.get("qualificationCriteria") as FormArray;
+  deleteQualificationCriteria(index: number) {
+    this.qualificationCriterias.splice(index, 1);
   }
 
-  addCriteria() {
-    const qualificationCriteria = this.fb.group({
-      qualificationCriteria: new FormControl(""),
-    });
+  updateQualificationCriteria(index: number) {
+    this.inputCriteria = this.qualificationCriterias[index];
 
-    this.qualificationCriteria.push(qualificationCriteria);
-  }
-
-  deleteCriteria(index: number) {
-    this.qualificationCriteria.removeAt(index);
+    this.deleteQualificationCriteria(index);
   }
 
   saveRubric() {
-    let qualificationCriteriaTemp: Array<string> = [];
-
-    for (let index = 0; index < this.qualificationCriteria.length; index++) {
-      let element = this.qualificationCriteria.at(index).value;
-
-      qualificationCriteriaTemp.push(element.qualificationCriteria);
-    }
-
     let rubricData = {
       rubric: {
-        qualificationCriteria: qualificationCriteriaTemp,
-        ratingRange: this.rubric.get("ratingRange")!.value,
-        reviewersRating: this.rubric.get("reviewersRating")!.value,
+        qualificationCriteria: this.qualificationCriterias,
+        ratingRange: '0-100',
+        reviewersRating: '',
       },
     };
 
@@ -68,13 +71,13 @@ export class RubricComponent {
       console.log(response);
 
       Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Creación exitosa",
+        position: 'top-end',
+        icon: 'success',
+        title: 'Creación exitosa',
         showConfirmButton: false,
         timer: 1500,
       });
-      this.router.navigate(["/dashboard/congresses"]);
+      this.router.navigate(['/dashboard/congresses']);
     });
   }
 }
