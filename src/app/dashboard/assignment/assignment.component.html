@@ -24,6 +24,8 @@
                 leading-tight
                 focus:outline-none
               "
+              [(ngModel)]="selected_reviewer"
+              name="selected_reviewer"
             >
               <option value="">Seleccione..</option>
               <option *ngFor="let user of users" value="{{ user }}">
@@ -84,17 +86,24 @@
       </form>
 
       <h2>Lista de Asignados</h2>
-      <ul class="heroes">
-        <li>
-          <span class="badge"> </span>
-        </li>
-      </ul>
+      <table>
+        <thead>
+          <td>
+            Revisor
+          </td>
+          <td>
 
-      <ul class="heroes">
-        <li>
-          <span class="badge"> </span>
-        </li>
-      </ul>
+            Área de conocimiento
+          </td>
+        </thead>
+
+        <tbody>
+          <td *ngFor="let item of assignmentReviewers; let i = index">
+            <tr>{{ item.reviewer_data[i].names }} {{ item.reviewer_data[i].last_names }}</tr>
+            <tr>{{ item.knowledge_area }}</tr>
+          </td>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

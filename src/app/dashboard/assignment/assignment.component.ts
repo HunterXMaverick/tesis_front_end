@@ -15,6 +15,8 @@ export class AssignmentComponent implements OnInit {
   congress: any = [];
   knowledge_area: Array<string> = [];
   selected_knowledge_area: string = '';
+  selected_reviewer: string = ""
+  assignmentReviewers: Array<any> = [];
 
   constructor(
     private personService: PersonService,
@@ -55,7 +57,7 @@ export class AssignmentComponent implements OnInit {
   getAssignments() {
     return this.assignmentService.getAssignments().subscribe(
       (res: any) => {
-        console.log(res.data);
+        this.assignmentReviewers = res.data
       },
       (err) => console.error(err)
     );
@@ -64,15 +66,14 @@ export class AssignmentComponent implements OnInit {
   postAssignment() {
     let dataAssignment = {
       assigment: {
-        reviewer_data: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+        reviewer_data: this.selected_reviewer,
         knowledge_area: this.selected_knowledge_area,
       },
     };
-    console.log(dataAssignment);
 
     return this.assignmentService.postAssignment(dataAssignment).subscribe(
       (res: any) => {
-        console.log(res.data);
+        this.getAssignments()
       },
       (err) => console.error(err)
     );
