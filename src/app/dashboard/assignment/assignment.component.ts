@@ -44,6 +44,8 @@ export class AssignmentComponent implements OnInit {
       },
       (err) => console.error(err)
     );
+
+    
   }
 
   

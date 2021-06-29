@@ -59,8 +59,8 @@ export class RubricComponent {
     let rubricData = {
       rubric: {
         qualificationCriteria: qualificationCriteriaTemp,
-        ratingRange: this.rubric.get("ratingRange").value,
-        reviewersRating: this.rubric.get("reviewersRating").value,
+        ratingRange: this.rubric.get("ratingRange")!.value,
+        reviewersRating: this.rubric.get("reviewersRating")!.value,
       },
     };
 

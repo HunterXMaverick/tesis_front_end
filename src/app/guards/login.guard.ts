@@ -16,11 +16,7 @@ export class LoginGuard implements CanActivate {
   userLogin: any;
 
   constructor(private router: Router, private permissions: PermissionsService) {
-<<<<<<< HEAD
-    this.userLogin = this.permissions.obtainPersonLogin();
-=======
     this.userLogin = this.permissions.obtainToken();
->>>>>>> 48ed258a0a659d085a67dcac3a07dbc4ec1b9712
   }
 
   canActivate(
