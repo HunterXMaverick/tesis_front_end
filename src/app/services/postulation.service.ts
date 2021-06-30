@@ -26,4 +26,12 @@ export class PostulationService {
       this.server.obtainHeaders()
     );
   }
+
+  disableEnableSpeaker(id: string, person: boolean) {
+    return this.http.put(
+      `${this.url}/disableSpeaker${id}`,
+      person,
+      this.server.obtainHeaders()
+    )
+  }
 }

@@ -7,4 +7,5 @@ export interface Postulation {
   files?: string;
   presentation_date?: string;
   person_id: string;
+  status: boolean;
 }

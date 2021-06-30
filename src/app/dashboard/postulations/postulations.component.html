@@ -139,6 +139,40 @@
                   <span class="tooltiptext">Elegir PDF</span>
                 </button>
               </td>
+
+              <td class="px-5 py-5e text-sm text-center">
+                <p class="text-gray-900">pendiente</p>
+                <div
+                class="
+                    relative
+                    inline-block
+                    w-10
+                    mr-2
+                    align-middle
+                    select-none
+                    transition
+                    duration-200
+                    ease-in">
+                    <input (click)="disableEnableSpeaker(userData._id, (userData.status = false))"
+                    type="button"
+                    *ngId="user.status == true"
+                    checked
+                    class="class=
+                    toggle-checkbox
+                    absolute
+                    block
+                    w-6
+                    h-6
+                    rounded-full
+                    bg-white
+                    border-4
+                    appearance-none
+                    focus:outline-none
+                    cursor-pointer"/>
+
+                </div>
+
+              </td>
             </tr>
           </tbody>
         </table>
@@ -208,15 +242,6 @@
       <div class="flex py-2">
         <h2 class="font-bold mr-3">Correo electrónico:</h2>
         <p>{{ userData.email }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Estado:</h2>
-        <p *ngIf="userData.status == true" class="text-green-700">
-          <i class="fas fa-check-circle text-1xl mr-2"></i>Habilitado
-        </p>
-        <p *ngIf="userData.status == false" class="text-red-700">
-          <i class="fas fa-times-circle text-1xl mr-2"></i>Inhabilitado
-        </p>
       </div>
       <!-- </div> -->
     </div>
