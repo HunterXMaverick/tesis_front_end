@@ -1,11 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { Router } from '@angular/router';
 import { RubricService } from 'src/app/services/rubric.service';
 import Swal from 'sweetalert2';
@@ -18,8 +11,11 @@ import Swal from 'sweetalert2';
 export class RubricComponent {
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
+  rubric: any;
 
-  constructor(private rubricService: RubricService, private router: Router) {}
+  constructor(private rubricService: RubricService, private router: Router) {
+    this.getRubrics();
+  }
 
   addQualificationCriteria() {
     const limitCriteria: number = 5;
@@ -56,6 +52,17 @@ export class RubricComponent {
     this.inputCriteria = this.qualificationCriterias[index];
 
     this.deleteQualificationCriteria(index);
+  }
+
+  getRubrics() {
+    this.rubricService.getRubrics().subscribe((res: any) => {
+      if (res.data.length == 0) {
+        this.rubric = null;
+      } else if (res.data.length >= 1) {
+        this.rubric = res.data[0];
+      }
+      console.log(res);
+    });
   }
 
   saveRubric() {

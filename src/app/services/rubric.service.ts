@@ -35,4 +35,8 @@ export class RubricService {
       this.server.obtainHeaders()
     );
   }
+
+  getRubrics() {
+    return this.http.get(`${this.url}/getRubrics`, this.server.obtainHeaders());
+  }
 }

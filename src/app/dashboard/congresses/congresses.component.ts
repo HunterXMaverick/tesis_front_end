@@ -22,8 +22,6 @@ export class CongressesComponent implements OnInit {
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        console.log(res);
-
         if (res.data.length == 0) {
           this.congress = null;
         } else if (res.data.length >= 1) {
