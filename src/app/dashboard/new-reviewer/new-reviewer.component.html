@@ -1,42 +1,47 @@
-<div class="flex">
+<div class="flex overflow-hidden">
   <app-sidebar></app-sidebar>
 
   <div class="w-full p-2">
-    <div class="mb-5 text-left text-gray-600 font-bold text-4xl mb-10 flex">
-      <i class="fas fa-user py-2 mr-5"></i>
-      <h1 class="">Registro del Revisor</h1>
+    <div
+      class="
+        py-4
+        text-2xl
+        font-semibold
+        text-gray-800
+        border-b
+        flex
+        items-center
+      "
+    >
+      <i class="fas fa-user mr-2"></i>
+      <p>Registro del Revisor</p>
     </div>
 
-    <form class="flex text-gray-700">
+    <form class="flex lg:flex-row md:flex-row flex-col text-gray-700 px-3">
       <div class="flex flex-col w-full mx-2">
         <div class="py-3 w-full flex">
           <div class="mx-1 w-full">
             <label class="font-bold mb-1 block">Tipo de identificación:</label>
-            <div class="relative">
-              <select
-                name="type_dni"
-                [(ngModel)]="person.type_dni"
-                class="
-                  focus:border-blue-500
-                  appearance-none
-                  border
-                  rounded
-                  w-full
-                  flex-1
-                  py-2
-                  px-3
-                  leading-tight
-                  focus:outline-none
-                "
-              >
-                <option value="">Seleccione..</option>
-                <option>Cédula</option>
-                <option>Pasaporte</option>
-              </select>
-              <div class="absolute right-0 bottom-0 top-0 px-3 py-2">
-                <i class="fas fa-angle-down"></i>
-              </div>
-            </div>
+            <select
+              name="type_dni"
+              [(ngModel)]="person.type_dni"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                flex-1
+                py-2
+                px-3
+                leading-tight
+                focus:outline-none
+              "
+            >
+              <option value="">Seleccione..</option>
+              <option>Cédula</option>
+              <option>Pasaporte</option>
+            </select>
           </div>
 
           <div class="mx-1 w-full">
@@ -153,31 +158,26 @@
       <div class="flex flex-col w-full mx-2">
         <div class="py-3 w-full">
           <label class="font-bold mb-1 block">Nivel académico:</label>
-          <div class="relative">
-            <select
-              name="level_academy"
-              [(ngModel)]="person.level_academy"
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                leading-tight
-                focus:outline-none
-              "
-            >
-              <option value="">Seleccione..</option>
-              <option>Segundo Nivel</option>
-              <option>Tercer Nivel</option>
-              <option>Masterado</option>
-            </select>
-            <div class="absolute right-0 bottom-0 top-0 px-3 py-2">
-              <i class="fas fa-angle-down"></i>
-            </div>
-          </div>
+          <select
+            name="level_academy"
+            [(ngModel)]="person.level_academy"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              leading-tight
+              focus:outline-none
+            "
+          >
+            <option value="">Seleccione..</option>
+            <option>Segundo Nivel</option>
+            <option>Tercer Nivel</option>
+            <option>Masterado</option>
+          </select>
         </div>
 
         <div class="py-3 w-full">

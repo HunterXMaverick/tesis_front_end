@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
+  showPostulations: boolean = true;
   postulations: any = [];
   userById: any = [];
   userData: any;
@@ -26,7 +27,6 @@ export class PostulationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getUserByEmail();
     this.getPostulations();
   }
 
@@ -35,7 +35,6 @@ export class PostulationsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
-        console.log(this.userData);
       },
       (err) => console.error(err)
     );
@@ -45,13 +44,19 @@ export class PostulationsComponent implements OnInit {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
         this.postulations = res.data;
-        this.postulations.forEach((element: any) => {
-          this.getUserById(element.person_id);
-          if (element.person_id == this.dataUser._id) {
-            this.projectsSpeaker.push(element);
-            console.log(this.projectsSpeaker);
-          }
-        });
+
+        if (this.postulations.length == 0) {
+          this.showPostulations = false;
+        } else {
+          this.postulations.forEach((element: any) => {
+            this.getUserById(element.person_id);
+            if (element.person_id == this.dataUser._id) {
+              this.projectsSpeaker.push(element);
+              console.log(this.projectsSpeaker);
+            }
+          });
+          this.showPostulations = true;
+        }
       },
       (err) => console.error(err)
     );
@@ -60,17 +65,6 @@ export class PostulationsComponent implements OnInit {
   getUserId(id: string) {
     this.personId = id;
   }
-
-  // getUserByEmail() {
-  //   return this.personService
-  //     .getUserByEmail(this.personService.email)
-  //     .subscribe(
-  //       (res: any) => {
-  //         this.dataUser = res.data;
-  //       },
-  //       (err) => console.error(err)
-  //     );
-  // }
 
   getFile(fileName: string) {
     let file = fileName.split('/');
@@ -86,25 +80,27 @@ export class PostulationsComponent implements OnInit {
   }
 
   disableEnableSpeaker(id: string, status: boolean) {
-    let dataSpeaker = status
-    this.postulationService.disableEnableSpeaker(id, dataSpeaker).subscribe((res) => {
-      if (status == true) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Ponente Aceptado',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Ponente Rechazado',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
+    let dataSpeaker = status;
+    this.postulationService
+      .disableEnableSpeaker(id, dataSpeaker)
+      .subscribe((res) => {
+        if (status == true) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Ponente Aceptado',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Ponente Rechazado',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   }
 }
