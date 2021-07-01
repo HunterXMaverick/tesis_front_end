@@ -20,12 +20,7 @@ export class RubricService {
       this.server.obtainHeaders()
     );
   }
-getRubrics(){
-  return this.http.get(
-    `${this.url}/getRubrics`,
-    this.server.obtainHeaders()
-  );
-}
+  
   putRubric(id: string, rubric: object) {
     return this.http.put(
       `${this.url}/putRubric/${id}`,

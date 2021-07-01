@@ -85,10 +85,10 @@ export class PostulationsComponent implements OnInit {
       });
   }
 
-<<<<<<< HEAD
-  public create(postulation:any): void {
-    sessionStorage.setItem('postulationdata',(postulation._id));
-=======
+  public create(postulation: any): void {
+    sessionStorage.setItem('postulationdata', (postulation._id));
+  }
+
   disableEnableSpeaker(id: string, status: boolean) {
     let dataSpeaker = status
     this.postulationService.disableEnableSpeaker(id, dataSpeaker).subscribe((res) => {
@@ -110,6 +110,6 @@ export class PostulationsComponent implements OnInit {
         });
       }
     });
->>>>>>> 117e3a9bd2a3f9d88d3313dca446a3a25c7691a0
   }
+
 }
