@@ -1,65 +1,109 @@
 <div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full p-2">
+  <div class="w-full p-8">
     <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Asignación de Revisores
     </h2>
 
-    <div class="w-full pr-5 mt-6">
-      <form class="form-horizontal mx-auto">
-        <div class="-mx-3 md:flex my-4">
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-xl mr-5">Revisor</label>
-            <select
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-              formControlName="users"
-            >
-              <option value="999">Seleccione...</option>
-              <option *ngFor="let user of users" value="{{ user }}">
-                {{ user.names }} {{ user.last_names }}
-              </option>
-            </select>
-          </div>
+    <form class="w-full py-6 flex items-center">
+      <div class="w-1/3 flex flex-col px-3">
+        <label class="font-thin text-xl">Revisor</label>
+        <select
+          class="
+            focus:border-blue-500
+            appearance-none
+            border
+            rounded
+            w-full
+            py-2
+            px-3
+            text-gray-700
+            leading-tight
+            focus:outline-none
+          "
+          [(ngModel)]="selected_reviewer"
+          name="selected_reviewer"
+        >
+          <option value="">Seleccione...</option>
+          <option
+            *ngFor="let user of users"
+            value="{{ user.last_names }} {{ user.names }}"
+          >
+            <!-- <option *ngFor="let user of users" value="{{ user.last_names }}"> -->
+            {{ user.names }} {{ user.last_names }}
+          </option>
+        </select>
+      </div>
 
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5">
-              Área de conocimiento:
-            </label>
-            <select
-              class="
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                leading-tight
-                focus:outline-none
-              "
-              formControlName="knowledge_area"
-            >
-              <option value="">Seleccione..</option>
-              <option *ngFor="let area of knowledge_area" value="{{ area }}">
-                {{ area }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </form>
+      <div class="w-1/3 flex flex-col px-3">
+        <label class="font-thin text-xl mr-5"> Área de conocimiento: </label>
+        <select
+          class="
+            focus:border-blue-500
+            appearance-none
+            border
+            rounded
+            w-full
+            py-2
+            px-3
+            text-gray-700
+            leading-tight
+            focus:outline-none
+          "
+          [(ngModel)]="selected_knowledge_area"
+          name="selected_knowledge_area"
+        >
+          <option value="">Seleccione..</option>
+          <option *ngFor="let area of knowledge_area" value="{{ area }}">
+            {{ area }}
+          </option>
+        </select>
+      </div>
+
+      <div class="w-1/3 flex flex-col px-3">
+        <button
+          routerLink="/dashboard/assignment"
+          class="
+            focus:outline-none
+            py-1
+            px-4
+            rounded-lg
+            shadow-sm
+            text-center text-gray-700
+            bg-white
+            hover:bg-blue-400 hover:text-white
+            font-medium
+            border
+            mr-2
+          "
+          (click)="postAssignment()"
+        >
+          Asignar
+        </button>
+      </div>
+    </form>
+
+    <div class="py-8 w-full">
+      <h2 class="text-center py-2 text-2xl">Lista de Asignados</h2>
+      <table class="rounded border-2 w-full">
+        <thead class="bg-gray-200">
+          <tr>
+            <td class="w-1/2 text-center">Revisor</td>
+            <td class="w-1/2 text-center">Área de conocimiento</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of assignmentReviewers; let i = index">
+            <td class="w-1/2 px-2">
+              {{ data.reviewer_name }}
+            </td>
+            <td class="w-1/2 px-2">
+              {{ data.knowledge_area }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

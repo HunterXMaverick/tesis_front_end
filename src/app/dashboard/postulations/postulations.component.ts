@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostulationService } from '../../services/postulation.service';
 import { PersonService } from '../../services/person.service';
 import { FilesService } from 'src/app/services/files.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-postulations',
@@ -34,7 +35,7 @@ export class PostulationsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
-        console.log(this.userById);
+        console.log(this.userData);
       },
       (err) => console.error(err)
     );
@@ -84,7 +85,31 @@ export class PostulationsComponent implements OnInit {
       });
   }
 
+<<<<<<< HEAD
   public create(postulation:any): void {
     sessionStorage.setItem('postulationdata',(postulation._id));
+=======
+  disableEnableSpeaker(id: string, status: boolean) {
+    let dataSpeaker = status
+    this.postulationService.disableEnableSpeaker(id, dataSpeaker).subscribe((res) => {
+      if (status == true) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Ponente Aceptado',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Ponente Rechazado',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+>>>>>>> 117e3a9bd2a3f9d88d3313dca446a3a25c7691a0
   }
 }
