@@ -83,4 +83,8 @@ export class PostulationsComponent implements OnInit {
         console.error(error);
       });
   }
+
+  public create(postulation:any): void {
+    sessionStorage.setItem('postulationdata',(postulation._id));
+  }
 }

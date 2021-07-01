@@ -5,7 +5,7 @@ import { WebService } from './web.service';
 @Injectable({
   providedIn: 'root',
 })
-export class RubricService {
+export class QualificationService {
   private url: string;
   email!: string;
 
@@ -13,30 +13,30 @@ export class RubricService {
     this.url = this.server.obtainUrl();
   }
 
-  postRubric(rubric: object) {
+  postQualification(qualification: object) {
     return this.http.post(
-      `${this.url}/postRubric`,
-      rubric,
+      `${this.url}/postQualification`,
+      qualification,
       this.server.obtainHeaders()
     );
   }
-getRubrics(){
-  return this.http.get(
-    `${this.url}/getRubrics`,
-    this.server.obtainHeaders()
-  );
-}
-  putRubric(id: string, rubric: object) {
+  getQualification() {
+    return this.http.get(
+      `${this.url}/getQualification`,
+      this.server.obtainHeaders()
+    );
+  }
+  putQualification(id: string, qualification: object) {
     return this.http.put(
-      `${this.url}/putRubric/${id}`,
-      rubric,
+      `${this.url}/putQualification/${id}`,
+      qualification,
       this.server.obtainHeaders()
     );
   }
 
-  getRubricById(id: string) {
+  getQualificationById(id: string) {
     return this.http.get(
-      `${this.url}/getRubricById/${id}`,
+      `${this.url}/getQualificationById/${id}`,
       this.server.obtainHeaders()
     );
   }
