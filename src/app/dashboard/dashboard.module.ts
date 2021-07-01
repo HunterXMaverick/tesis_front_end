@@ -21,6 +21,7 @@ import { ReviewerComponent } from "./users/reviewer/reviewer.component";
 import { CreateCongressComponent } from "./congresses/create-congress/create-congress.component";
 import { RubricComponent } from "./rubric/rubric.component";
 import { AssignmentComponent } from './assignment/assignment.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AssignmentComponent } from './assignment/assignment.component';
     CreateCongressComponent,
     RubricComponent,
     AssignmentComponent,
+    EvaluationComponent,
   ],
   exports: [SidebarComponent],
   imports: [

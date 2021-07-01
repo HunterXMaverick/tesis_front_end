@@ -75,7 +75,7 @@
                 *ngIf="dataUser.rol !== 'Ponente'"
                 class="px-5 py-3 text-left text-sm text-gray-600"
               >
-                Rubrica
+                Calificar
               </th>
             </tr>
           </thead>
@@ -111,6 +111,16 @@
                 <button class="tooltip appearance-none focus:outline-none ml-2">
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
                   <span class="tooltiptext">Archivo adjunto</span>
+                </button>
+              </td>
+              <td class="px-5 py-5 flex-1 text-sm text-center">
+                <button
+                  (click)="create(postulation)"
+                  routerLink="../evaluation"
+                  class="tooltip appearance-none focus:outline-none ml-2"
+                >
+                  <i class="fas fa-marker text-gray-700 text-xl"></i>
+                  <span class="tooltiptext">Calificar</span>
                 </button>
               </td>
             </tr>
