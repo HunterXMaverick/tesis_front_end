@@ -6,9 +6,17 @@
         <a href="/" class="flex items-base pt-10 lg:p-2 -mb-10 lg:-mb-0">
           <img src="/assets/img/dot-logo.png" alt="" class="w-12 lg:w-48" />
           <div
-            class="block lg:hidden text-2xl text-primary hover:text-primary tracking-wide font-semibold uppercase"
+            class="
+              block
+              lg:hidden
+              text-2xl text-primary
+              hover:text-primary
+              tracking-wide
+              font-semibold
+              uppercase
+            "
           >
-            SCOCV
+            SCOV
           </div>
         </a>
       </div>
@@ -24,7 +32,18 @@
             type="email"
             name="email"
             formControlName="email"
-            class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
             autocomplete="email"
             placeholder="Ej: jose@example.com"
           />
@@ -40,7 +59,18 @@
               name="password"
               formControlName="password"
               [type]="viewPassword ? 'password' : 'text'"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
               autocomplete="current-password"
               placeholder="******"
             />
@@ -76,7 +106,15 @@
           </div>
         </div>
         <div
-          class="mb-6 flex lg:flex-row flex-col justify-between align-middle lg:px-32"
+          class="
+            mb-6
+            flex
+            lg:flex-row
+            flex-col
+            justify-between
+            align-middle
+            lg:px-32
+          "
         >
           <div class="py-1">
             <input
@@ -84,7 +122,17 @@
               type="radio"
               value="Organizador"
               formControlName="rol"
-              class="form-radio h-5 w-5 focus:border-blue-500 appearance-none border rounded leading-tight focus:outline-none"
+              class="
+                form-radio
+                h-5
+                w-5
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                leading-tight
+                focus:outline-none
+              "
             /><span class="ml-2 text-gray-700">Organizador</span>
           </div>
 
@@ -94,7 +142,17 @@
               type="radio"
               value="Revisor"
               formControlName="rol"
-              class="form-radio h-5 w-5 focus:border-blue-500 appearance-none border rounded leading-tight focus:outline-none"
+              class="
+                form-radio
+                h-5
+                w-5
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                leading-tight
+                focus:outline-none
+              "
             /><span class="ml-2 text-gray-700">Revisor</span>
           </div>
 
@@ -104,7 +162,17 @@
               type="radio"
               value="Ponente"
               formControlName="rol"
-              class="form-radio h-5 w-5 focus:border-blue-500 appearance-none border rounded leading-tight focus:outline-none"
+              class="
+                form-radio
+                h-5
+                w-5
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                leading-tight
+                focus:outline-none
+              "
             /><span class="ml-2 text-gray-700">Ponente</span>
           </div>
 
@@ -114,14 +182,37 @@
               type="radio"
               value="Asistente"
               formControlName="rol"
-              class="form-radio h-5 w-5 focus:border-blue-500 appearance-none border rounded leading-tight focus:outline-none"
+              class="
+                form-radio
+                h-5
+                w-5
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                leading-tight
+                focus:outline-none
+              "
             /><span class="ml-2 text-gray-700">Participante</span>
           </div>
         </div>
         <div class="block md:flex items-center justify-between">
           <button
             (click)="login()"
-            class="align-middle bg-blue-500 hover:bg-blue-600 text-center px-4 py-2 text-white text-sm font-semibold rounded-lg inline-block shadow-lg focus:outline-none"
+            class="
+              align-middle
+              bg-blue-500
+              hover:bg-blue-600
+              text-center
+              px-4
+              py-2
+              text-white text-sm
+              font-semibold
+              rounded-lg
+              inline-block
+              shadow-lg
+              focus:outline-none
+            "
           >
             Ingresar
           </button>
@@ -174,7 +265,19 @@
       <div class="w-full md:w-full px-3 mb-4">
         <button
           routerLink="/register-assistant"
-          class="appearance-none block w-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+          class="
+            appearance-none
+            block
+            w-full
+            border border-gray-900
+            text-gray-900
+            hover:bg-gray-900 hover:text-gray-100
+            rounded-lg
+            py-3
+            px-3
+            leading-tight
+            focus:outline-none
+          "
         >
           Asistente
         </button>
@@ -182,7 +285,19 @@
       <div class="w-full md:w-full px-3 mb-4">
         <button
           routerLink="/register-speaker"
-          class="appearance-none block w-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+          class="
+            appearance-none
+            block
+            w-full
+            border border-gray-900
+            text-gray-900
+            hover:bg-gray-900 hover:text-gray-100
+            rounded-lg
+            py-3
+            px-3
+            leading-tight
+            focus:outline-none
+          "
         >
           Ponente
         </button>
@@ -190,7 +305,19 @@
       <div class="w-full md:w-full px-3" style="display: none">
         <button
           routerLink="/register-reviewer"
-          class="appearance-none block w-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-gray-100 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+          class="
+            appearance-none
+            block
+            w-full
+            border border-gray-900
+            text-gray-900
+            hover:bg-gray-900 hover:text-gray-100
+            rounded-lg
+            py-3
+            px-3
+            leading-tight
+            focus:outline-none
+          "
         >
           Revisor
         </button>
