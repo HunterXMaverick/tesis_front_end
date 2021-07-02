@@ -18,6 +18,12 @@ export class AssignmentService {
       this.server.obtainHeaders()
     );
   }
+    getAssignmentsName(reviewer_name: string) {
+    return this.http.get(
+      `${this.url}/getAssigmentsByReviewer/${reviewer_name}`,
+      this.server.obtainHeaders()
+    );
+  }
 
   deleteAssignment(id: string) {
     return this.http.put(

@@ -24,83 +24,84 @@
                     </thead>
                     <tbody>
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td>
+                            <th>
                                 <input class="
                                   focus:border-blue-500
                                   appearance-none
                                   border
                                   rounded
-                                  w-1/3
+                                  w-full
                                   py-2
                                   px-3
                                   text-gray-700
                                   leading-tight
                                   focus:outline-none
                                 " type="number" [(ngModel)]="inputreviewersRating" name="inputreviewersRating" />
-                            </td>
-                            <td>
+                            </th>
+                            <th>
                                 <input class="
                                   focus:border-blue-500
                                   appearance-none
                                   border
                                   rounded
-                                  w-1/3
+                                  w-full
                                   py-2
                                   px-3
                                   text-gray-700
                                   leading-tight
                                   focus:outline-none
                                 " type="text" [(ngModel)]="inputremark" name="inputremark" />
-                            </td>
-                            <td>
-                                <button (click)="addQuality()" class="w-1/3">Add</button>
-                            </td>
+                            </th>
+                            <th>
+                                <button (click)="addQuality()" class="w-full">Add</button>
+                            </th>
                         </tr>
                     </tbody>
                 </table>
 
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200 bg-gray-200">
+                            <th class="px-5 py-3 text-left text-sm text-gray-600">
+                                Parametros
+                            </th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100" *ngFor="let parameter of parameters;let indice=index"> 
+                        <td>
+                           {{indice+1}} {{parameter}}
+                        </td>
+                      </tr>
+                </tbody>
+            </table>
 
-                <div class="form-horizontal mx-auto">
-                    <table class="border-2">
-
-                        <thead>
-                            <tr>
-                            <tr class="border-b-2 border-gray-200 bg-gray-200">
-                                <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                    Parametro
-                                </th>
-                                <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                    Nota
-                                </th>
-                                <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                    Observacion
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr *ngFor="let parameter of parameters">
-                                <td class="w-full">
-                                    {{ parameter }}
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr *ngFor="let parameter of reviewersRatings">
-                                <td class="w-full">
-                                    {{ parameter }}
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr *ngFor="let data of remarks">
-                                <td class="w-full">
-                                    {{ data }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b-2 border-gray-200 bg-gray-200">
+                        <th class="px-5 py-3 text-left text-sm text-gray-600">
+                            Notas
+                        </th>
+                        <th class="px-5 py-3 text-left text-sm text-gray-600">
+                            Observaciones
+                        </th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr class="border-b border-gray-200 hover:bg-gray-100" *ngFor="let parameter of parameters;let indice=index"> 
+                    <td>
+                        <ng-container *ngFor="let ratings of reviewersRatings">
+                            {{ratings}}
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let data of remarks">
+                            {{data}}
+                        </ng-container>
+                    </td>
+                  </tr>
+            </tbody>
+        </table>
 
 
                 <div class="block md:flex items-center justify-between">
@@ -114,3 +115,30 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- 
+<tr>
+    <td *ngFor="let parameter of parameters">
+        {{ parameter }}
+    </td>
+    <td  *ngFor="let ratings of reviewersRatings">
+        {{ ratings }}
+    </td>
+    <td *ngFor="let data of remarks">
+        {{ data }}
+    </td>
+</tr> -->
+<!-- 
+<td>
+    <ng-container *ngFor="let ratings of reviewersRatings">
+        {{ratings}}
+    </ng-container>
+</td>
+<td>
+    <ng-container *ngFor="let data of remarks">
+        {{data}}
+    </ng-container>
+</td> -->
