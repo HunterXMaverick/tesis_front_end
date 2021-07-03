@@ -17,6 +17,7 @@ import { ReviewerComponent } from "./users/reviewer/reviewer.component";
 import { RubricComponent } from "./rubric/rubric.component";
 import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: "rubric", component: RubricComponent },
   { path: "assignment", component: AssignmentComponent },
   { path: "list-topics", component: ListTopicsComponent },
+  { path: "evaluation", component: EvaluationComponent },
 ];
 
 @NgModule({

@@ -19,6 +19,12 @@ export class PostulationService {
     );
   }
 
+  getPostulationsByknowledgeArea(knowledge_area: string) {
+    return this.http.get(
+      `${this.url}/knowledgeByArea/${knowledge_area}`,
+      this.server.obtainHeaders()
+    );
+  }
   postPostulation(postulation: object) {
     return this.http.post(
       `${this.url}/postPostulation`,
