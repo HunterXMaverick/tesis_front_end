@@ -50,18 +50,22 @@ export class PostulationsComponent implements OnInit {
   getKnowledge = () => {
     this.names = this.dataUser.names;
     this.last_names = this.dataUser.last_names;
-    console.log(`${this.last_names}${this.names}`);
+
     this.assignmentService
       .getAssignmentsName(`${this.last_names} ${this.names}`)
       .subscribe((result: any) => {
-        this.assignments = result.data[0].knowledge_area;
-        console.log(this.assignments);
-        this.postulationService
-          .getPostulationsByknowledgeArea(this.assignments)
-          .subscribe((knowledge: any) => {
-            this.knowledge_areas = knowledge.data;
-            console.log(this.knowledge_areas);
-          });
+        if (result.data.length == 0) {
+          this.assignments = null;
+        } else {
+          this.assignments = result.data[0].knowledge_area;
+
+          this.postulationService
+            .getPostulationsByknowledgeArea(this.assignments)
+            .subscribe((knowledge: any) => {
+              this.knowledge_areas = knowledge.data;
+              console.log(this.knowledge_areas);
+            });
+        }
       });
   };
 
