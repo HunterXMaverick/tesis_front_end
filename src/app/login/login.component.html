@@ -222,7 +222,7 @@
         <label class="block mb-2 text-sm text-gray-800"
           >No te haz registrado?
           <a
-            onclick="document.getElementById('myModal').showModal()"
+            (click)="handleModal(true)"
             id="btn"
             class="text-blue-500 hover:text-blue-700 cursor-pointer"
             >Hazlo aquí</a
@@ -234,14 +234,27 @@
 </div>
 
 <!-- MODAL -->
-<dialog id="myModal" class="h-auto w-11/12 md:w-1/2 p-5 bg-white rounded-md">
-  <div class="flex flex-col w-full h-auto p-3">
+<div
+  id="modal"
+  class="
+    flex
+    items-center
+    justify-center
+    fixed
+    left-0
+    bottom-0
+    w-full
+    h-full
+    bg-gray-800 bg-opacity-75
+  "
+>
+  <div class="flex flex-col w-1/3 h-auto p-3 bg-white">
     <div class="flex w-full h-auto items-center">
       <div class="flex w-10/12 h-auto py-3 text-xl md:text-2xl ml-5">
         Selecciona el rol que desempeñaras
       </div>
       <div
-        onclick="document.getElementById('myModal').close();"
+        (click)="handleModal(false)"
         class="flex w-1/12 h-auto justify-center cursor-pointer"
       >
         <svg
@@ -279,7 +292,7 @@
             focus:outline-none
           "
         >
-          Asistente
+          Participante
         </button>
       </div>
       <div class="w-full md:w-full px-3 mb-4">
@@ -324,4 +337,4 @@
       </div>
     </div>
   </div>
-</dialog>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PermissionsService } from '../services/permissions.service';
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   viewPassword = true;
   loginData: FormGroup;
 
@@ -25,6 +25,10 @@ export class LoginComponent {
       password: ['1234', Validators.required],
       rol: ['Organizador', Validators.required],
     });
+  }
+
+  ngOnInit() {
+    this.handleModal(false);
   }
 
   login() {
@@ -96,6 +100,16 @@ export class LoginComponent {
         showConfirmButton: false,
         timer: 1500,
       });
+    }
+  }
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
     }
   }
 }

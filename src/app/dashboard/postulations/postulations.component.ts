@@ -33,6 +33,7 @@ export class PostulationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.handleModal(false);
     this.getPostulations();
     this.getKnowledge();
   }
@@ -145,5 +146,15 @@ export class PostulationsComponent implements OnInit {
           });
         }
       });
+  }
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
   }
 }

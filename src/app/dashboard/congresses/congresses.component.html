@@ -136,25 +136,6 @@
 
             <div class="w-1/2 flex justify-end">
               <button
-                routerLink="/dashboard/rubric"
-                class="
-                  focus:outline-none
-                  py-1
-                  px-4
-                  rounded-lg
-                  shadow-sm
-                  text-center text-gray-700
-                  bg-white
-                  hover:bg-blue-400 hover:text-white
-                  font-medium
-                  border
-                  mr-2
-                "
-              >
-                Crear Rúbrica
-              </button>
-
-              <button
                 routerLink="/dashboard/put-congresses"
                 class="
                   focus:outline-none
@@ -170,7 +151,7 @@
                   border
                 "
               >
-                Crear Congreso
+                Editar Congreso
               </button>
             </div>
           </div>
@@ -271,97 +252,97 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Revisor -->
-  <div
-    *ngIf="dataUser.rol == 'Revisor'"
-    class="flex flex-col w-full bg-white rounded shadow-lg"
-  >
+    <!-- Revisor -->
     <div
-      class="w-full h-64 bg-top bg-cover rounded-t"
-      style="background-image: url(/assets/img/congresos.jpg)"
-    ></div>
-    <div class="flex flex-col w-full md:flex-row">
+      *ngIf="dataUser.rol == 'Revisor'"
+      class="flex flex-col w-full bg-white rounded shadow-lg"
+    >
       <div
-        class="
-          flex flex-row
-          justify-around
-          p-4
-          font-bold
-          leading-none
-          text-gray-800
-          uppercase
-          bg-blue-500
-          rounded
-          md:flex-col md:items-center md:justify-center md:w-1/4
-        "
-      >
-        <div class="flex flex-col items-center justify-center h-1/2 w-full">
-          <div class="md:text-xl text-center">Fecha de Inicio</div>
-          <div class="md:text-2xl">
-            {{ congress.start_date | date: "dd/MM/yyyy" }}
-          </div>
-        </div>
-        <div class="flex flex-col items-center justify-center h-1/2 w-full">
-          <div class="md:text-xl text-center">Fecha de Finalización</div>
-          <div class="md:text-2xl">
-            {{ congress.end_date | date: "dd/MM/yyyy" }}
-          </div>
-        </div>
-      </div>
-      <div class="p-4 font-normal text-gray-800 md:w-3/4">
-        <h1
+        class="w-full h-64 bg-top bg-cover rounded-t"
+        style="background-image: url(/assets/img/congresos.jpg)"
+      ></div>
+      <div class="flex flex-col w-full md:flex-row">
+        <div
           class="
-            mb-4
-            text-4xl
+            flex flex-row
+            justify-around
+            p-4
             font-bold
             leading-none
-            tracking-tight
             text-gray-800
+            uppercase
+            bg-blue-500
+            rounded
+            md:flex-col md:items-center md:justify-center md:w-1/4
           "
         >
-          Congreso: {{ congress.name }}
-        </h1>
-
-        <div class="leading-normal flex items-center">
-          <b>Reglamento:</b>
-          <iframe
-            class="text-xl text-justify"
-            srcdoc="{{ congress.regulations }}"
-          ></iframe>
+          <div class="flex flex-col items-center justify-center h-1/2 w-full">
+            <div class="md:text-xl text-center">Fecha de Inicio</div>
+            <div class="md:text-2xl">
+              {{ congress.start_date | date: "dd/MM/yyyy" }}
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center h-1/2 w-full">
+            <div class="md:text-xl text-center">Fecha de Finalización</div>
+            <div class="md:text-2xl">
+              {{ congress.end_date | date: "dd/MM/yyyy" }}
+            </div>
+          </div>
         </div>
-
-        <div class="leading-normal flex items-center">
-          <b class="mr-2">Dirección Web:</b
-          ><a
-            class="text-blue-800 hover:text-blue-500 text-xl"
-            href="{{ congress.address_web }}"
-            target="_blank"
+        <div class="p-4 font-normal text-gray-800 md:w-3/4">
+          <h1
+            class="
+              mb-4
+              text-4xl
+              font-bold
+              leading-none
+              tracking-tight
+              text-gray-800
+            "
           >
-            {{ congress.address_web }}</a
-          >
-        </div>
+            Congreso: {{ congress.name }}
+          </h1>
 
-        <div class="leading-normal flex items-center">
-          <b class="mr-2">Capacidad de Ponentes:</b>
-          <p>
-            {{ congress.capacity_speakers }}
-          </p>
-        </div>
+          <div class="leading-normal flex items-center">
+            <b>Reglamento:</b>
+            <iframe
+              class="text-xl text-justify"
+              srcdoc="{{ congress.regulations }}"
+            ></iframe>
+          </div>
 
-        <div class="leading-normal flex items-center">
-          <b class="mr-2">Capacidad de Participantes:</b>
-          <p>
-            {{ congress.capacity_participants }}
-          </p>
-        </div>
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Dirección Web:</b
+            ><a
+              class="text-blue-800 hover:text-blue-500 text-xl"
+              href="{{ congress.address_web }}"
+              target="_blank"
+            >
+              {{ congress.address_web }}</a
+            >
+          </div>
 
-        <div class="leading-normal flex items-center">
-          <b class="mr-2">Áreas de Conocimiento:</b>
-          <p>
-            {{ congress.knowledge_area }}
-          </p>
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Capacidad de Ponentes:</b>
+            <p>
+              {{ congress.capacity_speakers }}
+            </p>
+          </div>
+
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Capacidad de Participantes:</b>
+            <p>
+              {{ congress.capacity_participants }}
+            </p>
+          </div>
+
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Áreas de Conocimiento:</b>
+            <p>
+              {{ congress.knowledge_area }}
+            </p>
+          </div>
         </div>
       </div>
     </div>

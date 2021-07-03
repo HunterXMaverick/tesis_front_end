@@ -52,7 +52,7 @@
           </a>
 
           <a
-            *ngIf="congressCreated == true"
+            *ngIf="congressCreated == true && reviewersCreated == true"
             routerLink="../assignment"
             class="flex hover:text-green-700 py-2 items-center"
           >
@@ -68,6 +68,16 @@
             </svg>
             <span class="ml-2 capitalize font-medium"> Asignación </span>
           </a>
+
+          <button
+            *ngIf="congressCreated == true && rubricCreated == false"
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-user-plus"></i>
+
+            <span class="ml-2 capitalize font-medium"> Crear Rúbrica </span>
+          </button>
         </div>
       </div>
 
@@ -163,6 +173,14 @@
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Ponente'">
+      <a
+        routerLink="../congresses"
+        class="flex items-center hover:text-green-700 py-2"
+      >
+        <i class="fa fa-university"></i>
+        <span class="ml-2 capitalize font-medium"> Congreso </span>
+      </a>
+
       <a
         routerLink="../postulations"
         class="flex hover:text-green-700 py-2 items-center"
