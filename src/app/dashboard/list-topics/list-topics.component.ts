@@ -5,11 +5,10 @@ import { FilesService } from 'src/app/services/files.service';
 import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-list-topics',
   templateUrl: './list-topics.component.html',
-  styleUrls: ['./list-topics.component.scss']
+  styleUrls: ['./list-topics.component.scss'],
 })
 export class ListTopicsComponent implements OnInit {
   postulations: any = [];
@@ -27,7 +26,9 @@ export class ListTopicsComponent implements OnInit {
     private personService: PersonService,
     private congressService: CongressService,
     private filesService: FilesService
-  ) { this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!); }
+  ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+  }
 
   ngOnInit(): void {
     this.getPostulations();
@@ -79,28 +80,32 @@ export class ListTopicsComponent implements OnInit {
   }
 
   disableEnableSpeaker(id: string, status: boolean) {
-    let dataSpeaker = status
-    this.postulationService.disableEnableSpeaker(id, dataSpeaker).subscribe((res) => {
-      if (status == true) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Ponente Aceptado',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Ponente Rechazado',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
-  }
+    let dataSpeaker = {
+      postulation: status,
+    };
 
+    this.postulationService
+      .disableEnableSpeaker(id, dataSpeaker)
+      .subscribe((res) => {
+        if (status == true) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Ponente Aceptado',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Ponente Rechazado',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
@@ -111,5 +116,4 @@ export class ListTopicsComponent implements OnInit {
       (err) => console.error(err)
     );
   }
-
 }
