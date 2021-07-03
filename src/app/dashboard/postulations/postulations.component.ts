@@ -13,15 +13,15 @@ import Swal from 'sweetalert2';
 export class PostulationsComponent implements OnInit {
   showPostulations: boolean = true;
   postulations: any = [];
-  assignments: any = "";
+  assignments: any = '';
   knowledge_areas: any = [];
   userById: any = [];
-  userData: any;
+  userData: any = '';
   personId: any;
   dataUser: any = [];
   projectsSpeaker: any = [];
-  names: any = "";
-  last_names: any = "";
+  names: any = '';
+  last_names: any = '';
 
   constructor(
     private postulationService: PostulationService,
@@ -47,33 +47,35 @@ export class PostulationsComponent implements OnInit {
     );
   }
 
-  getKnowledge=()=>{
+  getKnowledge = () => {
     this.names = this.dataUser.names;
     this.last_names = this.dataUser.last_names;
-    console.log(`${this.last_names}${this.names}`)
-    this.assignmentService.getAssignmentsName(`${this.last_names} ${this.names}`).
-    subscribe((result: any) => {
-      this.assignments = result.data[0].knowledge_area;
-      console.log(this.assignments)
-    this.postulationService.getPostulationsByknowledgeArea(this.assignments).
-     subscribe((knowledge: any)=>{
-      this.knowledge_areas = knowledge.data;
-      console.log(this.knowledge_areas)
-     });
-    });
-  }
+    console.log(`${this.last_names}${this.names}`);
+    this.assignmentService
+      .getAssignmentsName(`${this.last_names} ${this.names}`)
+      .subscribe((result: any) => {
+        this.assignments = result.data[0].knowledge_area;
+        console.log(this.assignments);
+        this.postulationService
+          .getPostulationsByknowledgeArea(this.assignments)
+          .subscribe((knowledge: any) => {
+            this.knowledge_areas = knowledge.data;
+            console.log(this.knowledge_areas);
+          });
+      });
+  };
 
   getPostulations() {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
         this.postulations = res.data;
-        this.postulations.forEach(async (element: any) => {
-          this.getUserById(element.person_id);
-          if (element.person_id == this.dataUser._id) {
-            this.projectsSpeaker.push(element);
-            console.log(this.projectsSpeaker);
-          }
-        });
+        // this.postulations.forEach(async (element: any) => {
+        //   this.getUserById(element.person_id);
+        //   if (element.person_id == this.dataUser._id) {
+        //     this.projectsSpeaker.push(element);
+        //     console.log(this.projectsSpeaker);
+        //   }
+        // });
 
         if (this.postulations.length == 0) {
           this.showPostulations = false;
@@ -110,15 +112,18 @@ export class PostulationsComponent implements OnInit {
   }
 
   public create(postulation: any): void {
-    sessionStorage.setItem('postulationdata', (postulation._id));
+    sessionStorage.setItem('postulationdata', postulation._id);
   }
 
   disableEnableSpeaker(id: string, status: boolean) {
-    let dataSpeaker = status;
+    let dataSpeaker = {
+      postulation: status,
+    };
+
     this.postulationService
       .disableEnableSpeaker(id, dataSpeaker)
-      .subscribe((res) => {
-        if (status == true) {
+      .subscribe((res: any) => {
+        if (res.ok == true) {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -137,5 +142,4 @@ export class PostulationsComponent implements OnInit {
         }
       });
   }
-
 }

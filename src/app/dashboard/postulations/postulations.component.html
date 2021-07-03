@@ -72,12 +72,20 @@
                 Estado
               </th>
               <!-- ESTADO PARA REVISOR CALIFICACIONES -->
-              <th *ngIf="dataUser.rol !== 'Ponente' || 
-              dataUser.rol !== 'Organizador'" class="px-5 py-3 text-left text-sm text-gray-600">
+              <th
+                *ngIf="
+                  dataUser.rol !== 'Ponente' || dataUser.rol !== 'Organizador'
+                "
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
                 Estado
               </th>
-              <th *ngIf="dataUser.rol !== 'Ponente' || 
-              dataUser.rol !== 'Organizador'" class="px-5 py-3 text-left text-sm text-gray-600">
+              <th
+                *ngIf="
+                  dataUser.rol !== 'Ponente' || dataUser.rol !== 'Organizador'
+                "
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              ></th>
               <th
                 *ngIf="dataUser.rol !== 'Ponente'"
                 class="px-5 py-3 text-left text-sm text-gray-600"
@@ -88,8 +96,9 @@
             </tr>
           </thead>
           <!--   BODY FOR ADMIN AND ORGANIZER   -->
-          <tbody *ngIf="dataUser.rol !== 'Ponente' && 
-          dataUser.rol !== 'Revisor'" >
+          <tbody
+            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+          >
             <!-- agregar un console en esta linea -->
             <tr
               *ngFor="let postulation of postulations"
@@ -104,11 +113,17 @@
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
               </td>
-              <td *ngIf="dataUser.rol !== 'Ponente'&& 
-                 dataUser.rol !== 'Revisor'" class="px-5 py-5 flex-1 text-sm text-center">
-                <button (click)="getUserById(postulation.person_id)"
-                  onclick="document.getElementById('myModal').showModal()" id="btn"
-                  class="tooltip appearance-none focus:outline-none mr-2">
+              <td
+                *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+                class="px-5 py-5 flex-1 text-sm text-center"
+              >
+                <button
+                  (click)="getUserById(postulation.person_id)"
+                  onclick="document.getElementById('myModal').showModal()"
+                  id="btn"
+                  class="tooltip appearance-none focus:outline-none mr-2"
+                ></button>
+              </td>
               <td
                 *ngIf="dataUser.rol !== 'Ponente'"
                 class="px-5 py-5 flex-1 text-sm text-center"
@@ -131,24 +146,37 @@
           </tbody>
 
           <!--   BODY FOR REVIEWER   -->
-          <tbody *ngIf="dataUser.rol !== 'Ponente' &&
-           dataUser.rol !== 'Organizador'">
+          <tbody
+            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
+          >
             <!-- agregar un console en esta linea -->
-            <tr *ngFor="let knowledge_area of knowledge_areas" class="border-b border-gray-200 hover:bg-gray-100">
+            <tr
+              *ngFor="let knowledge_area of knowledge_areas"
+              class="border-b border-gray-200 hover:bg-gray-100"
+            >
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ knowledge_area.title_project }}</p>
               </td>
               <td class="px-5 py-5 text-sm text-justify">
-                <p class="text-gray-900">{{ knowledge_area.summary_project }}</p>
+                <p class="text-gray-900">
+                  {{ knowledge_area.summary_project }}
+                </p>
               </td>
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ knowledge_area.knowledge_area }}</p>
               </td>
-              <td *ngIf="dataUser.rol !== 'Ponente' &&
-              dataUser.rol !== 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
-                <button (click)="getUserById(knowledge_area.person_id)"
-                  onclick="document.getElementById('myModal').showModal()" id="btn"
-                  class="tooltip appearance-none focus:outline-none mr-2">
+              <td
+                *ngIf="
+                  dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                "
+                class="px-5 py-5 flex-1 text-sm text-center"
+              >
+                <button
+                  (click)="getUserById(knowledge_area.person_id)"
+                  onclick="document.getElementById('myModal').showModal()"
+                  id="btn"
+                  class="tooltip appearance-none focus:outline-none mr-2"
+                >
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
                   <span class="tooltiptext">Datos del autor</span>
                 </button>
@@ -157,17 +185,31 @@
                   <span class="tooltiptext">Archivo adjunto</span>
                 </button>
               </td>
-              <td *ngIf="dataUser.rol !== 'Ponente' && 
-              dataUser.rol !== 'Organizador'" class="px-5 py-5e text-sm text-center">
-                <p class="text-gray-900">{{ knowledge_area.status_quelification }}</p>
+              <td
+                *ngIf="
+                  dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                "
+                class="px-5 py-5e text-sm text-center"
+              >
+                <p class="text-gray-900">
+                  {{ knowledge_area.status_quelification }}
+                </p>
               </td>
-              <td *ngIf="dataUser.rol !== 'Ponente' &&
-              dataUser.rol !== 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
-                <button (click)="create(knowledge_area)" routerLink="../evaluation"
-                  class="tooltip appearance-none focus:outline-none ml-2">
+              <td
+                *ngIf="
+                  dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                "
+                class="px-5 py-5 flex-1 text-sm text-center"
+              >
+                <button
+                  (click)="create(knowledge_area)"
+                  routerLink="../evaluation"
+                  class="tooltip appearance-none focus:outline-none ml-2"
+                ></button>
+              </td>
               <td class="px-5 py-5 flex-1 text-sm text-center">
                 <button
-                  (click)="create(postulation)"
+                  (click)="create(postulations)"
                   routerLink="../evaluation"
                   class="tooltip appearance-none focus:outline-none ml-2"
                 >
@@ -177,7 +219,6 @@
               </td>
             </tr>
           </tbody>
-
 
           <!--   TBODY FOR SPEAKER   -->
           <tbody *ngIf="dataUser.rol == 'Ponente'">
@@ -205,32 +246,7 @@
               </td>
 
               <td class="px-5 py-5e text-sm text-center">
-                <p class="text-gray-900">pendiente</p>
-                <div class="
-                    relative
-                    inline-block
-                    w-10
-                    mr-2
-                    align-middle
-                    select-none
-                    transition
-                    duration-200
-                    ease-in">
-                  <input (click)="disableEnableSpeaker(userData._id, (userData.status = false))" type="button"
-                    *ngId="user.status == true" checked class="class=
-                    toggle-checkbox
-                    absolute
-                    block
-                    w-6
-                    h-6
-                    rounded-full
-                    bg-white
-                    border-4
-                    appearance-none
-                    focus:outline-none
-                    cursor-pointer" />
-
-                </div>
+                {{ project.status }}
               </td>
             </tr>
           </tbody>
@@ -274,44 +290,44 @@
         text-gray-800
       "
     >
-      <!-- <div *ngIf="personId === userData._id"> -->
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Nombres:</h2>
-        <p>{{ userData.names }}</p>
+      <div *ngIf="userData">
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Nombres:</h2>
+          <p>{{ userData.names }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Apellidos:</h2>
+          <p>{{ userData.last_names }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Rol:</h2>
+          <p>{{ userData.rol }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+          <p>{{ userData.type_dni }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Número de identificación:</h2>
+          <p>{{ userData.dni }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Nivel académico:</h2>
+          <p>{{ userData.level_academy }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Titulo:</h2>
+          <p>{{ userData.title }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Teléfono:</h2>
+          <p>{{ userData.phone }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Correo electrónico:</h2>
+          <p>{{ userData.email }}</p>
+        </div>
       </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Apellidos:</h2>
-        <p>{{ userData.last_names }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Rol:</h2>
-        <p>{{ userData.rol }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-        <p>{{ userData.type_dni }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Número de identificación:</h2>
-        <p>{{ userData.dni }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Nivel académico:</h2>
-        <p>{{ userData.level_academy }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Titulo:</h2>
-        <p>{{ userData.title }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Teléfono:</h2>
-        <p>{{ userData.phone }}</p>
-      </div>
-      <div class="flex py-2">
-        <h2 class="font-bold mr-3">Correo electrónico:</h2>
-        <p>{{ userData.email }}</p>
-      </div>
-      <!-- </div> -->
     </div>
   </div>
 </dialog>

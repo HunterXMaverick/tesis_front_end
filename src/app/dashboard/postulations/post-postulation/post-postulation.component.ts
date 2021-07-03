@@ -34,6 +34,7 @@ export class PostPostulationComponent implements OnInit {
       knowledge_area: ['', [Validators.required]],
       files: [null, [Validators.required]],
       person_id: ['', [Validators.required]],
+      status: ['Pendiente'],
     });
   }
 

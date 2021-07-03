@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebService } from "./web.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebService } from './web.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class PostulationService {
   private url: string;
@@ -33,11 +33,11 @@ export class PostulationService {
     );
   }
 
-  disableEnableSpeaker(id: string, person: boolean) {
+  disableEnableSpeaker(id: string, postulation: object) {
     return this.http.put(
-      `${this.url}/disableSpeaker${id}`,
-      person,
+      `${this.url}/disableSpeaker/${id}`,
+      postulation,
       this.server.obtainHeaders()
-    )
+    );
   }
 }
