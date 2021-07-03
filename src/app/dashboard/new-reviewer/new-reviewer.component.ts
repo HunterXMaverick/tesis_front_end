@@ -59,7 +59,7 @@ export class NewReviewerComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500,
             });
-            this.router.navigate(['/login']);
+            this.router.navigate(['/dashboard/congresses']);
           },
           (err) => {
             console.error(err);

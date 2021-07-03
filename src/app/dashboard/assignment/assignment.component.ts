@@ -100,7 +100,8 @@ export class AssignmentComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: 'Revisor actuamente asignado, selecciona otro para continuar.',
+          title:
+            'Revisor actualmente asignado, selecciona otro para continuar.',
           showConfirmButton: false,
           timer: 1500,
         });
