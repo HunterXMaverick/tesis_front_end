@@ -138,13 +138,22 @@
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Asistente'">
-      <a
-        routerLink="../links"
-        class="flex hover:text-green-700 py-2 items-center"
-      >
+      <a routerLink="../links"
+        class="flex hover:text-green-700 py-2 items-center">
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
       </a>
+      <a routerLink="../congresses"
+      class="flex hover:text-green-700 py-2 items-center">     
+      <i class="fas fa-link"></i>
+      <span class="ml-2 capitalize font-medium"> Informacion General </span>
+    </a>
+    <a routerLink="../list-topics"
+      class="flex hover:text-green-700 py-2 items-center">
+      <i class="fas fa-link"></i>
+      <span class="ml-2 capitalize font-medium"> Listado de Ponencias </span>
+    </a>
+
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Ponente'">
