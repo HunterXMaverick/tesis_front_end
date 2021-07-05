@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class RegisterAssistantComponent implements OnInit {
   viewPassword = true;
   person: Person = {
-    rol: 'Asistente',
+    rol: 'Participante',
     type_dni: '',
     dni: '',
     names: '',

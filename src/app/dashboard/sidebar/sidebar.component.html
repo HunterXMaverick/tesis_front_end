@@ -101,7 +101,7 @@
             class="flex items-center hover:text-green-700 py-2"
           >
             <i class="fas fa-user"></i>
-            <span class="ml-2 capitalize font-medium"> Asistentes </span>
+            <span class="ml-2 capitalize font-medium"> Participantes </span>
           </a>
 
           <a
@@ -139,23 +139,24 @@
         <span class="ml-2 capitalize font-medium"> Participantes </span>
       </a>
 
-      <a
+      <!-- <a
         routerLink="../links"
         class="flex hover:text-green-700 py-2 items-center"
       >
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
-      </a>
+      </a> -->
     </div>
 
-    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Asistente'">
-      <a
+    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Participante'">
+      <!-- <a
         routerLink="../links"
         class="flex hover:text-green-700 py-2 items-center"
       >
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
-      </a>
+      </a> -->
+
       <a
         routerLink="../congresses"
         class="flex hover:text-green-700 py-2 items-center"
@@ -189,13 +190,13 @@
         <span class="ml-2 capitalize font-medium"> Postular </span>
       </a>
 
-      <a
+      <!-- <a
         routerLink="../links"
         class="flex hover:text-green-700 py-2 items-center"
       >
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
-      </a>
+      </a> -->
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Revisor'">
@@ -216,13 +217,13 @@
         <span class="ml-2 capitalize font-medium"> Postulaciones </span>
       </a>
 
-      <a
+      <!-- <a
         routerLink="../links"
         class="flex hover:text-green-700 py-2 items-center"
       >
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
-      </a>
+      </a> -->
     </div>
 
     <div class="flex flex-col py-2">

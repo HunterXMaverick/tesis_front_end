@@ -69,7 +69,7 @@ export class PutUserComponent {
   // }
 
   putUser() {
-    if (this.logUser.rol == 'Asistente') {
+    if (this.logUser.rol == 'Participante') {
       this.user.setValue({
         phone: '0999999999',
       });

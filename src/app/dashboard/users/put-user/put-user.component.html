@@ -54,7 +54,7 @@
 
         <div class="flex mt-4 w-full">
           <div
-            *ngIf="logUser.rol !== 'Asistente'"
+            *ngIf="logUser.rol !== 'Participante'"
             class="flex flex-col mt-4 px-4"
           >
             <label class="font-thin text-xl mr-5"> Teléfono: </label>
@@ -79,7 +79,7 @@
           </div>
 
           <div
-            *ngIf="logUser.rol !== 'Asistente' && profile_picture_url == ''"
+            *ngIf="logUser.rol !== 'Participante' && profile_picture_url == ''"
             class="flex flex-col mt-4 px-4"
           >
             <label class="font-thin text-xl mr-5"> Foto de Perfil: </label>
@@ -102,7 +102,7 @@
           </div>
 
           <div
-            *ngIf="logUser.rol !== 'Asistente' && profile_picture_url !== ''"
+            *ngIf="logUser.rol !== 'Participante' && profile_picture_url !== ''"
             class="flex flex-col mt-4 px-4"
           >
             <img [src]="profile_picture_url" alt="Foto de Perfil" />
