@@ -18,6 +18,7 @@ export class EvaluationComponent implements OnInit {
   inputremark: string = "";
   postulations_id: string = "";
   reviewersRatings: Array<number> = [];
+  sumreviewersRatings: number=0;
   remarks: Array<string> = [];
   qualificaty: number = 0;
   person_id: string = "";
@@ -51,6 +52,7 @@ export class EvaluationComponent implements OnInit {
       if (this.reviewersRatings.length + 1 <= limitCriteria) {
         if (this.remarks.length + 1 <= limitCriteria) {
           this.reviewersRatings.push(this.inputreviewersRating);
+          this.sumreviewersRatings+=this.inputreviewersRating;
           this.inputreviewersRating = 0;
           this.remarks.push(this.inputremark);
           this.inputremark = "";
@@ -89,8 +91,8 @@ export class EvaluationComponent implements OnInit {
         postulations_id: sessionStorage.getItem('postulationdata'),
         reviewersRating: this.reviewersRatings,
         remark: this.remarks,
-        qualificaty: 100,
-        person_id: sessionStorage.getItem('_user-data')
+        qualificaty: this.sumreviewersRatings,
+        person_id: JSON.stringify(sessionStorage.getItem('_user-data'))
       },
     };
 

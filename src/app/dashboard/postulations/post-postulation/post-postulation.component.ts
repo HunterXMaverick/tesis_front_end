@@ -35,6 +35,7 @@ export class PostPostulationComponent implements OnInit {
       files: [null, [Validators.required]],
       person_id: ['', [Validators.required]],
       status: ['Pendiente'],
+      status_quelification: [false],
     });
   }
 
