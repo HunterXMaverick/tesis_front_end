@@ -2,23 +2,32 @@
   <app-sidebar></app-sidebar>
 
   <div class="w-full p-2">
-    <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
+    <h2
+      *ngIf="dataUser.rol !== 'Ponente'"
+      class="py-4 text-2xl font-semibold text-gray-800 border-b"
+    >
       Lista de Postulaciones
     </h2>
 
     <div class="w-1/3 flex flex-col px-3">
       <label class="font-thin text-xl mr-5"> Área de conocimiento: </label>
-      <select class="
-            focus:border-blue-500
-            appearance-none
-            border
-            rounded
-            w-full
-            py-2
-            px-3
-            text-gray-700
-            leading-tight
-            focus:outline-none" [(ngModel)]="selected_knowledge_area" name="selected_knowledge_area">
+      <select
+        class="
+          focus:border-blue-500
+          appearance-none
+          border
+          rounded
+          w-full
+          py-2
+          px-3
+          text-gray-700
+          leading-tight
+          focus:outline-none
+        "
+        [(ngModel)]="selected_knowledge_area"
+        name="selected_knowledge_area"
+        (change)="getPostulationsByAreaOfKnowledge()"
+      >
         <option value="">Seleccione..</option>
         <option *ngFor="let area of knowledge_area" value="{{ area }}">
           {{ area }}
@@ -28,10 +37,12 @@
 
     <div class="py-6">
       <div class="inline-block shadow rounded-lg">
-        <table *ngIf="
-              (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
-              dataUser.rol == 'Asistente'
-            ">
+        <table
+          *ngIf="
+            (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
+            dataUser.rol == 'Participante'
+          "
+        >
           <thead>
             <tr class="border-b-2 border-gray-200 bg-gray-200">
               <th class="px-5 py-3 text-left text-sm text-gray-600">
@@ -41,15 +52,20 @@
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Nombre del Ponente
               </th>
-              <th *ngIf="dataUser.rol !== 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
+              <th
+                *ngIf="dataUser.rol !== 'Revisor'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
                 Participar
               </th>
-
             </tr>
           </thead>
           <!--   BODY FOR ADMIN AND ORGANIZER   -->
           <tbody *ngIf="dataUser.rol !== 'Ponente'">
-            <tr *ngFor="let postulation of postulations" class="border-b border-gray-200 hover:bg-gray-100">
+            <tr
+              *ngFor="let postulation of postulations"
+              class="border-b border-gray-200 hover:bg-gray-100"
+            >
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ postulation.title_project }}</p>
               </td>
@@ -57,11 +73,14 @@
                 <p class="text-gray-900">{{ postulation.summary_project }}</p>
               </td>
 
-              <td class="px-1 py-5 text-sm text-center">
-                <p>{{userData.names}} {{userData.last_names}} </p>
+              <td class="px-1 py-5 text-sm text-center" *ngIf="userData">
+                <p>{{ userData.names }} {{ userData.last_names }}</p>
               </td>
 
-              <td *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-5 flex-1 text-sm text-center">
+              <td
+                *ngIf="dataUser.rol !== 'Ponente'"
+                class="px-5 py-5 flex-1 text-sm text-center"
+              >
                 <button class="tooltip appearance-none focus:outline-none ml-2">
                   <span class="tooltiptext">Asistir</span>
                 </button>
@@ -70,7 +89,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>
@@ -80,11 +98,16 @@
   <div class="flex flex-col w-full h-auto">
     <div class="flex w-full h-auto justify-between">
       <div class="h-auto pb-5 pr-2 text-2xl">
-        <i onclick="document.getElementById('myModal').close();"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
+        <i
+          onclick="document.getElementById('myModal').close();"
+          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
+        ></i>
       </div>
     </div>
-    <div class="w-fullh-autopy-6px-10items-centerbg-gray-200 rounded text-gray-800">
+    <div
+      *ngIf="userData"
+      class="w-fullh-autopy-6px-10items-centerbg-gray-200 rounded text-gray-800"
+    >
       <div class="flex py-2">
         <h2 class="font-bold mr-3">Nombres:</h2>
         <p>{{ userData.names }}</p>

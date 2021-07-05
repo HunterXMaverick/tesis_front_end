@@ -116,4 +116,16 @@ export class ListTopicsComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+
+  getPostulationsByAreaOfKnowledge() {
+    return this.postulationService
+      .getPostulationsByknowledgeArea(this.selected_knowledge_area)
+      .subscribe(
+        (res: any) => {
+          this.congress = res.data[0];
+          this.knowledge_area = this.congress.knowledge_area.split(',');
+        },
+        (err) => console.error(err)
+      );
+  }
 }
