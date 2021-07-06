@@ -16,6 +16,7 @@ export class SidebarComponent {
   rubricCreated: boolean = false;
   reviewersCreated: boolean = false;
   postulationsCreated: boolean = false;
+  profile_picture_url: string = '';
 
   constructor(
     private congressService: CongressService,
@@ -25,6 +26,7 @@ export class SidebarComponent {
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
     this.showSidebar = true;
+    this.getUserProfilePic();
     this.getCongress();
     this.getRubric();
     this.getReviewers();
@@ -93,5 +95,17 @@ export class SidebarComponent {
       },
       (err) => console.error(err)
     );
+  }
+
+  getUserProfilePic() {
+    return this.personService
+      .getUserById(this.dataUser._id)
+      .subscribe((res: any) => {
+        if (res.data.profile_picture) {
+          this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        } else {
+          this.profile_picture_url = ``;
+        }
+      });
   }
 }

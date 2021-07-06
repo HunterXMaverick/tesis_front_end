@@ -79,7 +79,7 @@
           </div>
 
           <div
-            *ngIf="logUser.rol !== 'Participante' && profile_picture_url == ''"
+            *ngIf="logUser.rol == 'Organizador' || logUser.rol == 'Ponente'"
             class="flex flex-col mt-4 px-4"
           >
             <label class="font-thin text-xl mr-5"> Foto de Perfil: </label>
@@ -101,12 +101,12 @@
             />
           </div>
 
-          <div
+          <!-- <div
             *ngIf="logUser.rol !== 'Participante' && profile_picture_url !== ''"
             class="flex flex-col mt-4 px-4"
           >
             <img [src]="profile_picture_url" alt="Foto de Perfil" />
-          </div>
+          </div> -->
         </div>
         <div class="flex flex-col my-16">
           <div class="flex">

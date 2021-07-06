@@ -20,7 +20,7 @@ export class RubricService {
       this.server.obtainHeaders()
     );
   }
-  
+
   putRubric(id: string, rubric: object) {
     return this.http.put(
       `${this.url}/putRubric/${id}`,
@@ -38,5 +38,12 @@ export class RubricService {
 
   getRubrics() {
     return this.http.get(`${this.url}/getRubrics`, this.server.obtainHeaders());
+  }
+
+  deleteRubric(id: string) {
+    return this.http.delete(
+      `${this.url}/rubric/${id}`,
+      this.server.obtainHeaders()
+    );
   }
 }
