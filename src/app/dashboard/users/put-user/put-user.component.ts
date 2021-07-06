@@ -94,78 +94,76 @@ export class PutUserComponent {
             confirmButtonText: 'Confirmar',
           }).then((result) => {
             if (result.isConfirmed) {
-              if (this.profile_picture_url == '') {
-                const formData: any = new FormData();
-                formData.append(
-                  'file',
-                  this.user.get('profile_picture')!.value
-                );
+              // if (this.profile_picture_url == '') {
+              const formData: any = new FormData();
+              formData.append('file', this.user.get('profile_picture')!.value);
 
-                this.filesService
-                  .uploadFile('images', formData)
-                  .then((response) => {
-                    if (response.ok) {
-                      this.user.patchValue({
-                        profile_picture: `${response.data.directory}/${response.data.name}`,
-                      });
-                    } else {
-                      this.filesService
-                        .deleteFile(
-                          `${response.data.directory}`,
-                          `${response.data.name}`
-                        )
-                        .then((response: any) => {
-                          console.log(response.info);
-                        })
-                        .catch((error) => {
-                          console.error(error);
-                        });
-                    }
-                  })
-                  .then(() => {
-                    let dataPerson = {
-                      person: this.user.value,
-                    };
-
-                    this.personService
-                      .putPerson(this.idUser, dataPerson)
-                      .subscribe(
-                        (res) => {
-                          this.routerLink.navigate(['/dashboard/congresses']);
-                        },
-                        (err) => {
-                          console.error(err);
-                        }
-                      );
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title: 'Actualización exitosa',
-                      showConfirmButton: false,
-                      timer: 1500,
+              this.filesService
+                .uploadFile('images', formData)
+                .then((response) => {
+                  if (response.ok) {
+                    this.user.patchValue({
+                      profile_picture: `${response.data.directory}/${response.data.name}`,
                     });
-                  });
-              } else {
-                let dataPerson = {
-                  person: this.user.value,
-                };
-
-                this.personService.putPerson(this.idUser, dataPerson).subscribe(
-                  (res) => {
-                    this.routerLink.navigate(['/dashboard/congresses']);
-                  },
-                  (err) => {
-                    console.error(err);
+                  } else {
+                    this.filesService
+                      .deleteFile(
+                        `${response.data.directory}`,
+                        `${response.data.name}`
+                      )
+                      .then((response: any) => {
+                        console.log(response.info);
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                      });
                   }
-                );
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Actualización exitosa',
-                  showConfirmButton: false,
-                  timer: 1500,
+                })
+                .then(() => {
+                  let dataPerson = {
+                    person: this.user.value,
+                  };
+
+                  this.personService
+                    .putPerson(this.idUser, dataPerson)
+                    .subscribe(
+                      (res) => {
+                        this.routerLink.navigate(['/dashboard/congresses']);
+                      },
+                      (err) => {
+                        console.error(err);
+                      }
+                    );
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Actualización exitosa',
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
                 });
-              }
+              // }
+              //  else {
+              //   let dataPerson = {
+              //     person: this.user.value,
+              //   };
+
+              //   this.personService.putPerson(this.idUser, dataPerson).subscribe(
+              //     (res) => {
+              //       this.routerLink.navigate(['/dashboard/congresses']);
+              //     },
+              //     (err) => {
+              //       console.error(err);
+              //     }
+              //   );
+              //   Swal.fire({
+              //     position: 'top-end',
+              //     icon: 'success',
+              //     title: 'Actualización exitosa',
+              //     showConfirmButton: false,
+              //     timer: 1500,
+              //   });
+              // }
             }
           });
         } else {

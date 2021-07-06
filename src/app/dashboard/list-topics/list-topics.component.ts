@@ -20,6 +20,7 @@ export class ListTopicsComponent implements OnInit {
   knowledge_area: Array<string> = [];
   congress: any = [];
   selected_knowledge_area: string = '';
+  nameSpeakerTemp: string = '';
 
   constructor(
     private postulationService: PostulationService,
@@ -54,7 +55,6 @@ export class ListTopicsComponent implements OnInit {
           this.getUserById(element.person_id);
           if (element.person_id == this.dataUser._id) {
             this.projectsSpeaker.push(element);
-            console.log(this.projectsSpeaker);
           }
         });
       },
@@ -117,13 +117,30 @@ export class ListTopicsComponent implements OnInit {
     );
   }
 
+  getSpeakerName(id: string) {
+    return this.personService.getUserById(id).subscribe(
+      (res: any) => {
+        this.nameSpeakerTemp = `${res.data.last_names} ${res.data.names}`;
+        // this.userById.push(res.data);
+        // this.userData = res.data;
+        // console.log(this.userData);
+      },
+      (err) => console.error(err)
+    );
+  }
+
   getPostulationsByAreaOfKnowledge() {
     return this.postulationService
       .getPostulationsByknowledgeArea(this.selected_knowledge_area)
       .subscribe(
         (res: any) => {
-          this.congress = res.data[0];
-          this.knowledge_area = this.congress.knowledge_area.split(',');
+          this.postulations = [];
+
+          res.data.forEach((element: any) => {
+            this.getSpeakerName(element.person_id);
+            element.speakerName = this.nameSpeakerTemp;
+            this.postulations.push(element);
+          });
         },
         (err) => console.error(err)
       );

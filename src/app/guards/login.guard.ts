@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
@@ -15,9 +15,10 @@ import { PermissionsService } from '../services/permissions.service';
 export class LoginGuard implements CanActivate {
   userLogin: any;
 
-  constructor(private router: Router, private permissions: PermissionsService) {
-    this.userLogin = this.permissions.obtainToken();
-  }
+  constructor(
+    private router: Router,
+    private permissions: PermissionsService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,6 +28,7 @@ export class LoginGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.userLogin = this.permissions.obtainToken();
     if (this.userLogin) {
       return true;
     } else {

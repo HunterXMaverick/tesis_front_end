@@ -18,6 +18,15 @@
       <h2 class="my-2 text-lg text-gray-700 font-extrabold">
         {{ dataUser.last_names }} {{ dataUser.names }}
       </h2>
+      <div
+        *ngIf="
+          (dataUser.rol == 'Organizador' || dataUser.rol == 'Ponente') &&
+          profile_picture_url !== ''
+        "
+        class="flex w-32 h-32 ml-4 justify-center text-center"
+      >
+        <img [src]="profile_picture_url" alt="Foto de Perfil" />
+      </div>
       <span class="text-sm font-semibold text-green-600">
         {{ dataUser.rol }}
       </span>
@@ -78,6 +87,16 @@
 
             <span class="ml-2 capitalize font-medium"> Crear Rúbrica </span>
           </button>
+
+          <button
+            *ngIf="congressCreated == true && rubricCreated == true"
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-user-plus"></i>
+
+            <span class="ml-2 capitalize font-medium"> Ver Rúbrica </span>
+          </button>
         </div>
       </div>
 
@@ -121,23 +140,6 @@
           </a>
         </div>
       </div>
-
-      <a
-        routerLink="../assignment"
-        class="flex hover:text-green-700 py-2 items-center"
-      >
-        <svg
-          class="fill-current h-5 w-5 dark:text-gray-300"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 13H7v5h5v2H5V10h2v1h5v2M8
-              4v2H4V4h4m2-2H2v6h8V2m10 9v2h-4v-2h4m2-2h-8v6h8V9m-2
-              9v2h-4v-2h4m2-2h-8v6h8v-6z"
-          ></path>
-        </svg>
-        <span class="ml-2 capitalize font-medium"> Participantes </span>
-      </a>
 
       <!-- <a
         routerLink="../links"

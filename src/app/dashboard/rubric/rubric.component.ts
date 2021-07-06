@@ -75,8 +75,6 @@ export class RubricComponent {
     };
 
     this.rubricService.postRubric(rubricData).subscribe((response) => {
-      console.log(response);
-
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -86,5 +84,20 @@ export class RubricComponent {
       });
       this.router.navigate(['/dashboard/congresses']);
     });
+  }
+
+  deleteRubric() {
+    this.rubricService
+      .deleteRubric(this.rubric._id)
+      .subscribe((response: any) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Eliminado exitosamente',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.router.navigate(['/dashboard/congresses']);
+      });
   }
 }

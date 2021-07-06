@@ -35,6 +35,7 @@ export class PermissionsService {
         last_names: decoded.last_names,
         names: decoded.names,
         rol: decoded.rol,
+        userPic: decoded.profile_picture,
       };
 
       sessionStorage.setItem('_user-data', JSON.stringify(userData));
