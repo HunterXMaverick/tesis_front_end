@@ -1,0 +1,343 @@
+<div class="flex">
+    <app-sidebar></app-sidebar>
+  
+    <div class="w-full p-2">
+      <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
+        Listado de Participantes por asignar
+      </h2>
+      <div class="flex border-b justify-between" *ngIf="dataUser.rol == 'Ponente'">
+        <div>
+          <h2 class="py-4 text-2xl font-semibold text-gray-800">
+            Postulaciones Realizadas
+          </h2>
+        </div>
+        <div>
+          <button routerLink="../post-postulation" class="
+              focus:outline-none
+              py-5
+              text-center text-gray-700
+              bg-white
+              hover:text-black
+              font-medium
+            ">
+            <i class="fa fa-plus pr-2"></i>Nueva Postulacion
+          </button>
+        </div>
+      </div>
+  
+      <div class="py-6">
+        <div class="inline-block shadow rounded-lg">
+          <table *ngIf="
+              (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
+              dataUser.rol == 'Organizador' ||
+              dataUser.rol == 'Revisor'
+            ">
+            <thead>
+              <tr class="border-b-2 border-gray-200 bg-gray-200">
+                <th class="px-5 py-3 text-left text-sm text-gray-600">
+                  Nombre de Participantes
+                </th>
+                <th class="px-5 py-3 text-left text-sm text-gray-600">Resumen</th>
+                <th *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-3 text-left text-sm text-gray-600">
+                  Asignación
+                </th>
+                <!-- ESTADO PARA REVISOR CALIFICACIONES -->
+                <th *ngIf="
+                    dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
+                  class="px-5 py-3 text-left text-sm text-gray-600">
+                  Estado
+                </th>
+                <th *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
+                  class="px-5 py-3 text-left text-sm text-gray-600">
+                  Calificar
+                </th>
+                <!-- ESTADO PARA REVISOR CALIFICACIONES -->
+              </tr>
+            </thead>
+            <!--   BODY FOR ADMIN AND ORGANIZER   -->
+            <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'">
+              <!-- agregar un console en esta linea -->
+              <tr *ngFor="let postulation of postulations" class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="px-1 py-5 text-sm text-center">
+                  <p class="text-gray-900">{{ postulation.title_project }}</p>
+                </td>
+                <td class="px-5 py-5 text-sm text-justify">
+                  <p class="text-gray-900">{{ postulation.summary_project }}</p>
+                </td>
+                <td class="px-5 py-5e text-sm text-center">
+                  <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
+                </td>
+                <td *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+                  class="px-5 py-5 flex-1 text-sm text-center">
+                  <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
+                    class="tooltip appearance-none focus:outline-none mr-2">
+                  </button>
+                </td>
+                <td *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-5 flex-1 text-sm text-center">
+                  <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
+                    class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-address-book text-blue-800 text-xl"></i>
+                    <span class="tooltiptext">Datos del autor</span>
+                  </button>
+                  <!-- <button class="tooltip appearance-none focus:outline-none ml-2">
+                    <i class="fas fa-file-invoice text-green-700 text-xl"></i>
+                    <span class="tooltiptext">Archivo adjunto</span>
+                  </button> -->
+                </td>
+  
+                <td *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
+                  <button routerLink= "/dashboard/assistants-participants"
+                  class="tooltip appearance-none focus:outline-none ml-2">
+                    Asignar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+  
+            <!--   BODY FOR REVIEWER   -->
+            <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'">
+              <!-- agregar un console en esta linea -->
+              <tr *ngFor="let knowledge_area of knowledge_areas" class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="px-1 py-5 text-sm text-center">
+                  <p class="text-gray-900">{{ knowledge_area.title_project }}</p>
+                </td>
+                <td class="px-5 py-5 text-sm text-justify">
+                  <p class="text-gray-900">
+                    {{ knowledge_area.summary_project }}
+                  </p>
+                </td>
+                <td class="px-5 py-5e text-sm text-center">
+                  <p class="text-gray-900">{{ knowledge_area.knowledge_area }}</p>
+                </td>
+                <td *ngIf="
+                    dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                  " class="px-5 py-5 flex-1 text-sm text-center">
+                  <button (click)="
+                      getUserById(knowledge_area.person_id); handleModal(true)
+                    " class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-address-book text-blue-800 text-xl"></i>
+                    <span class="tooltiptext">Datos del autor</span>
+                  </button>
+                  <button (click)="getFile(knowledge_area.files)" class="tooltip appearance-none focus:outline-none ml-2">
+                    <i class="fas fa-file-invoice text-green-700 text-xl"></i>
+                    <span class="tooltiptext">Archivo adjunto</span>
+                  </button>
+                </td>
+                <td *ngIf="
+                    dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                  " class="px-5 py-5e text-sm text-center">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i *ngIf="knowledge_area.status_quelification !== false"
+                      class="fas fa-check text-green-700 text-xl"></i>
+                    <span class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      ">Calificado</span>
+                  </button>
+                </td>
+                <td *ngIf="
+                    dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                  " class="px-5 py-5e text-sm text-center">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i *ngIf="knowledge_area.status_quelification !== true" class="fas fa-times text-red-700 text-xl"></i>
+                    <span class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      ">Por calificar</span>
+                  </button>
+                </td>
+                <td *ngIf="
+                    dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
+                  " class="px-5 py-5 flex-1 text-sm text-center">
+                  <button (click)="create(knowledge_area)" routerLink="../evaluation"
+                    class="tooltip appearance-none focus:outline-none ml-2"></button>
+                  <button (click)="create(postulations)" routerLink="../evaluation"
+                    class="tooltip appearance-none focus:outline-none ml-2">
+                    <i class="fas fa-marker text-gray-700 text-xl"></i>
+                    <span class="tooltiptext">Calificar</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+  
+            <!--   TBODY FOR SPEAKER   -->
+            <tbody *ngIf="dataUser.rol == 'Ponente'">
+              <tr *ngFor="let project of projectsSpeaker" class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="px-1 py-5 text-sm text-center">
+                  <p class="text-gray-900">{{ project.title_project }}</p>
+                </td>
+                <td class="px-5 py-5 text-sm text-justify">
+                  <p class="text-gray-900">{{ project.summary_project }}</p>
+                </td>
+                <td class="px-5 py-5e text-sm text-center">
+                  <p class="text-gray-900">{{ project.knowledge_area }}</p>
+                </td>
+                <td class="px-5 py-5 flex-1 text-sm text-center">
+                  <button class="tooltip appearance-none focus:outline-none ml-2" (click)="getFile(project.files)">
+                    <i class="fas fa-file-invoice text-green-700 text-xl"></i>
+                    <span class="tooltiptext">Elegir PDF</span>
+                  </button>
+                </td>
+  
+                <td class="px-5 py-5e text-sm text-center">
+                  {{ project.status }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'" class="w-full text-center">
+          <p class="font-thin">No hay proyectos para mostrar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- MODAL -->
+  <!-- <dialog id="myModal" class="h-auto w-11/12 md:w-1/2 p-5 bg-white rounded-md">
+    <div class="flex flex-col w-full h-auto">
+      <div class="flex w-full h-auto justify-between">
+        <div class="h-auto pb-5 pl-2 text-2xl">
+          <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
+          Datos del autor
+        </div>
+        <div class="h-auto pb-5 pr-2 text-2xl">
+          <i
+            onclick="document.getElementById('myModal').close();"
+            class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
+          ></i>
+        </div>
+      </div>
+      <div
+        class="
+          w-full
+          h-auto
+          py-6
+          px-10
+          items-center
+          bg-gray-200
+          rounded
+          text-gray-800
+        "
+      >
+        <div *ngIf="userData">
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Nombres:</h2>
+            <p>{{ userData.names }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Apellidos:</h2>
+            <p>{{ userData.last_names }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Rol:</h2>
+            <p>{{ userData.rol }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+            <p>{{ userData.type_dni }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Número de identificación:</h2>
+            <p>{{ userData.dni }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Nivel académico:</h2>
+            <p>{{ userData.level_academy }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Titulo:</h2>
+            <p>{{ userData.title }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Teléfono:</h2>
+            <p>{{ userData.phone }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Correo electrónico:</h2>
+            <p>{{ userData.email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog> -->
+  
+  <div id="modal" class="
+      flex
+      items-center
+      justify-center
+      fixed
+      left-0
+      bottom-0
+      w-full
+      h-full
+      bg-gray-800 bg-opacity-75
+    ">
+    <div class="flex flex-col w-1/3 h-auto bg-white">
+      <div class="flex w-full h-auto justify-between">
+        <div class="h-auto pb-5 pl-2 text-2xl">
+          <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
+          Datos del autor
+        </div>
+        <div class="h-auto pb-5 pr-2 text-2xl">
+          <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
+        </div>
+      </div>
+      <!-- *ngFor="let element of userById" -->
+      <div class="
+          w-full
+          h-auto
+          py-6
+          px-10
+          items-center
+          bg-gray-200
+          rounded
+          text-gray-800
+        ">
+        <div *ngIf="userData">
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Nombres:</h2>
+            <p>{{ userData.names }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Apellidos:</h2>
+            <p>{{ userData.last_names }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Rol:</h2>
+            <p>{{ userData.rol }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+            <p>{{ userData.type_dni }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Número de identificación:</h2>
+            <p>{{ userData.dni }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Nivel académico:</h2>
+            <p>{{ userData.level_academy }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Titulo:</h2>
+            <p>{{ userData.title }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Teléfono:</h2>
+            <p>{{ userData.phone }}</p>
+          </div>
+          <div class="flex py-2">
+            <h2 class="font-bold mr-3">Correo electrónico:</h2>
+            <p>{{ userData.email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
