@@ -65,12 +65,11 @@
                 Acciones
               </th>
               <th
-                *ngIf="dataUser.rol !== 'Ponente'"
+                *ngIf="dataUser.rol == 'Organizador'"
                 class="px-5 py-3 text-left text-sm text-gray-600"
               >
-                Asignación de Participantes
+                Asignación
               </th>
-
               <!-- ESTADO PARA REVISOR CALIFICACIONES -->
               <th
                 *ngIf="
@@ -131,9 +130,21 @@
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
                   <span class="tooltiptext">Datos del autor</span>
                 </button>
-                <button class="tooltip appearance-none focus:outline-none ml-2">
+                <!-- <button class="tooltip appearance-none focus:outline-none ml-2">
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
                   <span class="tooltiptext">Archivo adjunto</span>
+                </button> -->
+              </td>
+
+              <td
+                *ngIf="dataUser.rol == 'Organizador'"
+                class="px-5 py-5 flex-1 text-sm text-center"
+              >
+                <button
+                  routerLink="/dashboard/assistants-participants"
+                  class="tooltip appearance-none focus:outline-none ml-2"
+                >
+                  Asignar
                 </button>
               </td>
             </tr>

@@ -23,6 +23,7 @@ import { RubricComponent } from "./rubric/rubric.component";
 import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
     AssignmentComponent,
     ListTopicsComponent,
     EvaluationComponent,
+    AssistantsParticipantsComponent,
   ],
   exports: [SidebarComponent],
   imports: [
