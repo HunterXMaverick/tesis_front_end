@@ -40,4 +40,12 @@ export class PostulationService {
       this.server.obtainHeaders()
     );
   }
+
+  putPostulation(id: string, postulation: object) {
+    return this.http.put(
+      `${this.url}/putPostulation/${id}`,
+      postulation,
+      this.server.obtainHeaders()
+    );
+  }
 }

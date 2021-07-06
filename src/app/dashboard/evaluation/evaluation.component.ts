@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RubricService } from '../../services/rubric.service';
-import { Rubrics } from "../../models/rubrics";
+import { PostulationService } from "../../services/postulation.service";
 import { QualificationService } from "../../services/qualification";
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -13,21 +13,24 @@ import { Router } from '@angular/router';
 export class EvaluationComponent implements OnInit {
   rubrics: any = [];
   parameters: any = [];
-
+ 
   inputreviewersRating: number = 0;
   inputremark: string = "";
   postulations_id: string = "";
   reviewersRatings: Array<number> = [];
-  sumreviewersRatings: number=0;
+  scoreRemarks: Array<any> = [];
+  sumreviewersRatings: number = 0;
   remarks: Array<string> = [];
   qualificaty: number = 0;
-  person_id: string = "";
+  //person_id: string = "";
 
   constructor(
     private rubricsService: RubricService,
     private qualificationService: QualificationService,
+    private postulationService: PostulationService,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getRubrics();
@@ -52,9 +55,11 @@ export class EvaluationComponent implements OnInit {
       if (this.reviewersRatings.length + 1 <= limitCriteria) {
         if (this.remarks.length + 1 <= limitCriteria) {
           this.reviewersRatings.push(this.inputreviewersRating);
-          this.sumreviewersRatings+=this.inputreviewersRating;
+          this.sumreviewersRatings += this.inputreviewersRating;
           this.inputreviewersRating = 0;
           this.remarks.push(this.inputremark);
+          this.scoreRemarks=[this.parameters,this.remarks,this.reviewersRatings];
+          console.log(this.scoreRemarks);
           this.inputremark = "";
         } else {
           Swal.fire({
@@ -86,27 +91,37 @@ export class EvaluationComponent implements OnInit {
   }
 
   postQualification() {
+    // let id_person = sessionStorage.getItem('_user-data');
     let qualificationData = {
-      qualification: {
-        postulations_id: sessionStorage.getItem('postulationdata'),
+      qualification:{
+        postulation_id: sessionStorage.getItem('postulationdata'),
         reviewersRating: this.reviewersRatings,
         remark: this.remarks,
         qualificaty: this.sumreviewersRatings,
-        person_id: JSON.stringify(sessionStorage.getItem('_user-data'))
+        person_id: sessionStorage.getItem('_user-data')
       },
     };
-
     this.qualificationService.postQualification(qualificationData).subscribe((response) => {
-      console.log(response);
-
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Creación exitosa",
+        title: "Calificación exitosa",
         showConfirmButton: false,
-        timer: 1500,
-      });
+        timer: 1800,
+      }).then
+      this.putStateQualification();
       this.router.navigate(["/dashboard/postulations"]);
     });
+  }
+
+  putStateQualification() {
+    let _id =  sessionStorage.getItem('postulationdata')!
+    let postulationData = {
+      postulation:{ status_quelification: true}
+    };
+    this.postulationService.putPostulation(_id, postulationData).
+      subscribe((res) => {
+        console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
+      })
   }
 }
