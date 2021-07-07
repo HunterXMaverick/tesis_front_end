@@ -5,6 +5,34 @@
     <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Lista de Postulaciones
     </h2>
+
+    <div *ngIf="dataUser.rol == 'Organizador'"
+    class="w-1/3 flex flex-col px-3">
+      <label 
+      class="font-thin text-xl mr-5"> Área de conocimiento: </label>
+      <select
+        class="
+          focus:border-blue-500
+          appearance-none
+          border
+          rounded
+          w-full
+          py-2
+          px-3
+          text-gray-700
+          leading-tight
+          focus:outline-none">
+          <!-- [(ngModel)]="selected_knowledge_area"
+        name="selected_knowledge_area"
+        (change)="getPostulationsByAreaOfKnowledge()" -->
+        <option value="">Seleccione..</option>
+        <!-- <option *ngFor="let area of knowledge_area" value="{{ area }}">
+          {{ area }}
+        </option> -->
+      </select>
+    </div>
+
+
     <div class="flex border-b justify-between" *ngIf="dataUser.rol == 'Ponente'">
       <div>
         <h2 class="py-4 text-2xl font-semibold text-gray-800">
@@ -37,16 +65,32 @@
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Título del proyecto
               </th>
-              <th *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
+              <th *ngIf="dataUser.rol == 'Ponente'"
+              class="px-5 py-3 text-left text-sm text-gray-600">
+                Resumen
+              </th>
+              <th *ngIf="dataUser.rol == 'Revisor'"
+              class="px-5 py-3 text-left text-sm text-gray-600">
+                Resumen
+              </th>
+              <th *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'" 
+              class="px-5 py-3 text-left text-sm text-gray-600">
                 Datos del Autor
               </th>
               <!-- <th class="px-5 py-3 text-left text-sm text-gray-600">Resumen</th> -->
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Área de conocimiento
               </th>
+              <th *ngIf="dataUser.rol == 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
+                Datos del Autor
+              </th>
+              <th *ngIf="dataUser.rol == 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
+                Archivo
+              </th>
               <th *ngIf="dataUser.rol !== 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Estado
               </th>
+              
 
               <th *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !=='Revisor'"
                 class="px-5 py-3 text-left text-sm text-gray-600">
