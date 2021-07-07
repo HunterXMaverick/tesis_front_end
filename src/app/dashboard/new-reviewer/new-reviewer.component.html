@@ -243,12 +243,11 @@
 
         <div class="pt-24 w-full flex justify-center">
           <button
-            routerLink="/home"
+            routerLink="/dashboard/congresses"
             class="
-              w-32
               focus:outline-none
-              py-2
-              px-5
+              py-1
+              px-4
               rounded-lg
               shadow-sm
               text-center text-gray-600
@@ -257,19 +256,21 @@
               font-medium
               border
               mx-3
+              flex
+              items-center
             "
           >
+            <i class="fas fa-undo mr-1"></i>
             Cancelar
           </button>
 
           <button
             (click)="postPerson()"
             class="
-              w-32
               focus:outline-none
               border border-transparent
-              py-2
-              px-5
+              py-1
+              px-4
               rounded-lg
               shadow-sm
               text-center text-white
@@ -277,9 +278,12 @@
               hover:bg-blue-600
               font-medium
               mx-3
+              flex
+              items-center
             "
           >
-            Enviar
+            <i class="fas fa-save mr-1"></i>
+            Grabar
           </button>
         </div>
       </div>

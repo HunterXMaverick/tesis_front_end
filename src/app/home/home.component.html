@@ -15,10 +15,11 @@
         <div class="flex justify-center lg:justify-start mt-6">
           <button
             (click)="handleModal(true)"
-            id="btn"
             class="
+              py-1
               px-4
-              py-3
+              flex
+              items-center
               bg-gray-300
               text-gray-900 text-base
               font-semibold
@@ -26,6 +27,7 @@
               hover:bg-gray-400
             "
           >
+            <i class="fas fa-user-plus mr-1"></i>
             Regístrate
           </button>
         </div>
@@ -68,26 +70,18 @@
       <div class="flex w-10/12 h-auto py-3 text-xl md:text-2xl ml-5">
         Selecciona el rol que desempeñaras
       </div>
-      <div
+
+      <i
+        class="
+          fas
+          fa-window-close
+          text-2xl
+          cursor-pointer
+          text-red-500
+          hover:text-red-700
+        "
         (click)="handleModal(false)"
-        class="flex w-1/12 h-auto justify-center cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-x"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </div>
+      ></i>
     </div>
     <div class="w-full h-auto py-10 justify-center items-center text-center">
       <div class="w-full md:w-full px-3 mb-4">
@@ -95,7 +89,6 @@
           routerLink="/register-assistant"
           class="
             appearance-none
-            block
             w-full
             border border-gray-900
             text-gray-900
@@ -105,8 +98,12 @@
             px-3
             leading-tight
             focus:outline-none
+            flex
+            items-center
+            justify-center
           "
         >
+          <i class="fas fa-user-plus mr-1"></i>
           Participante
         </button>
       </div>
@@ -115,7 +112,6 @@
           routerLink="/register-speaker"
           class="
             appearance-none
-            block
             w-full
             border border-gray-900
             text-gray-900
@@ -125,8 +121,12 @@
             px-3
             leading-tight
             focus:outline-none
+            flex
+            items-center
+            justify-center
           "
         >
+          <i class="fas fa-user-plus mr-1"></i>
           Ponente
         </button>
       </div>

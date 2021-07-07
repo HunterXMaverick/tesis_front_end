@@ -99,6 +99,28 @@
       </tbody>
     </table>
 
-    <button (click)="deleteRubric()">Eliminar</button>
+    <div class="w-full py-3 flex justify-center">
+      <button
+        (click)="deleteRubric()"
+        class="
+          focus:outline-none
+          py-1
+          px-4
+          rounded-lg
+          shadow-sm
+          text-center text-white
+          bg-red-500
+          hover:bg-red-700
+          font-medium
+          border
+          mx-3
+          flex
+          items-center
+        "
+      >
+        <i class="fas fa-trash-alt mr-1"></i>
+        Eliminar
+      </button>
+    </div>
   </div>
 </div>

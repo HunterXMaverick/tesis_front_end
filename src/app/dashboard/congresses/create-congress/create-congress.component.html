@@ -206,7 +206,6 @@
           <button
             routerLink="/dashboard/congresses"
             class="
-              w-32
               focus:outline-none
               py-1
               px-4
@@ -217,15 +216,17 @@
               hover:bg-gray-100
               font-medium
               border
+              flex
+              items-center
             "
           >
+            <i class="fas fa-undo mr-1"></i>
             Cancelar
           </button>
 
           <button
             (click)="postCongress()"
             class="
-              w-32
               focus:outline-none
               border border-transparent
               py-1
@@ -236,9 +237,12 @@
               bg-blue-500
               hover:bg-blue-600
               font-medium
+              flex
+              items-center
             "
           >
-            Guardar
+            <i class="fas fa-save mr-1"></i>
+            Grabar
           </button>
         </div>
       </div>

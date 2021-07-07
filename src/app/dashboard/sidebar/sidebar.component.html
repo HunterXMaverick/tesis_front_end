@@ -23,9 +23,9 @@
           (dataUser.rol == 'Organizador' || dataUser.rol == 'Ponente') &&
           profile_picture_url !== ''
         "
-        class="flex w-32 h-32 ml-4 justify-center text-center"
+        class="flex mt-4 w-full justify-center"
       >
-        <img [src]="profile_picture_url" alt="Foto de Perfil" />
+        <img [src]="profile_picture_url" class="w-32" alt="Foto de Perfil" />
       </div>
       <span class="text-sm font-semibold text-green-600">
         {{ dataUser.rol }}

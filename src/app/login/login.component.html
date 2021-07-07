@@ -105,97 +105,81 @@
             </div>
           </div>
         </div>
+
         <div
           class="
-            mb-6
             flex
             lg:flex-row
+            md:flex-row
             flex-col
+            border
+            lg:rounded-full
+            md:rounded-full
+            overflow-hidden
+            m-4
+            select-none
             justify-between
-            align-middle
-            lg:px-32
           "
         >
-          <div class="py-1">
+          <div
+            class="
+              title
+              py-3
+              my-auto
+              px-5
+              bg-blue-500
+              text-white text-sm
+              font-semibold
+              mr-3
+            "
+          >
+            Rol
+          </div>
+          <label class="flex p-2 cursor-pointer">
             <input
               id="organizer"
               type="radio"
               value="Organizador"
               formControlName="rol"
-              class="
-                form-radio
-                h-5
-                w-5
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                leading-tight
-                focus:outline-none
-              "
-            /><span class="ml-2 text-gray-700">Organizador</span>
-          </div>
+              class="my-auto transform scale-125"
+            />
+            <div class="title px-2">Organizador</div>
+          </label>
 
-          <div class="py-1">
-            <input
-              id="reviewer"
-              type="radio"
-              value="Revisor"
-              formControlName="rol"
-              class="
-                form-radio
-                h-5
-                w-5
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                leading-tight
-                focus:outline-none
-              "
-            /><span class="ml-2 text-gray-700">Revisor</span>
-          </div>
-
-          <div class="py-1">
+          <label class="flex p-2 cursor-pointer">
             <input
               id="speaker"
               type="radio"
               value="Ponente"
               formControlName="rol"
-              class="
-                form-radio
-                h-5
-                w-5
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                leading-tight
-                focus:outline-none
-              "
-            /><span class="ml-2 text-gray-700">Ponente</span>
-          </div>
+              class="my-auto transform scale-125"
+            />
+            <div class="title px-2">Ponente</div>
+          </label>
 
-          <div class="py-1">
+          <label class="flex p-2 cursor-pointer">
+            <input
+              id="reviewer"
+              type="radio"
+              value="Revisor"
+              formControlName="rol"
+              class="my-auto transform scale-125"
+            />
+            <div class="title px-2">Revisor</div>
+          </label>
+
+          <label class="flex p-2 cursor-pointer">
             <input
               id="assistant"
               type="radio"
               value="Participante"
               formControlName="rol"
-              class="
-                form-radio
-                h-5
-                w-5
-                focus:border-blue-500
-                appearance-none
-                border
-                rounded
-                leading-tight
-                focus:outline-none
-              "
-            /><span class="ml-2 text-gray-700">Participante</span>
-          </div>
+              class="my-auto transform scale-125"
+            />
+            <div class="title px-2">Participante</div>
+          </label>
         </div>
+
         <div class="block md:flex items-center justify-between">
           <button
             (click)="login()"
@@ -204,16 +188,18 @@
               bg-blue-500
               hover:bg-blue-600
               text-center
+              py-1
               px-4
-              py-2
               text-white text-sm
               font-semibold
               rounded-lg
-              inline-block
               shadow-lg
               focus:outline-none
+              flex
+              items-center
             "
           >
+            <i class="fas fa-sign-in-alt mr-1"></i>
             Ingresar
           </button>
         </div>
@@ -253,26 +239,18 @@
       <div class="flex w-10/12 h-auto py-3 text-xl md:text-2xl ml-5">
         Selecciona el rol que desempeñaras
       </div>
-      <div
+
+      <i
+        class="
+          fas
+          fa-window-close
+          text-2xl
+          cursor-pointer
+          text-red-500
+          hover:text-red-700
+        "
         (click)="handleModal(false)"
-        class="flex w-1/12 h-auto justify-center cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-x"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </div>
+      ></i>
     </div>
     <div class="w-full h-auto py-10 justify-center items-center text-center">
       <div class="w-full md:w-full px-3 mb-4">
@@ -280,7 +258,6 @@
           routerLink="/register-assistant"
           class="
             appearance-none
-            block
             w-full
             border border-gray-900
             text-gray-900
@@ -290,8 +267,12 @@
             px-3
             leading-tight
             focus:outline-none
+            flex
+            items-center
+            justify-center
           "
         >
+          <i class="fas fa-user-plus mr-1"></i>
           Participante
         </button>
       </div>
@@ -300,7 +281,6 @@
           routerLink="/register-speaker"
           class="
             appearance-none
-            block
             w-full
             border border-gray-900
             text-gray-900
@@ -310,8 +290,12 @@
             px-3
             leading-tight
             focus:outline-none
+            flex
+            items-center
+            justify-center
           "
         >
+          <i class="fas fa-user-plus mr-1"></i>
           Ponente
         </button>
       </div>
