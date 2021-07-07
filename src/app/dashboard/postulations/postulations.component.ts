@@ -3,6 +3,7 @@ import { PostulationService } from '../../services/postulation.service';
 import { PersonService } from '../../services/person.service';
 import { AssignmentService } from '../../services/assignment';
 import { FilesService } from 'src/app/services/files.service';
+import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,12 +25,17 @@ export class PostulationsComponent implements OnInit {
   names: any = '';
   last_names: any = '';
   page: number = 1;
+  selected_knowledge_area: string = '';
+  nameSpeakerTemp: string = '';
+  knowledge_area: Array<string> = [];
+  congress: any = [];
 
   constructor(
     private postulationService: PostulationService,
     private personService: PersonService,
     private filesService: FilesService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private congressService: CongressService,
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
@@ -38,6 +44,7 @@ export class PostulationsComponent implements OnInit {
     this.handleModal(false);
     this.getPostulations();
     this.getKnowledge();
+    this.getCongress();
   }
 
   getUserById(id: string) {
@@ -151,5 +158,44 @@ export class PostulationsComponent implements OnInit {
     } else {
       modal.classList.add('hidden');
     }
+  }
+
+  getSpeakerName(id: string) {
+    return this.personService.getUserById(id).subscribe(
+      (res: any) => {
+        this.nameSpeakerTemp = `${res.data.last_names} ${res.data.names}`;
+        // this.userById.push(res.data);
+        // this.userData = res.data;
+        // console.log(this.userData);
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  getPostulationsByAreaOfKnowledge() {
+    return this.postulationService
+      .getPostulationsByknowledgeArea(this.selected_knowledge_area)
+      .subscribe(
+        (res: any) => {
+          this.postulations = [];
+
+          res.data.forEach((element: any) => {
+            this.getSpeakerName(element.person_id);
+            element.speakerName = this.nameSpeakerTemp;
+            this.postulations.push(element);
+          });
+        },
+        (err) => console.error(err)
+      );
+  }
+
+  getCongress() {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        this.congress = res.data[0];
+        this.knowledge_area = this.congress.knowledge_area.split(',');
+      },
+      (err) => console.error(err)
+    );
   }
 }

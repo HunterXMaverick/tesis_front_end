@@ -11,8 +11,7 @@
           <table *ngIf="
               (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
               dataUser.rol == 'Organizador' ||
-              dataUser.rol == 'Revisor'
-            ">
+              dataUser.rol == 'Revisor'">
             <thead>
               <tr class="border-b-2 border-gray-200 bg-gray-200">
                 <th class="px-5 py-3 text-left text-sm text-gray-600">
@@ -33,7 +32,6 @@
                   <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
                     class="tooltip appearance-none focus:outline-none mr-2">
                     <i class="fas fa-address-book text-blue-800 text-xl"></i>
-                    <span class="tooltiptext">Datos del autor</span>
                   </button>
                 </td>
                 <td class="px-5 py-5e text-sm text-center">
