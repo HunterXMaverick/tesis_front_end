@@ -5,6 +5,7 @@ import { AssignmentService } from '../../services/assignment';
 import { FilesService } from 'src/app/services/files.service';
 import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
+import { QualificationService } from 'src/app/services/qualification';
 
 @Component({
   selector: 'app-postulations',
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class PostulationsComponent implements OnInit {
   profile_picture_url: string = '';
+  remarks: Array<string> = [];
   showPostulations: boolean = true;
   postulations: any = [];
   assignments: any = '';
@@ -36,12 +38,14 @@ export class PostulationsComponent implements OnInit {
     private filesService: FilesService,
     private assignmentService: AssignmentService,
     private congressService: CongressService,
+    private qualificationService: QualificationService
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
 
   ngOnInit() {
     this.handleModal(false);
+    this.handleModalRemark(false);
     this.getPostulations();
     this.getKnowledge();
     this.getCongress();
@@ -160,33 +164,44 @@ export class PostulationsComponent implements OnInit {
     }
   }
 
+  handleModalRemark(showModal: boolean) {
+    let modal: any = document.getElementById('modal-remark');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
   getSpeakerName(id: string) {
     return this.personService.getUserById(id).subscribe(
       (res: any) => {
         this.nameSpeakerTemp = `${res.data.last_names} ${res.data.names}`;
-        // this.userById.push(res.data);
-        // this.userData = res.data;
-        // console.log(this.userData);
       },
       (err) => console.error(err)
     );
   }
 
   getPostulationsByAreaOfKnowledge() {
-    return this.postulationService
-      .getPostulationsByknowledgeArea(this.selected_knowledge_area)
-      .subscribe(
-        (res: any) => {
-          this.postulations = [];
+    if (this.selected_knowledge_area == '') {
+      return this.getPostulations();
+    } else {
+      return this.postulationService
+        .getPostulationsByknowledgeArea(this.selected_knowledge_area)
+        .subscribe(
+          (res: any) => {
+            this.postulations = [];
 
-          res.data.forEach((element: any) => {
-            this.getSpeakerName(element.person_id);
-            element.speakerName = this.nameSpeakerTemp;
-            this.postulations.push(element);
-          });
-        },
-        (err) => console.error(err)
-      );
+            res.data.forEach((element: any) => {
+              this.getSpeakerName(element.person_id);
+              element.speakerName = this.nameSpeakerTemp;
+              this.postulations.push(element);
+            });
+          },
+          (err) => console.error(err)
+        );
+    }
   }
 
   getCongress() {
@@ -196,6 +211,19 @@ export class PostulationsComponent implements OnInit {
         this.knowledge_area = this.congress.knowledge_area.split(',');
       },
       (err) => console.error(err)
+    );
+  }
+
+  getRemarkQualification(postulationID: string) {
+    return this.qualificationService.getQualification().subscribe(
+      (response: any) => {
+        response.data.forEach((element: any) => {
+          if (element.postulation_id == postulationID) {
+            this.remarks = element.remark;
+          }
+        });
+      },
+      (error) => console.error(error)
     );
   }
 }

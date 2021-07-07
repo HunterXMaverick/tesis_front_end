@@ -2,18 +2,14 @@
   <app-sidebar></app-sidebar>
 
   <div class="w-full p-2">
-    <h2
-      *ngIf="dataUser.rol !== 'Ponente'"
-      class="py-4 text-2xl font-semibold text-gray-800 border-b"
-    >
+    <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Lista de Postulaciones
     </h2>
 
     <div *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
     class="w-1/3 flex flex-col px-3">
       <label class="font-thin text-xl mr-5"> Área de conocimiento: </label>
-      <select
-        class="
+      <select class="
           focus:border-blue-500
           appearance-none
           border
@@ -29,33 +25,27 @@
         name="selected_knowledge_area"
         (change)="getPostulationsByAreaOfKnowledge()"
       >
-        <option value="">Seleccione..</option>
+        <option value="">Todas las áreas...</option>
         <option *ngFor="let area of knowledge_area" value="{{ area }}">
           {{ area }}
         </option>
       </select>
     </div>
-    <div
-      class="flex border-b justify-between"
-      *ngIf="dataUser.rol == 'Ponente'"
-    >
+    <div class="flex border-b justify-between" *ngIf="dataUser.rol == 'Ponente'">
       <div>
         <h2 class="py-4 text-2xl font-semibold text-gray-800">
           Postulaciones Realizadas
         </h2>
       </div>
       <div>
-        <button
-          routerLink="../post-postulation"
-          class="
+        <button routerLink="../post-postulation" class="
             focus:outline-none
             py-5
             text-center text-gray-700
             bg-white
             hover:text-black
             font-medium
-          "
-        >
+          ">
           <i class="fa fa-plus pr-2"></i>Nueva Postulacion
         </button>
       </div>
@@ -63,113 +53,72 @@
 
     <div class="py-6">
       <div class="inline-block shadow rounded-lg">
-        <table
-          *ngIf="
+        <table *ngIf="
             (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
             dataUser.rol == 'Organizador' ||
             dataUser.rol == 'Revisor'
-          "
-        >
+          ">
           <thead>
             <tr class="border-b-2 border-gray-200 bg-gray-200">
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Título del proyecto
               </th>
-              <th
-                *ngIf="dataUser.rol == 'Ponente'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol == 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Resumen
               </th>
-              <th
-                *ngIf="dataUser.rol == 'Revisor'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol == 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Resumen
               </th>
-              <th
-                *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+                class="px-5 py-3 text-left text-sm text-gray-600">
                 Datos del Autor
               </th>
               <!-- <th class="px-5 py-3 text-left text-sm text-gray-600">Resumen</th> -->
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Área de conocimiento
               </th>
-              <th
-                *ngIf="dataUser.rol == 'Revisor'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol == 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Datos del Autor
               </th>
-              <th
-                *ngIf="dataUser.rol == 'Ponente'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol == 'Ponente'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Archivo
               </th>
-              <th
-                *ngIf="dataUser.rol !== 'Revisor'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol !== 'Revisor'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Estado
               </th>
-              <th
-                *ngIf="dataUser.rol == 'Organizador'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-3 text-left text-sm text-gray-600">
                 Observaciones
               </th>
-              <th
-                *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+              <th *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+                class="px-5 py-3 text-left text-sm text-gray-600">
                 Asignación de Participantes
               </th>
               <!-- ESTADO PARA REVISOR CALIFICACIONES -->
-              <th
-                *ngIf="
+              <th *ngIf="
                   dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
-                "
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+                " class="px-5 py-3 text-left text-sm text-gray-600">
                 Estado
               </th>
-              <th
-                *ngIf="
+              <th *ngIf="
                   dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
-                "
-                class="px-5 py-3 text-left text-sm text-gray-600"
-              >
+                " class="px-5 py-3 text-left text-sm text-gray-600">
                 Calificar
               </th>
               <!-- ESTADO PARA REVISOR CALIFICACIONES -->
             </tr>
           </thead>
           <!--   BODY FOR ADMIN AND ORGANIZER   -->
-          <tbody
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-          >
-            <tr
-              *ngFor="
+          <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'">
+            <tr *ngFor="
                 let postulation of postulations
                   | paginate: { itemsPerPage: 5, currentPage: page }
-              "
-              class="border-b border-gray-200 hover:bg-gray-100"
-            >
+              " class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ postulation.title_project }}</p>
               </td>
-              <td
-                *ngIf="dataUser.rol !== 'Ponente'"
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
-                <button
-                  (click)="getUserById(postulation.person_id)"
-                  (click)="handleModal(true)"
-                  class="tooltip appearance-none focus:outline-none mr-2"
-                >
+              <td *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-5 flex-1 text-sm text-center">
+                <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
+                  class="tooltip appearance-none focus:outline-none mr-2">
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
                   <span class="tooltiptext">Datos del autor</span>
                 </button>
@@ -180,94 +129,72 @@
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
               </td>
-              <td
-                *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-                class="px-5 py-5e text-sm text-center"
-              >
-                <div
-                  *ngIf="
+              <td *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+                class="px-5 py-5e text-sm text-center">
+                <div *ngIf="
                     postulation.status !== 'Aprobado' &&
                     postulation.status !== 'Reprobado'
-                  "
-                >
-                  <button
-                    id="btn"
-                    class="tooltip appearance-none focus:outline-none mr-2"
-                  >
+                  ">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
                     <i class="fas fa-clock text-blue-700 text-xl"></i>
-                    <span
-                      class="
+                    <span class="
                         tooltip
                         appearance-none
                         focus:outline-none
                         mr-2
                         tooltiptext
-                      "
-                      >Pendiente</span
-                    >
+                      ">Pendiente</span>
                   </button>
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     postulation.status !== 'Pendiente' &&
                     postulation.status !== 'Reprobado'
-                  "
-                >
-                  <button
-                    id="btn"
-                    class="tooltip appearance-none focus:outline-none mr-2"
-                  >
+                  ">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
                     <i class="fas fa-thumbs-up text-green-700 text-xl"></i>
-                    <span
-                      class="
+                    <span class="
                         tooltip
                         appearance-none
                         focus:outline-none
                         mr-2
                         tooltiptext
-                      "
-                      >Aprobado</span
-                    >
+                      ">Aprobado</span>
                   </button>
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     postulation.status !== 'Aprobado' &&
                     postulation.status !== 'Pendiente'
                   "
                 >
                   <button
-                    id="btn"
                     class="tooltip appearance-none focus:outline-none mr-2"
                   >
                     <i class="fas fa-thumbs-down text-red-700 text-xl"></i>
-                    <span
-                      class="
+                    <span class="
                         tooltip
                         appearance-none
                         focus:outline-none
-                        mr-2
                         tooltiptext
-                      "
-                      >Reprobado</span
-                    >
+                      ">Reprobado</span>
                   </button>
                 </div>
               </td>
-              <td>
-                <button class="tooltip appearance-none focus:outline-none mr-2">
+              <td class="px-5 py-5 text-sm text-center">
+                <button
+                  class="tooltip appearance-none focus:outline-none mr-2"
+                  (click)="
+                    getRemarkQualification(postulation._id);
+                    handleModalRemark(true)
+                  "
+                >
+                  <i class="fas fa-info-circle text-xl text-blue-700"></i>
                   <span class="tooltiptext">Observaciones</span>
                 </button>
               </td>
 
-              <td
-                *ngIf="dataUser.rol == 'Organizador'"
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
-                <button
-                  routerLink="/dashboard/assistants-participants"
-                  class="tooltip appearance-none focus:outline-none ml-2"
-                >
+              <td *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
+                <button routerLink="/dashboard/assistants-participants"
+                  class="tooltip appearance-none focus:outline-none ml-2">
                   Asignar
                 </button>
               </td>
@@ -275,14 +202,10 @@
           </tbody>
 
           <!--   BODY FOR REVIEWER   -->
-          <tbody
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-          >
+          <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'">
             <!-- agregar un console en esta linea -->
-            <tr
-              *ngFor="let knowledge_area of knowledge_areas"
-              class="border-b border-gray-200 hover:bg-gray-100"
-            >
+            <tr *ngFor="let knowledge_area of knowledge_areas | paginate: { itemsPerPage: 5, currentPage: page }
+            " class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ knowledge_area.title_project }}</p>
               </td>
@@ -294,94 +217,61 @@
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ knowledge_area.knowledge_area }}</p>
               </td>
-              <td
-                *ngIf="
+              <td *ngIf="
                   dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
-                "
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
-                <button
-                  (click)="
+                " class="px-5 py-5 flex-1 text-sm text-center">
+                <button (click)="
                     getUserById(knowledge_area.person_id); handleModal(true)
-                  "
-                  class="tooltip appearance-none focus:outline-none mr-2"
-                >
+                  " class="tooltip appearance-none focus:outline-none mr-2">
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
                   <span class="tooltiptext">Datos del autor</span>
                 </button>
-                <button
-                  (click)="getFile(knowledge_area.files)"
-                  class="tooltip appearance-none focus:outline-none ml-2"
-                >
+                <button (click)="getFile(knowledge_area.files)" class="tooltip appearance-none focus:outline-none ml-2">
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
                   <span class="tooltiptext">Archivo adjunto</span>
                 </button>
               </td>
-              <td
-                *ngIf="
+              <td *ngIf="
                   dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
-                "
-                class="px-5 py-5e text-sm text-center"
-              >
+                " class="px-5 py-5e text-sm text-center">
                 <div *ngIf="knowledge_area.status_quelification !== false">
-                  <button
-                    id="btn"
-                    class="tooltip appearance-none focus:outline-none mr-2"
-                  >
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
                     <i class="fas fa-check text-green-700 text-xl"></i>
-                    <span
-                      class="
+                    <span class="
                         tooltip
                         appearance-none
                         focus:outline-none
                         mr-2
                         tooltiptext
-                      "
-                      >Calificado</span
-                    >
+                      ">Calificado</span>
                   </button>
                 </div>
                 <div *ngIf="knowledge_area.status_quelification !== true">
-                  <button
-                    id="btn"
-                    class="tooltip appearance-none focus:outline-none mr-2"
-                  >
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
                     <i class="fas fa-times text-red-700 text-xl"></i>
-                    <span
-                      class="
+                    <span class="
                         tooltip
                         appearance-none
                         focus:outline-none
                         mr-2
                         tooltiptext
-                      "
-                      >Por calificar</span
-                    >
+                      ">Por calificar</span>
                   </button>
                 </div>
               </td>
-              <td
-                *ngIf="
+              <td *ngIf="
                   dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'
-                "
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
+                " class="px-5 py-5 flex-1 text-sm text-center">
                 <div>
-                  <button
-                    *ngIf="knowledge_area.status_quelification != false"
-                    class="tooltip appearance-none focus:outline-none ml-2"
-                  >
+                  <button *ngIf="knowledge_area.status_quelification != false"
+                    class="tooltip appearance-none focus:outline-none ml-2">
                     <i class="fas fa-marker text-gray-700 text-xl"></i>
                     <span class="tooltiptext">Ponencia Calificada</span>
                   </button>
                 </div>
                 <div>
-                  <button
-                    *ngIf="knowledge_area.status_quelification != true"
-                    (click)="create(knowledge_area)"
-                    routerLink="../evaluation"
-                    class="tooltip appearance-none focus:outline-none ml-2"
-                  >
+                  <button *ngIf="knowledge_area.status_quelification != true" (click)="create(knowledge_area)"
+                    routerLink="../evaluation" class="tooltip appearance-none focus:outline-none ml-2">
                     <i class="fas fa-marker text-gray-700 text-xl"></i>
                     <span class="tooltiptext">Calificar</span>
                   </button>
@@ -392,10 +282,8 @@
 
           <!--   TBODY FOR SPEAKER   -->
           <tbody *ngIf="dataUser.rol == 'Ponente'">
-            <tr
-              *ngFor="let project of projectsSpeaker"
-              class="border-b border-gray-200 hover:bg-gray-100"
-            >
+            <tr *ngFor="let project of projectsSpeaker  | paginate: { itemsPerPage: 5, currentPage: page }
+            " class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ project.title_project }}</p>
               </td>
@@ -406,44 +294,74 @@
                 <p class="text-gray-900">{{ project.knowledge_area }}</p>
               </td>
               <td class="px-5 py-5 flex-1 text-sm text-center">
-                <button
-                  class="tooltip appearance-none focus:outline-none ml-2"
-                  (click)="getFile(project.files)"
-                >
+                <button class="tooltip appearance-none focus:outline-none ml-2" (click)="getFile(project.files)">
                   <i class="fas fa-file-invoice text-green-700 text-xl"></i>
                   <span class="tooltiptext">Elegir PDF</span>
                 </button>
               </td>
-
-              <td class="px-5 py-5e text-sm text-center">
-                {{ project.status }}
+              <td *ngIf="dataUser.rol == 'Ponente'" class="px-5 py-5e text-sm text-center">
+                <div *ngIf="
+                  project.status !== 'Aprobado' &&
+                  project.status !== 'Reprobado'
+                  ">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-clock text-blue-700 text-xl"></i>
+                    <span class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      ">Pendiente</span>
+                  </button>
+                </div>
+                <div *ngIf="
+                  project.status !== 'Pendiente' &&
+                  project.status !== 'Reprobado'
+                  ">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-thumbs-up text-green-700 text-xl"></i>
+                    <span class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      ">Aprobado</span>
+                  </button>
+                </div>
+                <div *ngIf="
+                  project.status !== 'Aprobado' &&
+                  project.status !== 'Pendiente'
+                  ">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-thumbs-down text-red-700 text-xl"></i>
+                    <span class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      ">Reprobado</span>
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div
-        *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'"
-        class="w-full text-center"
-      >
+      <div *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'" class="w-full text-center">
         <p class="font-thin">No hay proyectos para mostrar</p>
       </div>
-      <pagination-controls
-        *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-        class="flex text-center"
-        (pageChange)="page = $event"
-        previousLabel="Anterior"
-        nextLabel="Siguiente"
-      >
+      <pagination-controls class="flex text-center"
+        (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
       </pagination-controls>
     </div>
   </div>
 </div>
 
 <!-- MODAL -->
-<div
-  id="modal"
-  class="
+<div id="modal" class="
     flex
     items-center
     justify-center
@@ -453,8 +371,7 @@
     w-full
     h-full
     bg-gray-800 bg-opacity-75
-  "
->
+  ">
   <div class="flex flex-col w-2/3 bg-white">
     <div class="flex w-full px-3 items-center justify-between">
       <div class="h-auto text-2xl">
@@ -463,15 +380,11 @@
       </div>
 
       <div class="text-2xl">
-        <i
-          (click)="handleModal(false)"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
+        <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
       </div>
     </div>
 
-    <div
-      class="
+    <div class="
         flex
         w-full
         h-auto
@@ -482,8 +395,7 @@
         bg-gray-200
         rounded
         text-gray-800
-      "
-    >
+      ">
       <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Nombres:</h2>
@@ -523,14 +435,61 @@
         </div>
       </div>
 
-      <div
-        class="flex w-1/2 justify-center"
-        *ngIf="
+      <div class="flex w-1/2 justify-center" *ngIf="
           (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
           profile_picture_url !== ''
-        "
-      >
+        ">
         <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="modal-remark"
+  class="
+    flex
+    items-center
+    justify-center
+    fixed
+    left-0
+    bottom-0
+    w-full
+    h-full
+    bg-gray-800 bg-opacity-75
+  "
+>
+  <div class="flex flex-col w-1/3 bg-white">
+    <div class="flex w-full px-3 items-center justify-between">
+      <div class="h-auto text-2xl">
+        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
+        Observaciones
+      </div>
+
+      <div class="text-2xl">
+        <i
+          (click)="handleModalRemark(false)"
+          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
+        ></i>
+      </div>
+    </div>
+
+    <div
+      class="
+        flex
+        w-full
+        h-auto
+        py-6
+        px-10
+        items-center
+        justify-between
+        bg-gray-200
+        rounded
+        text-gray-800
+      "
+    >
+      <div class="flex flex-col justify-center" *ngIf="remarks">
+        <p *ngFor="let remark of remarks">{{ remark }}</p>
       </div>
     </div>
   </div>
