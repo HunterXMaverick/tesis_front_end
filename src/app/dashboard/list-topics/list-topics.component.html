@@ -22,12 +22,10 @@
           px-3
           text-gray-700
           leading-tight
-          focus:outline-none
-        "
+          focus:outline-none"
         [(ngModel)]="selected_knowledge_area"
         name="selected_knowledge_area"
-        (change)="getPostulationsByAreaOfKnowledge()"
-      >
+        (change)="getPostulationsByAreaOfKnowledge()">
         <option value="">Seleccione..</option>
         <option *ngFor="let area of knowledge_area" value="{{ area }}">
           {{ area }}
@@ -59,7 +57,7 @@
               </th>
             </tr>
           </thead>
-          <!--   BODY FOR ADMIN AND ORGANIZER   -->
+          <!--   BODY FOR PARTICIPANTS -->
           <tbody *ngIf="dataUser.rol !== 'Ponente'">
             <tr
               *ngFor="let postulation of postulations"
