@@ -114,7 +114,8 @@
           <!--   BODY FOR ADMIN AND ORGANIZER   -->
           <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'">
             <!-- agregar un console en esta linea -->
-            <tr *ngFor="let postulation of postulations" class="border-b border-gray-200 hover:bg-gray-100">
+            <tr *ngFor="let postulation of postulations | paginate: { itemsPerPage: 5, currentPage: page }"
+              class="border-b border-gray-200 hover:bg-gray-100">
               <td class="px-1 py-5 text-sm text-center">
                 <p class="text-gray-900">{{ postulation.title_project }}</p>
               </td>
@@ -131,10 +132,45 @@
               <td class="px-5 py-5e text-sm text-center">
                 <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
               </td>
-              <td *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-                class="px-5 py-5 flex-1 text-sm text-center">
-                <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
-                  class="tooltip appearance-none focus:outline-none mr-2"></button>
+              <td *ngIf="
+              dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'
+            " class="px-5 py-5e text-sm text-center">
+                <div *ngIf="postulation.status !== 'Aprobado' && postulation.status !== 'Reprobado'">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-clock text-blue-700 text-xl"></i>
+                    <span class="
+                    tooltip
+                    appearance-none
+                    focus:outline-none
+                    mr-2
+                    tooltiptext
+                  ">Pendiente</span>
+                  </button>
+                </div>
+                <div *ngIf="postulation.status !== 'Pendiente' && postulation.status !== 'Reprobado'">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-thumbs-up text-green-700 text-xl"></i>
+                    <span class="
+                    tooltip
+                    appearance-none
+                    focus:outline-none
+                    mr-2
+                    tooltiptext
+                  ">Aprobado</span>
+                  </button>
+                </div>
+                <div *ngIf="postulation.status !== 'Aprobado' && postulation.status !== 'Pendiente'">
+                  <button id="btn" class="tooltip appearance-none focus:outline-none mr-2">
+                    <i class="fas fa-thumbs-down text-red-700 text-xl"></i>
+                    <span class="
+                    tooltip
+                    appearance-none
+                    focus:outline-none
+                    mr-2
+                    tooltiptext
+                  ">Reprobado</span>
+                  </button>
+                </div>
               </td>
 
               <td *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
@@ -252,6 +288,9 @@
       <div *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'" class="w-full text-center">
         <p class="font-thin">No hay proyectos para mostrar</p>
       </div>
+      <pagination-controls *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'" class="flex text-center"
+        (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+      </pagination-controls>
     </div>
   </div>
 </div>
