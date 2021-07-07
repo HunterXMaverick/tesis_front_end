@@ -21,6 +21,7 @@ export class ListTopicsComponent implements OnInit {
   congress: any = [];
   selected_knowledge_area: string = '';
   nameSpeakerTemp: string = '';
+  page: number = 1;
 
   constructor(
     private postulationService: PostulationService,
