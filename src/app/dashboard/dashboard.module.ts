@@ -24,6 +24,7 @@ import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
+import { NgxPaginationModule } from 'ngx-pagination'; 
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AssistantsParticipantsComponent } from './assistants-participants/assis
     FormsModule,
     CKEditorModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
   ],
 })
 export class DashboardModule {}
