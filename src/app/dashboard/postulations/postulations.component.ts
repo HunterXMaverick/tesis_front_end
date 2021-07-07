@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
+  profile_picture_url: string = '';
   showPostulations: boolean = true;
   postulations: any = [];
   assignments: any = '';
@@ -44,6 +45,7 @@ export class PostulationsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
+        this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
       },
       (err) => console.error(err)
     );
@@ -75,14 +77,6 @@ export class PostulationsComponent implements OnInit {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
         this.postulations = res.data;
-        // this.postulations.forEach(async (element: any) => {
-        //   this.getUserById(element.person_id);
-        //   if (element.person_id == this.dataUser._id) {
-        //     this.projectsSpeaker.push(element);
-        //     console.log(this.projectsSpeaker);
-        //   }
-        // });
-
         if (this.postulations.length == 0) {
           this.showPostulations = false;
         } else {

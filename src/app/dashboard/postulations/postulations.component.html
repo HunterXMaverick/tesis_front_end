@@ -146,7 +146,6 @@
           <tbody
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
           >
-            <!-- agregar un console en esta linea -->
             <tr
               *ngFor="
                 let postulation of postulations
@@ -162,8 +161,9 @@
                 class="px-5 py-5 flex-1 text-sm text-center"
               >
                 <button
-                  (click)="getUserById(postulation.person_id)"
-                  (click)="handleModal(true)"
+                  (click)="
+                    getUserById(postulation.person_id); handleModal(true)
+                  "
                   class="tooltip appearance-none focus:outline-none mr-2"
                 >
                   <i class="fas fa-address-book text-blue-800 text-xl"></i>
@@ -432,74 +432,6 @@
 </div>
 
 <!-- MODAL -->
-<!-- <dialog id="myModal" class="h-auto w-11/12 md:w-1/2 p-5 bg-white rounded-md">
-  <div class="flex flex-col w-full h-auto">
-    <div class="flex w-full h-auto justify-between">
-      <div class="h-auto pb-5 pl-2 text-2xl">
-        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Datos del autor
-      </div>
-      <div class="h-auto pb-5 pr-2 text-2xl">
-        <i
-          onclick="document.getElementById('myModal').close();"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
-      </div>
-    </div>
-    <div
-      class="
-        w-full
-        h-auto
-        py-6
-        px-10
-        items-center
-        bg-gray-200
-        rounded
-        text-gray-800
-      "
-    >
-      <div *ngIf="userData">
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nombres:</h2>
-          <p>{{ userData.names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Apellidos:</h2>
-          <p>{{ userData.last_names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Rol:</h2>
-          <p>{{ userData.rol }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-          <p>{{ userData.type_dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Número de identificación:</h2>
-          <p>{{ userData.dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nivel académico:</h2>
-          <p>{{ userData.level_academy }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Titulo:</h2>
-          <p>{{ userData.title }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Teléfono:</h2>
-          <p>{{ userData.phone }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Correo electrónico:</h2>
-          <p>{{ userData.email }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</dialog> -->
-
 <div
   id="modal"
   class="
@@ -514,33 +446,36 @@
     bg-gray-800 bg-opacity-75
   "
 >
-  <div class="flex flex-col w-1/3 h-auto bg-white">
-    <div class="flex w-full h-auto justify-between">
-      <div class="h-auto pb-5 pl-2 text-2xl">
+  <div class="flex flex-col w-2/3 bg-white">
+    <div class="flex w-full px-3 items-center justify-between">
+      <div class="h-auto text-2xl">
         <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
         Datos del autor
       </div>
-      <div class="h-auto pb-5 pr-2 text-2xl">
+
+      <div class="text-2xl">
         <i
           (click)="handleModal(false)"
           class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
         ></i>
       </div>
     </div>
-    <!-- *ngFor="let element of userById" -->
+
     <div
       class="
+        flex
         w-full
         h-auto
         py-6
         px-10
         items-center
+        justify-between
         bg-gray-200
         rounded
         text-gray-800
       "
     >
-      <div *ngIf="userData">
+      <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Nombres:</h2>
           <p>{{ userData.names }}</p>
@@ -577,6 +512,16 @@
           <h2 class="font-bold mr-3">Correo electrónico:</h2>
           <p>{{ userData.email }}</p>
         </div>
+      </div>
+
+      <div
+        class="flex w-1/2 justify-center"
+        *ngIf="
+          (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
+          profile_picture_url !== ''
+        "
+      >
+        <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
       </div>
     </div>
   </div>

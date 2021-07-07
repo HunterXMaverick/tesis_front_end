@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list-topics.component.scss'],
 })
 export class ListTopicsComponent implements OnInit {
+  profile_picture_url: string = '';
   postulations: any = [];
   userById: any = [];
   userData: any;
@@ -33,6 +34,7 @@ export class ListTopicsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.handleModal(false);
     this.getPostulations();
     this.getCongress();
   }
@@ -42,7 +44,7 @@ export class ListTopicsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
-        console.log(this.userData);
+        this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
       },
       (err) => console.error(err)
     );
@@ -145,5 +147,15 @@ export class ListTopicsComponent implements OnInit {
         },
         (err) => console.error(err)
       );
+  }
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
   }
 }
