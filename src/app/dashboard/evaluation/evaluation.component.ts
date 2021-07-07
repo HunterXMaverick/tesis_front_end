@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { RubricService } from '../../services/rubric.service';
-import { PostulationService } from "../../services/postulation.service";
-import { QualificationService } from "../../services/qualification";
+import { PostulationService } from '../../services/postulation.service';
+import { QualificationService } from '../../services/qualification';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
-  styleUrls: ['./evaluation.component.scss']
+  styleUrls: ['./evaluation.component.scss'],
 })
 export class EvaluationComponent implements OnInit {
   rubrics: any = [];
   parameters: any = [];
- 
+
   inputreviewersRating: number = 0;
-  inputremark: string = "";
-  postulations_id: string = "";
+  inputremark: string = '';
+  postulations_id: string = '';
   reviewersRatings: Array<number> = [];
   scoreRemarks: Array<any> = [];
   sumreviewersRatings: number = 0;
@@ -28,8 +28,9 @@ export class EvaluationComponent implements OnInit {
     private rubricsService: RubricService,
     private qualificationService: QualificationService,
     private postulationService: PostulationService,
-    private router: Router,
+    private router: Router
   ) {
+    this.postulations_id = sessionStorage.getItem('postulationdata')!;
   }
 
   ngOnInit(): void {
@@ -46,44 +47,53 @@ export class EvaluationComponent implements OnInit {
       },
       (err) => {
         console.error(err);
-      });
+      }
+    );
   }
 
   addQuality() {
-    const limitCriteria: number = 5;
-    if (this.inputreviewersRating !== null) {
-      if (this.reviewersRatings.length + 1 <= limitCriteria) {
-        if (this.remarks.length + 1 <= limitCriteria) {
+    if (
+      this.inputreviewersRating !== null &&
+      this.inputreviewersRating >= 0 &&
+      this.inputreviewersRating <= 100
+    ) {
+      if (this.reviewersRatings.length + 1 <= this.parameters.length) {
+        if (this.remarks.length + 1 <= this.parameters.length) {
           this.reviewersRatings.push(this.inputreviewersRating);
-          this.sumreviewersRatings += this.inputreviewersRating;
+          this.sumreviewersRatings +=
+            this.inputreviewersRating / this.parameters.length;
           this.inputreviewersRating = 0;
           this.remarks.push(this.inputremark);
-          this.scoreRemarks=[this.parameters,this.remarks,this.reviewersRatings];
-          console.log(this.scoreRemarks);
-          this.inputremark = "";
+          this.scoreRemarks = [
+            this.parameters,
+            this.remarks,
+            this.reviewersRatings,
+          ];
+
+          this.inputremark = '';
         } else {
           Swal.fire({
-            position: "center",
-            icon: "warning",
-            title: "Máximo 5 notas.",
+            position: 'center',
+            icon: 'warning',
+            title: `Máximo ${this.parameters.length} notas.`,
             showConfirmButton: false,
             timer: 1500,
           });
         }
       } else {
         Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Máximo 5 observaciones.",
+          position: 'center',
+          icon: 'warning',
+          title: 'Máximo 5 observaciones.',
           showConfirmButton: false,
           timer: 1500,
         });
       }
     } else {
       Swal.fire({
-        position: "center",
-        icon: "warning",
-        title: "Agregue un nota para continuar.",
+        position: 'center',
+        icon: 'warning',
+        title: 'Agregue un nota para continuar.',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -91,37 +101,61 @@ export class EvaluationComponent implements OnInit {
   }
 
   postQualification() {
-    // let id_person = sessionStorage.getItem('_user-data');
-    let qualificationData = {
-      qualification:{
-        postulation_id: sessionStorage.getItem('postulationdata'),
-        reviewersRating: this.reviewersRatings,
-        remark: this.remarks,
-        qualificaty: this.sumreviewersRatings,
-        person_id: sessionStorage.getItem('_user-data')
-      },
-    };
-    this.qualificationService.postQualification(qualificationData).subscribe((response) => {
+    if (this.reviewersRatings.length == this.parameters.length) {
+      let qualificationData = {
+        qualification: {
+          postulation_id: this.postulations_id,
+          reviewersRating: this.reviewersRatings,
+          remark: this.remarks,
+          qualificaty: this.sumreviewersRatings,
+          person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+        },
+      };
+
+      this.qualificationService
+        .postQualification(qualificationData)
+        .subscribe((response) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Calificado exitosamente.',
+            showConfirmButton: false,
+            timer: 1800,
+          }).then;
+          this.putStateQualification();
+          this.router.navigate(['/dashboard/postulations']);
+        });
+    } else {
       Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Calificación exitosa",
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Califique todos los criterios para continuar.',
         showConfirmButton: false,
         timer: 1800,
-      }).then
-      this.putStateQualification();
-      this.router.navigate(["/dashboard/postulations"]);
-    });
+      });
+    }
   }
 
   putStateQualification() {
-    let _id =  sessionStorage.getItem('postulationdata')!
-    let postulationData = {
-      postulation:{ status_quelification: true}
-    };
-    this.postulationService.putPostulation(_id, postulationData).
-      subscribe((res) => {
+    let percentage: number =
+        (this.sumreviewersRatings * 100) /
+        Number(this.parameters.length + '00'),
+      postulationData;
+
+    if (percentage >= 70 || percentage <= 100) {
+      postulationData = {
+        postulation: { status_quelification: true, status: 'Aprobado' },
+      };
+    } else {
+      postulationData = {
+        postulation: { status_quelification: true, status: 'Reprobado' },
+      };
+    }
+
+    this.postulationService
+      .putPostulation(this.postulations_id, postulationData)
+      .subscribe((res) => {
         console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
-      })
+      });
   }
 }

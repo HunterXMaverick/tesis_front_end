@@ -1,106 +1,126 @@
 <div class="flex">
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
 
-    <div class="w-full p-2">
-        <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
-            Rúbrica de Calificación | {{rubrics[0].ratingRange}}
-        </h2>
-        <div class="block md:flex items-center justify-between">
-            <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
-                Calificación Final | {{sumreviewersRatings}}
-            </h2>
-        </div>
-
-        <div class="py-6">
-            <form class="form-horizontal mx-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b-2 border-gray-200 bg-gray-200">
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Nota
-                            </th>
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Observacion
-                            </th>
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Calificar
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <th>
-                                <input class="
-                                  focus:border-blue-500
-                                  appearance-none
-                                  border
-                                  rounded
-                                  w-full
-                                  py-2
-                                  px-3
-                                  text-gray-700
-                                  leading-tight
-                                  focus:outline-none
-                                " type="number" [(ngModel)]="inputreviewersRating" name="inputreviewersRating" />
-                            </th>
-                            <th>
-                                <input class="
-                                  focus:border-blue-500
-                                  appearance-none
-                                  border
-                                  rounded
-                                  w-full
-                                  py-2
-                                  px-3
-                                  text-gray-700
-                                  leading-tight
-                                  focus:outline-none
-                                " type="text" [(ngModel)]="inputremark" name="inputremark" />
-                            </th>
-                            <th>
-                                <button (click)="addQuality()" class="w-full">Add</button>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b-2 border-gray-200 bg-gray-200">
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Parametros
-                            </th>
-                            <td *ngFor="let parametro of parameters">
-                                {{parametro}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Notas
-                            </th>
-                            <td *ngFor="let observacion of scoreRemarks[2]">
-                                {{observacion}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="px-5 py-3 text-left text-sm text-gray-600">
-                                Observaciones
-                            </th>
-                            <td *ngFor="let nota of scoreRemarks[1]">
-                                {{nota}}
-                            </td>
-                        </tr>
-                    </thead>
-                </table>
-
-                <div class="block md:flex items-center justify-between">
-                    <button (click)="postQualification()"
-                        class="align-middle bg-blue-500 hover:bg-blue-600 text-center px-4 py-2 text-white text-sm font-semibold rounded-lg inline-block shadow-lg focus:outline-none">
-                        Guardar
-                    </button>
-                </div>
-
-            </form>
-        </div>
+  <div class="w-full p-2">
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Rúbrica de Calificación | {{ rubrics[0].ratingRange }}
+    </h2>
+    <div class="block md:flex items-center justify-between">
+      <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+        Calificación Final | {{ sumreviewersRatings }}
+      </h2>
     </div>
+
+    <div class="py-6">
+      <form class="form-horizontal mx-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b-2 border-gray-200 bg-gray-200">
+              <th class="px-5 py-3 text-left text-sm text-gray-600">Nota</th>
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
+                Observacion
+              </th>
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
+                Calificar
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+              <th>
+                <input
+                  class="
+                    focus:border-blue-500
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    leading-tight
+                    focus:outline-none
+                  "
+                  type="number"
+                  [(ngModel)]="inputreviewersRating"
+                  name="inputreviewersRating"
+                />
+              </th>
+              <th>
+                <input
+                  class="
+                    focus:border-blue-500
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700
+                    leading-tight
+                    focus:outline-none
+                  "
+                  type="text"
+                  [(ngModel)]="inputremark"
+                  name="inputremark"
+                />
+              </th>
+              <th>
+                <button (click)="addQuality()" class="w-full">Add</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="w-full">
+          <thead>
+            <tr class="border-b-2 border-gray-200 bg-gray-200">
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
+                Parametros
+              </th>
+              <td *ngFor="let parametro of parameters">
+                {{ parametro }}
+              </td>
+            </tr>
+            <tr>
+              <th class="px-5 py-3 text-left text-sm text-gray-600">Notas</th>
+              <td *ngFor="let observacion of scoreRemarks[2]">
+                {{ observacion }}
+              </td>
+            </tr>
+            <tr>
+              <th class="px-5 py-3 text-left text-sm text-gray-600">
+                Observaciones
+              </th>
+              <td *ngFor="let nota of scoreRemarks[1]">
+                {{ nota }}
+              </td>
+            </tr>
+          </thead>
+        </table>
+
+        <div class="block md:flex items-center justify-between">
+          <button
+            (click)="postQualification()"
+            class="
+              align-middle
+              bg-blue-500
+              hover:bg-blue-600
+              text-center
+              px-4
+              py-2
+              text-white text-sm
+              font-semibold
+              rounded-lg
+              inline-block
+              shadow-lg
+              focus:outline-none
+            "
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
