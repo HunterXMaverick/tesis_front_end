@@ -22,6 +22,7 @@ export class PostulationsComponent implements OnInit {
   projectsSpeaker: any = [];
   names: any = '';
   last_names: any = '';
+  page: number = 1;
 
   constructor(
     private postulationService: PostulationService,

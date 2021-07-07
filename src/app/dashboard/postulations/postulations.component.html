@@ -8,6 +8,33 @@
     >
       Lista de Postulaciones
     </h2>
+
+    <div *ngIf="dataUser.rol == 'Organizador'" class="w-1/3 flex flex-col px-3">
+      <label class="font-thin text-xl mr-5"> Área de conocimiento: </label>
+      <select
+        class="
+          focus:border-blue-500
+          appearance-none
+          border
+          rounded
+          w-full
+          py-2
+          px-3
+          text-gray-700
+          leading-tight
+          focus:outline-none
+        "
+      >
+        <!-- [(ngModel)]="selected_knowledge_area"
+        name="selected_knowledge_area"
+        (change)="getPostulationsByAreaOfKnowledge()" -->
+        <option value="">Seleccione..</option>
+        <!-- <option *ngFor="let area of knowledge_area" value="{{ area }}">
+          {{ area }}
+        </option> -->
+      </select>
+    </div>
+
     <div
       class="flex border-b justify-between"
       *ngIf="dataUser.rol == 'Ponente'"
@@ -49,7 +76,19 @@
                 Título del proyecto
               </th>
               <th
-                *ngIf="dataUser.rol !== 'Ponente'"
+                *ngIf="dataUser.rol == 'Ponente'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
+                Resumen
+              </th>
+              <th
+                *ngIf="dataUser.rol == 'Revisor'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
+                Resumen
+              </th>
+              <th
+                *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
                 class="px-5 py-3 text-left text-sm text-gray-600"
               >
                 Datos del Autor
@@ -57,6 +96,18 @@
               <!-- <th class="px-5 py-3 text-left text-sm text-gray-600">Resumen</th> -->
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Área de conocimiento
+              </th>
+              <th
+                *ngIf="dataUser.rol == 'Revisor'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
+                Datos del Autor
+              </th>
+              <th
+                *ngIf="dataUser.rol == 'Ponente'"
+                class="px-5 py-3 text-left text-sm text-gray-600"
+              >
+                Archivo
               </th>
               <th
                 *ngIf="dataUser.rol !== 'Revisor'"
@@ -97,7 +148,10 @@
           >
             <!-- agregar un console en esta linea -->
             <tr
-              *ngFor="let postulation of postulations"
+              *ngFor="
+                let postulation of postulations
+                  | paginate: { itemsPerPage: 5, currentPage: page }
+              "
               class="border-b border-gray-200 hover:bg-gray-100"
             >
               <td class="px-1 py-5 text-sm text-center">
@@ -124,13 +178,77 @@
               </td>
               <td
                 *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-                class="px-5 py-5 flex-1 text-sm text-center"
+                class="px-5 py-5e text-sm text-center"
               >
-                <button
-                  (click)="getUserById(postulation.person_id)"
-                  (click)="handleModal(true)"
-                  class="tooltip appearance-none focus:outline-none mr-2"
-                ></button>
+                <div
+                  *ngIf="
+                    postulation.status !== 'Aprobado' &&
+                    postulation.status !== 'Reprobado'
+                  "
+                >
+                  <button
+                    id="btn"
+                    class="tooltip appearance-none focus:outline-none mr-2"
+                  >
+                    <i class="fas fa-clock text-blue-700 text-xl"></i>
+                    <span
+                      class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      "
+                      >Pendiente</span
+                    >
+                  </button>
+                </div>
+                <div
+                  *ngIf="
+                    postulation.status !== 'Pendiente' &&
+                    postulation.status !== 'Reprobado'
+                  "
+                >
+                  <button
+                    id="btn"
+                    class="tooltip appearance-none focus:outline-none mr-2"
+                  >
+                    <i class="fas fa-thumbs-up text-green-700 text-xl"></i>
+                    <span
+                      class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      "
+                      >Aprobado</span
+                    >
+                  </button>
+                </div>
+                <div
+                  *ngIf="
+                    postulation.status !== 'Aprobado' &&
+                    postulation.status !== 'Pendiente'
+                  "
+                >
+                  <button
+                    id="btn"
+                    class="tooltip appearance-none focus:outline-none mr-2"
+                  >
+                    <i class="fas fa-thumbs-down text-red-700 text-xl"></i>
+                    <span
+                      class="
+                        tooltip
+                        appearance-none
+                        focus:outline-none
+                        mr-2
+                        tooltiptext
+                      "
+                      >Reprobado</span
+                    >
+                  </button>
+                </div>
               </td>
 
               <td
@@ -301,6 +419,14 @@
       >
         <p class="font-thin">No hay proyectos para mostrar</p>
       </div>
+      <pagination-controls
+        *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+        class="flex text-center"
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      >
+      </pagination-controls>
     </div>
   </div>
 </div>
