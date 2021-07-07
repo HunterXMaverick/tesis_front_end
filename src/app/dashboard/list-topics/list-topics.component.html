@@ -60,7 +60,9 @@
           <!--   BODY FOR PARTICIPANTS -->
           <tbody *ngIf="dataUser.rol !== 'Ponente'">
             <tr
-              *ngFor="let postulation of postulations"
+              *ngFor="let postulation of postulations
+              | paginate: { itemsPerPage: 5, currentPage: page }
+              "
               class="border-b border-gray-200 hover:bg-gray-100"
             >
               <td class="px-1 py-5 text-sm text-center">
@@ -85,6 +87,14 @@
             </tr>
           </tbody>
         </table>
+        <pagination-controls
+        *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+        class="flex text-center"
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      >
+      </pagination-controls>
       </div>
     </div>
   </div>
