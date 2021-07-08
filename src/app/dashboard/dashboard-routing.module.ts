@@ -19,6 +19,7 @@ import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
+import { ConferenceComponent } from './conference/conference.component'; 
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: "list-topics", component: ListTopicsComponent },
   { path: "evaluation", component: EvaluationComponent },
   { path: "assistants-participants", component: AssistantsParticipantsComponent },
+  { path: "conference", component: ConferenceComponent },
 ];
 
 @NgModule({

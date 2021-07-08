@@ -86,12 +86,11 @@
                 </button>
               </td>
 
-              <td
-                *ngIf="dataUser.rol !== 'Ponente'"
-                class="px-5 py-5 flex-1 text-sm text-center"
-              >
-                <button class="tooltip appearance-none focus:outline-none ml-2">
-                  <span class="tooltiptext">Postular</span>
+              <td 
+                *ngIf="dataUser.rol == 'Participante'" class="tooltip appearance-none focus:outline-none ml-2">
+                <button (click)="postParticipation()"
+                class="tooltip appearance-none focus:outline-none ml-2">
+                  Postular
                 </button>
               </td>
             </tr>
