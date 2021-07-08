@@ -3,6 +3,9 @@ import { PostulationService } from '../../services/postulation.service';
 import { PersonService } from '../../services/person.service';
 import { FilesService } from 'src/app/services/files.service';
 import { CongressService } from 'src/app/services/congress.service';
+import { ParticipationService } from '../../services/participation.service';
+import { Participation } from '../../models/participation'
+import { Router } from "@angular/router";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,11 +27,18 @@ export class ListTopicsComponent implements OnInit {
   nameSpeakerTemp: string = '';
   page: number = 1;
 
+  modelParticipation: Participation = {
+    attend: "",
+    person_id: ""
+  }
+
   constructor(
     private postulationService: PostulationService,
     private personService: PersonService,
     private congressService: CongressService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private participation: ParticipationService,
+    private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
@@ -37,6 +47,7 @@ export class ListTopicsComponent implements OnInit {
     this.handleModal(false);
     this.getPostulations();
     this.getCongress();
+    this.postParticipation();
   }
 
   getUserById(id: string) {
@@ -164,6 +175,19 @@ export class ListTopicsComponent implements OnInit {
       modal.classList.remove('hidden');
     } else {
       modal.classList.add('hidden');
+    }
+  }
+
+  postParticipation() {
+    if (
+      this.modelParticipation.attend &&
+      this.modelParticipation.person_id
+    ) {
+      let dataParticipation = {
+        participation: this.modelParticipation
+      };
+
+    
     }
   }
 }

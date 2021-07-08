@@ -24,7 +24,8 @@ import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ConferenceComponent } from './conference/conference.component'; 
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ListTopicsComponent,
     EvaluationComponent,
     AssistantsParticipantsComponent,
+    ConferenceComponent,
   ],
   exports: [SidebarComponent],
   imports: [
