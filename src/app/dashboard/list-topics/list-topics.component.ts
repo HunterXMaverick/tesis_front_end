@@ -4,8 +4,8 @@ import { PersonService } from '../../services/person.service';
 import { FilesService } from 'src/app/services/files.service';
 import { CongressService } from 'src/app/services/congress.service';
 import { ParticipationService } from '../../services/participation.service';
-import { Participation } from '../../models/participation'
-import { Router } from "@angular/router";
+import { Participation } from '../../models/participation';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -28,9 +28,9 @@ export class ListTopicsComponent implements OnInit {
   page: number = 1;
 
   modelParticipation: Participation = {
-    attend: "",
-    person_id: ""
-  }
+    attend: '',
+    person_id: '',
+  };
 
   constructor(
     private postulationService: PostulationService,
@@ -179,15 +179,10 @@ export class ListTopicsComponent implements OnInit {
   }
 
   postParticipation() {
-    if (
-      this.modelParticipation.attend &&
-      this.modelParticipation.person_id
-    ) {
+    if (this.modelParticipation.attend && this.modelParticipation.person_id) {
       let dataParticipation = {
-        participation: this.modelParticipation
+        participation: this.modelParticipation,
       };
-
-    
     }
   }
 }
