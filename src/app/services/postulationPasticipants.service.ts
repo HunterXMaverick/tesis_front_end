@@ -40,4 +40,11 @@ export class PostulationPasticipantsService {
       this.server.obtainHeaders()
     );
   }
+
+  getParticipantPostulationsLength(id: string) {
+    return this.http.get(
+      `${this.url}/getParticipantPostulationsLength/${id}`,
+      this.server.obtainHeaders()
+    );
+  }
 }
