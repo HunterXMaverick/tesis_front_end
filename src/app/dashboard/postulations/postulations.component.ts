@@ -6,6 +6,7 @@ import { FilesService } from 'src/app/services/files.service';
 import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
 import { QualificationService } from 'src/app/services/qualification';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-postulations',
@@ -38,7 +39,8 @@ export class PostulationsComponent implements OnInit {
     private filesService: FilesService,
     private assignmentService: AssignmentService,
     private congressService: CongressService,
-    private qualificationService: QualificationService
+    private qualificationService: QualificationService,
+    private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
@@ -78,7 +80,6 @@ export class PostulationsComponent implements OnInit {
             .getPostulationsByknowledgeArea(this.assignments)
             .subscribe((knowledge: any) => {
               this.knowledge_areas = knowledge.data;
-              console.log(this.knowledge_areas);
             });
         }
       });
@@ -95,7 +96,6 @@ export class PostulationsComponent implements OnInit {
             this.getUserById(element.person_id);
             if (element.person_id == this.dataUser._id) {
               this.projectsSpeaker.push(element);
-              console.log(this.projectsSpeaker);
             }
           });
           this.showPostulations = true;
@@ -225,5 +225,26 @@ export class PostulationsComponent implements OnInit {
       },
       (error) => console.error(error)
     );
+  }
+
+  showGrade(id: string) {
+    this.qualificationService.getQualification().subscribe((response: any) => {
+      response.data.forEach((element: any) => {
+        if (element.postulation_id == id) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: `Su calificación final es: ${element.qualificaty}`,
+            showConfirmButton: true,
+            timer: 3000,
+          });
+        }
+      });
+    });
+  }
+
+  assignParticipants(postulation_id: string) {
+    localStorage.setItem('postulation_id', postulation_id);
+    this.router.navigate(['dashboard/assistants-participants']);
   }
 }

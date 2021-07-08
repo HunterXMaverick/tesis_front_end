@@ -1,198 +1,60 @@
 <div class="flex">
-    <app-sidebar></app-sidebar>
-  
-    <div class="w-full p-2">
-      <h2 *ngIf="dataUser.rol !== 'Ponente'" class="py-4 text-2xl font-semibold text-gray-800 border-b">
-        Listado de Participantes por asignar
-      </h2>
-  
-      <div class="py-6">
-        <div class="inline-block shadow rounded-lg">
-          <table *ngIf="
-              (projectsSpeaker.length > 0 && dataUser.rol == 'Ponente') ||
-              dataUser.rol == 'Organizador' ||
-              dataUser.rol == 'Revisor'">
-            <thead>
-              <tr class="border-b-2 border-gray-200 bg-gray-200">
-                <th class="px-5 py-3 text-left text-sm text-gray-600">
-                  Nombre de Participantes
-                </th>
-                <th class="px-5 py-3 text-left text-sm text-gray-600">
-                  Título
-                </th>
-                <th *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-3 text-left text-sm text-gray-600">
-                  Asignación
-                </th>
-              </tr>
-            </thead>
-            <!--   BODY FOR PARTICIPANTS  -->
-            <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'">
-              <tr *ngFor="let postulation of postulations" class="border-b border-gray-200 hover:bg-gray-100">
-                <td *ngIf="dataUser.rol !== 'Ponente'" class="px-5 py-5 flex-1 text-sm text-center">
-                  <button (click)="getUserById(postulation.person_id)" (click)="handleModal(true)"
-                    class="tooltip appearance-none focus:outline-none mr-2">
-                    <i class="fas fa-address-book text-blue-800 text-xl"></i>
-                  </button>
-                </td>
-                <td class="px-5 py-5e text-sm text-center">
-                  <p class="text-gray-900">{{ postulation.knowledge_area }}</p>
-                </td>
-                <td *ngIf="dataUser.rol == 'Organizador'" class="px-5 py-5 flex-1 text-sm text-center">
-                  <button routerLink= "/dashboard/assistants-participants"
-                  class="tooltip appearance-none focus:outline-none ml-2">
-                    Asignar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-            </table>
-        </div>
-        <div *ngIf="projectsSpeaker.length == 0 && dataUser.rol == 'Ponente'" class="w-full text-center">
-          <p class="font-thin">No hay proyectos para mostrar</p>
-        </div>
-      </div>
-    </div>
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full p-2">
+    <h2
+      *ngIf="dataUser.rol !== 'Ponente'"
+      class="py-4 text-2xl font-semibold text-gray-800 border-b"
+    >
+      Listado de Participantes por asignar
+    </h2>
+
+    <table
+      *ngIf="dataUser.rol == 'Organizador'"
+      class="w-full my-6 px-3 text-center"
+    >
+      <thead>
+        <tr class="border-b-2 border-gray-200 bg-gray-200">
+          <th class="px-5 py-3 text-sm text-gray-600">
+            Nombre de Participantes
+          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Título</th>
+          <th
+            *ngIf="dataUser.rol == 'Organizador'"
+            class="px-5 py-3 text-sm text-gray-600"
+          >
+            Asignación
+          </th>
+        </tr>
+      </thead>
+      <!--   BODY FOR PARTICIPANTS  -->
+      <tbody *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'">
+        <tr
+          *ngFor="let element of participantsPostulations"
+          class="border-b border-gray-200 hover:bg-gray-100"
+        >
+          <td
+            *ngIf="dataUser.rol !== 'Ponente'"
+            class="px-5 py-5 flex-1 text-sm text-center"
+          >
+            <p class="text-gray-900">{{ element.name }}</p>
+          </td>
+          <td class="px-5 py-5e text-sm text-center">
+            <p class="text-gray-900">{{ element.title }}</p>
+          </td>
+          <td
+            *ngIf="dataUser.rol == 'Organizador'"
+            class="px-5 py-5 flex-1 text-sm text-center"
+          >
+            <button
+              routerLink="/dashboard/assistants-participants"
+              class="tooltip appearance-none focus:outline-none ml-2"
+            >
+              Asignar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
-  <!-- MODAL -->
-  <!-- <dialog id="myModal" class="h-auto w-11/12 md:w-1/2 p-5 bg-white rounded-md">
-    <div class="flex flex-col w-full h-auto">
-      <div class="flex w-full h-auto justify-between">
-        <div class="h-auto pb-5 pl-2 text-2xl">
-          <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-          Datos del autor
-        </div>
-        <div class="h-auto pb-5 pr-2 text-2xl">
-          <i
-            onclick="document.getElementById('myModal').close();"
-            class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-          ></i>
-        </div>
-      </div>
-      <div
-        class="
-          w-full
-          h-auto
-          py-6
-          px-10
-          items-center
-          bg-gray-200
-          rounded
-          text-gray-800
-        "
-      >
-        <div *ngIf="userData">
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Nombres:</h2>
-            <p>{{ userData.names }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Apellidos:</h2>
-            <p>{{ userData.last_names }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Rol:</h2>
-            <p>{{ userData.rol }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-            <p>{{ userData.type_dni }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Número de identificación:</h2>
-            <p>{{ userData.dni }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Nivel académico:</h2>
-            <p>{{ userData.level_academy }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Titulo:</h2>
-            <p>{{ userData.title }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Teléfono:</h2>
-            <p>{{ userData.phone }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Correo electrónico:</h2>
-            <p>{{ userData.email }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </dialog> -->
-  
-  <div id="modal" class="
-      flex
-      items-center
-      justify-center
-      fixed
-      left-0
-      bottom-0
-      w-full
-      h-full
-      bg-gray-800 bg-opacity-75
-    ">
-    <div class="flex flex-col w-1/3 h-auto bg-white">
-      <div class="flex w-full h-auto justify-between">
-        <div class="h-auto pb-5 pl-2 text-2xl">
-          <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-          Datos del autor
-        </div>
-        <div class="h-auto pb-5 pr-2 text-2xl">
-          <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
-        </div>
-      </div>
-      <!-- *ngFor="let element of userById" -->
-      <div class="
-          w-full
-          h-auto
-          py-6
-          px-10
-          items-center
-          bg-gray-200
-          rounded
-          text-gray-800
-        ">
-        <div *ngIf="userData">
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Nombres:</h2>
-            <p>{{ userData.names }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Apellidos:</h2>
-            <p>{{ userData.last_names }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Rol:</h2>
-            <p>{{ userData.rol }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-            <p>{{ userData.type_dni }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Número de identificación:</h2>
-            <p>{{ userData.dni }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Nivel académico:</h2>
-            <p>{{ userData.level_academy }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Titulo:</h2>
-            <p>{{ userData.title }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Teléfono:</h2>
-            <p>{{ userData.phone }}</p>
-          </div>
-          <div class="flex py-2">
-            <h2 class="font-bold mr-3">Correo electrónico:</h2>
-            <p>{{ userData.email }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>

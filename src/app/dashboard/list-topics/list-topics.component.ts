@@ -7,6 +7,7 @@ import { ParticipationService } from '../../services/participation.service';
 import { Participation } from '../../models/participation';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PostulationPasticipantsService } from 'src/app/services/postulationPasticipants.service';
 
 @Component({
   selector: 'app-list-topics',
@@ -38,6 +39,7 @@ export class ListTopicsComponent implements OnInit {
     private congressService: CongressService,
     private filesService: FilesService,
     private participation: ParticipationService,
+    private postulationParticipantsService: PostulationPasticipantsService,
     private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
@@ -47,7 +49,6 @@ export class ListTopicsComponent implements OnInit {
     this.handleModal(false);
     this.getPostulations();
     this.getCongress();
-    this.postParticipation();
   }
 
   getUserById(id: string) {
@@ -137,9 +138,6 @@ export class ListTopicsComponent implements OnInit {
     return this.personService.getUserById(id).subscribe(
       (res: any) => {
         this.nameSpeakerTemp = `${res.data.last_names} ${res.data.names}`;
-        // this.userById.push(res.data);
-        // this.userData = res.data;
-        // console.log(this.userData);
       },
       (err) => console.error(err)
     );
@@ -178,11 +176,77 @@ export class ListTopicsComponent implements OnInit {
     }
   }
 
-  postParticipation() {
-    if (this.modelParticipation.attend && this.modelParticipation.person_id) {
-      let dataParticipation = {
-        participation: this.modelParticipation,
-      };
-    }
+  postParticipation(postulation_id: string) {
+    let person_id = JSON.parse(sessionStorage.getItem('_user-data')!)._id;
+
+    this.postulationParticipantsService
+      .getParticipantPostulationsLength(person_id)
+      .subscribe((res: any) => {
+        if (res.data.length + 1 <= 2) {
+          if (res.data.length == 0) {
+            let postData = {
+              postulationParticipants: {
+                postulation_id,
+                person_id,
+                status: 'Pendiente',
+              },
+            };
+
+            this.postulationParticipantsService
+              .postPostulationParticipants(postData)
+              .subscribe(() => {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title:
+                    'Se ha recibido su petición de participar en la ponencia, espere a su confirmación.',
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              });
+          } else {
+            res.data.forEach((element: any) => {
+              if (element.postulation_id == postulation_id) {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'info',
+                  title: 'Ya ha postulado en esta ponencia.',
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              } else {
+                let postData = {
+                  postulationParticipants: {
+                    postulation_id,
+                    person_id,
+                    status: 'Pendiente',
+                  },
+                };
+
+                this.postulationParticipantsService
+                  .postPostulationParticipants(postData)
+                  .subscribe((response: any) => {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title:
+                        'Se ha recibido su petición de participar en la ponencia, espere a su confirmación.',
+                      showConfirmButton: false,
+                      timer: 3000,
+                    });
+                  });
+              }
+            });
+          }
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'info',
+            title: 'Solo puede postular en un máximo de dos ponencias.',
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
+      });
   }
 }
