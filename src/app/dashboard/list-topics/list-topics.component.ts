@@ -53,11 +53,13 @@ export class ListTopicsComponent implements OnInit {
   getPostulations() {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
-        this.postulations = res.data;
-        this.postulations.forEach((element: any) => {
-          this.getUserById(element.person_id);
-          if (element.person_id == this.dataUser._id) {
-            this.projectsSpeaker.push(element);
+        res.data.forEach((element: any) => {
+          if (element.status == 'Aprobado') {
+            this.postulations.push(element);
+            this.getUserById(element.person_id);
+            if (element.person_id == this.dataUser._id) {
+              this.projectsSpeaker.push(element);
+            }
           }
         });
       },
@@ -133,20 +135,26 @@ export class ListTopicsComponent implements OnInit {
   }
 
   getPostulationsByAreaOfKnowledge() {
-    return this.postulationService
-      .getPostulationsByknowledgeArea(this.selected_knowledge_area)
-      .subscribe(
-        (res: any) => {
-          this.postulations = [];
+    this.postulations = [];
 
-          res.data.forEach((element: any) => {
-            this.getSpeakerName(element.person_id);
-            element.speakerName = this.nameSpeakerTemp;
-            this.postulations.push(element);
-          });
-        },
-        (err) => console.error(err)
-      );
+    if (this.selected_knowledge_area == '') {
+      return this.getPostulations();
+    } else {
+      return this.postulationService
+        .getPostulationsByknowledgeArea(this.selected_knowledge_area)
+        .subscribe(
+          (res: any) => {
+            res.data.forEach((element: any) => {
+              if (element.status == 'Aprobado') {
+                this.getSpeakerName(element.person_id);
+                element.speakerName = this.nameSpeakerTemp;
+                this.postulations.push(element);
+              }
+            });
+          },
+          (err) => console.error(err)
+        );
+    }
   }
 
   handleModal(showModal: boolean) {
