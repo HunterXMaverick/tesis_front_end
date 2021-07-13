@@ -5,13 +5,13 @@
     <!-- Organizador -->
     <div
       *ngIf="dataUser.rol == 'Organizador'"
-      class="flex flex-col w-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
     >
       <div
-        class="w-full h-64 bg-top bg-cover rounded-t"
+        class="w-full h-1/3 bg-top bg-cover rounded-t"
         style="background-image: url(/assets/img/congresos.jpg)"
       ></div>
-      <div class="flex flex-col w-full md:flex-row">
+      <div class="flex flex-col w-full h-2/3 md:flex-row">
         <div
           class="
             flex flex-row
@@ -39,7 +39,17 @@
             </div>
           </div>
         </div>
-        <div class="p-4 font-normal text-gray-800 md:w-3/4">
+
+        <div
+          class="
+            p-4
+            font-normal
+            text-gray-800
+            md:w-3/4
+            flex flex-col
+            justify-between
+          "
+        >
           <h1
             class="
               mb-4
@@ -56,7 +66,7 @@
           <div class="leading-normal flex items-center">
             <b>Reglamento:</b>
             <iframe
-              class="text-xl text-justify"
+              class="text-xl text-justify w-full"
               srcdoc="{{ congress.regulations }}"
             ></iframe>
           </div>
@@ -165,13 +175,13 @@
     <!-- Ponentes -->
     <div
       *ngIf="dataUser.rol == 'Ponente'"
-      class="flex flex-col w-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
     >
       <div
-        class="w-full h-64 bg-top bg-cover rounded-t"
+        class="w-full h-1/3 bg-top bg-cover rounded-t"
         style="background-image: url(/assets/img/congresos.jpg)"
       ></div>
-      <div class="flex flex-col w-full md:flex-row">
+      <div class="flex flex-col w-full h-2/3 md:flex-row">
         <div
           class="
             flex flex-row
@@ -199,7 +209,16 @@
             </div>
           </div>
         </div>
-        <div class="p-4 font-normal text-gray-800 md:w-3/4">
+        <div
+          class="
+            p-4
+            font-normal
+            text-gray-800
+            md:w-3/4
+            flex flex-col
+            justify-between
+          "
+        >
           <h1
             class="
               mb-4
@@ -216,7 +235,7 @@
           <div class="leading-normal flex items-center">
             <b>Reglamento:</b>
             <iframe
-              class="text-xl text-justify"
+              class="text-xl text-justify w-full"
               srcdoc="{{ congress.regulations }}"
             ></iframe>
           </div>
@@ -259,13 +278,13 @@
     <!-- Revisor -->
     <div
       *ngIf="dataUser.rol == 'Revisor'"
-      class="flex flex-col w-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
     >
       <div
-        class="w-full h-64 bg-top bg-cover rounded-t"
+        class="w-full h-1/3 bg-top bg-cover rounded-t"
         style="background-image: url(/assets/img/congresos.jpg)"
       ></div>
-      <div class="flex flex-col w-full md:flex-row">
+      <div class="flex flex-col w-full h-2/3 md:flex-row">
         <div
           class="
             flex flex-row
@@ -293,7 +312,16 @@
             </div>
           </div>
         </div>
-        <div class="p-4 font-normal text-gray-800 md:w-3/4">
+        <div
+          class="
+            p-4
+            font-normal
+            text-gray-800
+            md:w-3/4
+            flex flex-col
+            justify-between
+          "
+        >
           <h1
             class="
               mb-4
@@ -310,7 +338,7 @@
           <div class="leading-normal flex items-center">
             <b>Reglamento:</b>
             <iframe
-              class="text-xl text-justify"
+              class="text-xl text-justify w-full"
               srcdoc="{{ congress.regulations }}"
             ></iframe>
           </div>
@@ -353,13 +381,13 @@
     <!-- Participante -->
     <div
       *ngIf="dataUser.rol == 'Participante'"
-      class="flex flex-col w-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
     >
       <div
-        class="w-full h-64 bg-top bg-cover rounded-t"
+        class="w-full h-1/3 bg-top bg-cover rounded-t"
         style="background-image: url(/assets/img/congresos.jpg)"
       ></div>
-      <div class="flex flex-col w-full md:flex-row">
+      <div class="flex flex-col w-full h-2/3 md:flex-row">
         <div
           class="
             flex flex-row
@@ -387,7 +415,16 @@
             </div>
           </div>
         </div>
-        <div class="p-4 font-normal text-gray-800 md:w-3/4">
+        <div
+          class="
+            p-4
+            font-normal
+            text-gray-800
+            md:w-3/4
+            flex flex-col
+            justify-between
+          "
+        >
           <h1
             class="
               mb-4
@@ -404,7 +441,7 @@
           <div class="leading-normal flex items-center">
             <b>Reglamento:</b>
             <iframe
-              class="text-xl text-justify"
+              class="text-xl text-justify w-full"
               srcdoc="{{ congress.regulations }}"
             ></iframe>
           </div>

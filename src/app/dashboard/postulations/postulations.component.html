@@ -259,12 +259,28 @@
             *ngIf="
               dataUser.rol == 'Organizador' && postulation.status == 'Aprobado'
             "
-            class="px-5 py-5 flex-1 text-sm text-center"
+            class="px-5 py-5 flex justify-center text-sm"
           >
             <button
               (click)="assignParticipants(postulation._id)"
-              class="tooltip appearance-none focus:outline-none ml-2"
+              class="
+                align-middle
+                bg-blue-500
+                hover:bg-blue-600
+                text-center
+                py-1
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+                mx-1
+              "
             >
+              <i class="fas fa-map-signs mr-1"></i>
               Asignar
             </button>
           </td>
@@ -656,8 +672,11 @@
         text-gray-800
       "
     >
-      <div class="flex flex-col justify-center" *ngIf="remarks">
-        <p *ngFor="let remark of remarks">{{ remark }}</p>
+      <div class="flex flex-col justify-center w-full" *ngIf="remarks">
+        <div *ngFor="let remark of remarks" class="flex">
+          <p class="px-2 w-1/2">{{ remark.criteria }}</p>
+          <p class="px-2 w-1/2">{{ remark.remark }}</p>
+        </div>
       </div>
     </div>
   </div>
