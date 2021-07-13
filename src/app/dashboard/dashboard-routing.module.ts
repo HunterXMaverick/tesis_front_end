@@ -21,6 +21,7 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
 import { ConferenceComponent } from './conference/conference.component'; 
 import { PostConferenceComponent } from './conference/post-conference/post-conference.component'; 
+import { PutQualificationsComponent } from './put-qualifications/put-qualifications.component'; 
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: "assistants-participants", component: AssistantsParticipantsComponent },
   { path: "conference", component: ConferenceComponent },
   { path: "post-conference", component: PostConferenceComponent },
+  { path: "put-qualifications", component:  PutQualificationsComponent},
 ];
 
 @NgModule({
