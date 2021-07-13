@@ -18,6 +18,7 @@ export class ConferenceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getPostulation();
   }
 
   getPostulation() {
@@ -25,6 +26,19 @@ export class ConferenceComponent implements OnInit {
       (res: any) => {
         this.postulations = res.data;
       });
+  }
+
+  getConference() {
+    return this.conferenceService.getConference().subscribe(
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.conference = null;
+        } else if (res.data.length >= 1) {
+          this.conference = res.data[0];
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
 }
