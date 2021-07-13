@@ -7,6 +7,7 @@ import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
 import { QualificationService } from 'src/app/services/qualification';
 import { Router } from '@angular/router';
+import { RubricService } from 'src/app/services/rubric.service';
 
 @Component({
   selector: 'app-postulations',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class PostulationsComponent implements OnInit {
   profile_picture_url: string = '';
-  remarks: Array<string> = [];
+  remarks: Array<any> = [];
   showPostulations: boolean = true;
   postulations: any = [];
   assignments: any = '';
@@ -40,6 +41,7 @@ export class PostulationsComponent implements OnInit {
     private assignmentService: AssignmentService,
     private congressService: CongressService,
     private qualificationService: QualificationService,
+    private rubricService: RubricService,
     private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
@@ -215,11 +217,29 @@ export class PostulationsComponent implements OnInit {
   }
 
   getRemarkQualification(postulationID: string) {
-    return this.qualificationService.getQualification().subscribe(
-      (response: any) => {
-        response.data.forEach((element: any) => {
+    this.remarks = [];
+    let counter: number = 0;
+
+    this.rubricService.getRubrics().subscribe((rubricResponse: any) => {
+      rubricResponse.data[0].qualificationCriteria.forEach(
+        (rubricElement: any) => {
+          let data = {
+            criteria: rubricElement,
+          };
+
+          this.remarks.push(data);
+        }
+      );
+    });
+
+    this.qualificationService.getQualification().subscribe(
+      (qualificationResponse: any) => {
+        qualificationResponse.data.forEach((element: any) => {
           if (element.postulation_id == postulationID) {
-            this.remarks = element.remark;
+            element.remark.forEach((remarkElement: any) => {
+              this.remarks[counter].remark = remarkElement;
+              counter++;
+            });
           }
         });
       },

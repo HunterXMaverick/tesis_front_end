@@ -11,6 +11,7 @@ export class SpeakersComponent implements OnInit {
   photo: any = '';
   users: any = [];
   // status: boolean;
+  page: number = 1;
 
   constructor(private personService: PersonService) {}
 

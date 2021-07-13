@@ -11,6 +11,7 @@ export class UsersComponent implements OnInit {
   photo: any = '';
   users: any = [];
   status: boolean = false;
+  page: number = 1;
 
   dataUserLog: any = [];
 

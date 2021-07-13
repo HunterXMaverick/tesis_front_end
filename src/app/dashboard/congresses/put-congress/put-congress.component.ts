@@ -39,7 +39,7 @@ export class PutCongressComponent {
       (res) => {
         this.congress = res;
         this.modelCongress.name = this.congress.data[0].name;
-        this.modelCongress.address_web = this.congress.data[0].address_web;
+        // this.modelCongress.address_web = this.congress.data[0].address_web;
         this.modelCongress.start_date = this.congress.data[0].start_date;
         this.modelCongress.end_date = this.congress.data[0].end_date;
         this.modelCongress.regulations = this.congress.data[0].regulations;

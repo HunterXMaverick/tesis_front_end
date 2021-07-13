@@ -29,23 +29,49 @@ export class AssistantsParticipantsComponent implements OnInit {
   }
 
   getPostulationParticipantsService() {
+    this.participantsPostulations = [];
     let data: any;
 
     this.postulationParticipantsService
       .getPostulationParticipantsController()
       .subscribe((response: any) => {
         response.data.forEach((element: any) => {
-          this.personsService
-            .getUserById(element.person_id)
-            .subscribe((res: any) => {
-              data = {
-                name: `${res.data.last_names} ${res.data.names}`,
-                title: res.data.title,
-                status: element.status,
-              };
-              this.participantsPostulations.push(data);
-            });
+          if (element.postulation_id == this.postulation_id) {
+            this.personsService
+              .getUserById(element.person_id)
+              .subscribe((res: any) => {
+                data = {
+                  _id: element._id,
+                  name: `${res.data.last_names} ${res.data.names}`,
+                  title: res.data.title,
+                  status: element.status,
+                };
+                this.participantsPostulations.push(data);
+              });
+          }
         });
       });
+  }
+
+  approveRejectParticipation(id: string, status: string) {
+    let data = {
+      postulationParticipants: { status },
+    };
+
+    this.postulationParticipantsService
+      .putPostulationParticipants(id, data)
+      .subscribe(
+        (res: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Participante ${status}.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.getPostulationParticipantsService();
+        },
+        (error) => console.error(error)
+      );
   }
 }

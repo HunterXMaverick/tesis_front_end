@@ -65,16 +65,7 @@
             routerLink="../assignment"
             class="flex hover:text-green-700 py-2 items-center"
           >
-            <svg
-              class="fill-current h-5 w-5 dark:text-gray-300"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 13H7v5h5v2H5V10h2v1h5v2M8
-                4v2H4V4h4m2-2H2v6h8V2m10 9v2h-4v-2h4m2-2h-8v6h8V9m-2
-                9v2h-4v-2h4m2-2h-8v6h8v-6z"
-              ></path>
-            </svg>
+            <i class="fas fa-map-signs"></i>
             <span class="ml-2 capitalize font-medium"> Asignación </span>
           </a>
 
@@ -84,7 +75,6 @@
             class="flex hover:text-green-700 py-2 items-center"
           >
             <i class="fas fa-user-plus"></i>
-
             <span class="ml-2 capitalize font-medium"> Crear Rúbrica </span>
           </button>
 
@@ -93,8 +83,7 @@
             routerLink="/dashboard/rubric"
             class="flex hover:text-green-700 py-2 items-center"
           >
-            <i class="fas fa-user-plus"></i>
-
+            <i class="fas fa-eye"></i>
             <span class="ml-2 capitalize font-medium"> Ver Rúbrica </span>
           </button>
         </div>
@@ -200,24 +189,33 @@
 
       <a
         routerLink="../postulations"
-        class="flex hover:text-green-700 py-2 items-center">
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-tasks"></i>
         <span class="ml-2 capitalize font-medium"> Postular </span>
       </a>
 
-      <a
-        routerLink="../conference"
-        class="flex hover:text-green-700 py-2 items-center">
-        <i class="fa fa-tasks"></i>
-        <span class="ml-2 capitalize font-medium">Conferencia </span>
-      </a>
+      <div id="item" class="flex flex-col py-2">
+        <a
+          routerLink="../conference"
+          class="flex hover:text-green-700 items-center"
+        >
+          <i class="fa fa-tasks"></i>
+          <span class="ml-2 capitalize font-medium">Conferencia </span>
+        </a>
 
-      <a
-        routerLink="../post-conference"
-        class="flex hover:text-green-700 py-2 items-center">
-        <i class="fa fa-tasks"></i>
-        <span class="ml-2 capitalize font-medium"> Generar Conferencia </span>
-      </a>
+        <div id="desple" class="ml-6 py-2 flex flex-col items-center">
+          <a
+            routerLink="../post-conference"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fa fa-tasks"></i>
+            <span class="ml-2 capitalize font-medium">
+              Generar Conferencia
+            </span>
+          </a>
+        </div>
+      </div>
 
       <!-- <a
         routerLink="../links"
