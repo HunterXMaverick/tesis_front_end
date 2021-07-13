@@ -26,7 +26,8 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ConferenceComponent } from './conference/conference.component';
-import { PostConferenceComponent } from './conference/post-conference/post-conference.component'; 
+import { PostConferenceComponent } from './conference/post-conference/post-conference.component';
+import { PutQualificationsComponent } from './put-qualifications/put-qualifications.component'; 
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { PostConferenceComponent } from './conference/post-conference/post-confe
     AssistantsParticipantsComponent,
     ConferenceComponent,
     PostConferenceComponent,
+    PutQualificationsComponent,
   ],
   exports: [SidebarComponent],
   imports: [

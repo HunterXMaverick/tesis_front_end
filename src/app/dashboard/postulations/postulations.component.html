@@ -400,6 +400,16 @@
             </div>
             <div>
               <button
+                *ngIf="knowledge_area.status_quelification != false"
+                routerLink="../evaluation"
+                class="tooltip appearance-none focus:outline-none ml-2"
+              >
+                <i class="fas fa-edit text-blue-600 text-xl"></i>
+                <span class="tooltiptext">Editar</span>
+              </button>
+            </div>
+            <div>
+              <button
                 *ngIf="knowledge_area.status_quelification != true"
                 (click)="create(knowledge_area)"
                 routerLink="../evaluation"
