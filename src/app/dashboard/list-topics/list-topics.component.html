@@ -6,7 +6,7 @@
       *ngIf="dataUser.rol !== 'Ponente'"
       class="py-4 text-2xl font-semibold text-gray-800 border-b"
     >
-      Lista de Postulaciones
+      Lista de Ponencias
     </h2>
 
     <div class="w-full py-4 flex justify-center">
@@ -29,7 +29,7 @@
           name="selected_knowledge_area"
           (change)="getPostulationsByAreaOfKnowledge()"
         >
-          <option value="">Seleccione..</option>
+          <option value="">Todas las ponencias...</option>
           <option *ngFor="let area of knowledge_area" value="{{ area }}">
             {{ area }}
           </option>
@@ -47,17 +47,17 @@
       <thead>
         <tr class="border-b-2 border-gray-200 bg-gray-200">
           <th class="px-5 py-3 text-center text-sm text-gray-600">
-            Título del proyecto
+            Título ponencia
           </th>
           <th class="px-5 py-3 text-center text-sm text-gray-600">Resumen</th>
           <th class="px-5 py-3 text-center text-sm text-gray-600">
-            Nombre del Ponente
+            Datos del Ponente
           </th>
           <th
             *ngIf="dataUser.rol !== 'Revisor'"
             class="px-5 py-3 text-center text-sm text-gray-600"
           >
-            Postular
+            Acciones
           </th>
         </tr>
       </thead>
@@ -98,12 +98,28 @@
 
           <td
             *ngIf="dataUser.rol == 'Participante'"
-            class="px-5 py-5 flex-1 text-sm text-center"
+            class="px-5 py-5 flex text-sm justify-center"
           >
             <button
               (click)="postParticipation(postulation._id)"
-              class="tooltip appearance-none focus:outline-none ml-2"
+              class="
+                align-middle
+                bg-gray-500
+                hover:bg-gray-600
+                text-center
+                py-1
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+                mx-1
+              "
             >
+              <i class="fas fa-pen mr-1"></i>
               Postular
             </button>
           </td>
@@ -143,7 +159,7 @@
     <div class="flex w-full px-3 items-center justify-between">
       <div class="h-auto text-2xl">
         <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Datos del autor
+        Datos del Ponente
       </div>
 
       <div class="text-2xl">

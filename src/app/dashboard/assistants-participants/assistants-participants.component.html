@@ -23,7 +23,7 @@
             *ngIf="dataUser.rol == 'Organizador'"
             class="px-5 py-3 text-sm text-gray-600"
           >
-            Asignación
+            Acciones
           </th>
         </tr>
       </thead>
@@ -43,14 +43,85 @@
             <p class="text-gray-900">{{ element.title }}</p>
           </td>
           <td
-            *ngIf="dataUser.rol == 'Organizador'"
-            class="px-5 py-5 flex-1 text-sm text-center"
+            *ngIf="
+              dataUser.rol == 'Organizador' && element.status == 'Pendiente'
+            "
+            class="px-5 py-5 flex text-sm justify-center"
           >
             <button
-              routerLink="/dashboard/assistants-participants"
-              class="tooltip appearance-none focus:outline-none ml-2"
+              (click)="approveRejectParticipation(element._id, 'Aprobado')"
+              class="
+                align-middle
+                bg-green-500
+                hover:bg-green-600
+                text-center
+                py-1
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+                mx-1
+              "
             >
-              Asignar
+              <i class="fas fa-check-circle mr-1"></i>
+              Aprobar
+            </button>
+
+            <button
+              (click)="approveRejectParticipation(element._id, 'Rechazado')"
+              class="
+                align-middle
+                bg-red-500
+                hover:bg-red-600
+                text-center
+                py-1
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+                mx-1
+              "
+            >
+              <i class="fas fa-times-circle mr-1"></i>
+              Rechazar
+            </button>
+          </td>
+
+          <td
+            *ngIf="
+              dataUser.rol == 'Organizador' && element.status != 'Pendiente'
+            "
+            class="px-5 py-5 flex text-sm justify-center"
+          >
+            <button
+              disabled
+              class="
+                align-middle
+                bg-gray-500
+                hover:bg-gray-600
+                text-center
+                py-1
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+                mx-1
+              "
+            >
+              <i class="fas fa-bookmark mr-1"></i>
+              {{ element.status }}
             </button>
           </td>
         </tr>

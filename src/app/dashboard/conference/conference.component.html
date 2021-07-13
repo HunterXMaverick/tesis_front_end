@@ -1,5 +1,135 @@
-<div class="flex overflow-hidden">
-    <app-sidebar></app-sidebar>
+<div class="flex">
+  <app-sidebar></app-sidebar>
 
-  
+  <div class="w-full p-2">
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Lista de Conferencias.
+    </h2>
+
+    <hr />
+
+    <table class="w-full px-3 my-4 text-center" *ngIf="conferences">
+      <thead>
+        <tr class="border-b-2 border-gray-200 bg-gray-200">
+          <th class="px-5 py-3 text-sm text-gray-600">
+            Información de la ponencia
+          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Dirección Web</th>
+          <th class="px-5 py-3 text-sm text-gray-600">Fecha</th>
+          <th class="px-5 py-3 text-sm text-gray-600">Hora</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let conference of conferences"
+          class="border-b border-gray-200 hover:bg-gray-100"
+        >
+          <td class="px-1 py-5 text-sm flex justify-center">
+            <button
+              (click)="
+                getPostulation(conference.postulation_id); handleModal(true)
+              "
+              class="
+                focus:outline-none
+                border border-transparent
+                py-1
+                px-4
+                rounded-lg
+                shadow-sm
+                text-center text-white
+                bg-blue-500
+                hover:bg-blue-600
+                font-medium
+                flex
+                items-center
+                mx-2
+              "
+            >
+              <i class="fas fa-info mr-1"></i>
+              Info
+            </button>
+          </td>
+          <td class="px-5 py-5 flex-1 text-sm text-center">
+            <a
+              class="tooltip appearance-none focus:outline-none mr-2"
+              href="{{ conference.link }}"
+            >
+              {{ conference.link }}
+            </a>
+          </td>
+          <td class="px-5 py-5e text-sm text-center">
+            <p class="text-gray-900">{{ conference.date }}</p>
+          </td>
+          <td class="px-5 py-5e text-sm text-center">{{ conference.hour }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!conferences" class="w-full flex justify-center">
+      <p class="font-thin">No hay conferencias para mostrar</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div
+  id="modal"
+  class="
+    flex
+    items-center
+    justify-center
+    fixed
+    left-0
+    bottom-0
+    w-full
+    h-full
+    bg-gray-800 bg-opacity-75
+  "
+>
+  <div class="flex flex-col w-1/3 bg-white">
+    <div class="flex w-full px-3 items-center justify-between">
+      <div class="h-auto text-2xl">
+        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
+        Ponencia
+      </div>
+
+      <div class="text-2xl">
+        <i
+          (click)="handleModal(false)"
+          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
+        ></i>
+      </div>
+    </div>
+
+    <div
+      class="
+        flex
+        w-full
+        h-auto
+        py-6
+        px-10
+        items-center
+        justify-between
+        bg-gray-200
+        rounded
+        text-gray-800
+      "
+    >
+      <div class="flex flex-col w-full justify-center" *ngIf="postulationData">
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3 w-1/2">Título:</h2>
+          <p class="w-1/2">{{ postulationData.title_project }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3 w-1/2">Resumen:</h2>
+          <p class="w-1/2">{{ postulationData.summary_project }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3 w-1/2">Área de conocimiento:</h2>
+          <p class="w-1/2">{{ postulationData.knowledge_area }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

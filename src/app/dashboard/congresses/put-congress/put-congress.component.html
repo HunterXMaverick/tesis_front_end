@@ -1,7 +1,7 @@
 <div class="flex overflow-hidden">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full p-8">
+  <div class="w-full p-8 overflow-y-auto">
     <div
       class="
         py-4
@@ -40,7 +40,7 @@
           />
         </div>
 
-        <div class="flex flex-col py-2">
+        <!-- <div class="flex flex-col py-2">
           <label class="font-thin text-md"> Dirección web: </label>
           <input
             [(ngModel)]="modelCongress.address_web"
@@ -59,7 +59,7 @@
             type="text"
             name="address_web"
           />
-        </div>
+        </div> -->
 
         <div class="flex py-2">
           <div class="w-1/2 mx-2 flex flex-col">
@@ -246,77 +246,6 @@
           </button>
         </div>
       </div>
-
-      <!-- <div class="flex flex-col mt-4"></div>
-
-        <div class="-mx-3 md:flex mt-4" style="display: none">
-          <div class="md:w-1/2 px-3">
-            <label class="font-thin text-md mr-5"> Estado del congreso: </label>
-            <div
-              class="
-                relative
-                inline-block
-                w-10
-                mr-2
-                align-middle
-                select-none
-                transition
-                duration-200
-                ease-in
-              "
-            >
-              <input
-                *ngIf="modelCongress.status_congress == true"
-                checked
-                class="
-                  toggle-checkbox
-                  absolute
-                  block
-                  w-6
-                  h-6
-                  rounded-full
-                  bg-white
-                  border-4
-                  appearance-none
-                  focus:outline-none
-                  cursor-pointer
-                "
-                type="checkbox"
-                name="status_congress"
-              />
-              <input
-                *ngIf="modelCongress.status_congress == false"
-                class="
-                  toggle-checkbox
-                  absolute
-                  block
-                  w-6
-                  h-6
-                  rounded-full
-                  bg-white
-                  border-4
-                  appearance-none
-                  focus:outline-none
-                  cursor-pointer
-                "
-                type="checkbox"
-                name="status_congress"
-              />
-              <label
-                class="
-                  toggle-label
-                  block
-                  overflow-hidden
-                  h-6
-                  rounded-full
-                  bg-gray-300
-                "
-              ></label>
-            </div>
-          </div>
-        </div>
-
-   -->
     </form>
   </div>
 </div>
