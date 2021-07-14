@@ -1,72 +1,162 @@
-<div class="h-screen w-full flex overflow-hidden">
-
+<div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full mx-12 my-2 overflow-auto">
-
+  <div class="w-full p-2">
     <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Editar perfil
     </h2>
 
-    <div class="w-full pr-5 mt-6">
-      <form class="form-horizontal mx-auto">
-        <div class="flex flex-col mt-4">
-
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5">
-              Nombres:
-            </label>
-            <input
-              name="names"
-              [(ngModel)]="person.names"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              type="text"
-              placeholder="Ej: Marco Antonio"
-            />
-          </div>
-
-          <div class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5">
-              Apellidos:
-            </label>
-            <input
-              name="last_names"
-              [(ngModel)]="person.last_names"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              type="text"
-              placeholder="Ej: Jumbo Estrada"
-            />
-          </div>
-
-          <div *ngIf="logUser.person.rol !== 'Asistente'" class="flex flex-col mt-4">
-            <label class="font-thin text-xl mr-5">
-              Teléfono:
-            </label>
-            <input
-              name="phone"
-              [(ngModel)]="person.phone"
-              class="focus:border-blue-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              type="text"
-              placeholder="Ej: 0999999999"
-              maxlength="10"
-            />
-          </div>
-
+    <form
+      [formGroup]="user"
+      class="flex lg:flex-row md:flex-row flex-col text-gray-700 px-3"
+    >
+      <div class="w-1/2 p-2">
+        <div class="flex flex-col mt-4 px-4">
+          <label class="font-thin text-xl mr-5"> Nombres: </label>
+          <input
+            formControlName="names"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="text"
+            placeholder="Ej: Marco Antonio"
+          />
         </div>
+
+        <div class="flex flex-col mt-4 px-4">
+          <label class="font-thin text-xl mr-5"> Apellidos: </label>
+          <input
+            formControlName="last_names"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="text"
+            placeholder="Ej: Jumbo Estrada"
+          />
+        </div>
+
+        <div
+          *ngIf="logUser.rol !== 'Participante'"
+          class="flex flex-col mt-4 px-4"
+        >
+          <label class="font-thin text-xl mr-5"> Teléfono: </label>
+          <input
+            formControlName="phone"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="text"
+            placeholder="Ej: 0999999999"
+            maxlength="10"
+          />
+        </div>
+      </div>
+
+      <div class="w-1/2 p-2">
+        <div
+          *ngIf="logUser.rol == 'Organizador' || logUser.rol == 'Ponente'"
+          class="flex flex-col mt-4 px-4"
+        >
+          <label class="font-thin text-xl mr-5"> Foto de Perfil: </label>
+          <input
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="file"
+            (change)="handleFileInput($event)"
+          />
+        </div>
+
+        <div
+          *ngIf="logUser.rol !== 'Participante' && profile_picture_url !== ''"
+          class="flex mt-4 w-full justify-center"
+        >
+          <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
+        </div>
+
         <div class="flex flex-col my-16">
           <div class="flex">
-            <button routerLink="../../congresses"
-                    class="w-32 mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border">
+            <button
+              routerLink="../../congresses"
+              class="
+                mx-auto
+                focus:outline-none
+                py-1
+                px-4
+                flex
+                items-center
+                rounded-lg
+                shadow-sm
+                text-center text-gray-600
+                bg-white
+                hover:bg-gray-100
+                font-medium
+                border
+              "
+            >
+              <i class="fas fa-undo mr-1"></i>
               Cancelar
             </button>
             <button
               (click)="putUser()"
-              class="w-32 mx-auto focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium">
+              class="
+                mx-auto
+                focus:outline-none
+                border border-transparent
+                py-1
+                px-4
+                flex
+                items-center
+                rounded-lg
+                shadow-sm
+                text-center text-white
+                bg-blue-500
+                hover:bg-blue-600
+                font-medium
+              "
+            >
+              <i class="fas fa-save mr-1"></i>
               Guardar
             </button>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,158 +1,324 @@
-<div id="menu" class="h-screen w-full flex overflow-hidden">
-  <nav class="flex flex-col bg-gray-200 dark:bg-gray-900 w-64 px-12 pt-4 pb-6">
-    <div class="flex flex-row border-b items-center pb-2">
-      <img class="h-12 w-12 rounded-full object-cover mr-3" src="/assets/img/dot-logo.png"/>
-      <span class="text-lg font-semibold capitalize text-gray-800">
-				SCOGC
-			</span>
+<div class="flex overflow-hidden">
+  <nav
+    id="menu"
+    class="flex flex-col h-screen bg-gray-200 w-full px-12 py-4 rounded-r"
+  >
+    <div class="flex justify-center items-center py-2">
+      <img
+        class="h-12 w-12 rounded-full object-cover mr-3"
+        src="/assets/img/dot-logo.png"
+      />
+      <span class="text-lg font-semibold capitalize text-gray-800"> SOCV </span>
     </div>
 
     <div class="mt-4 text-center">
-       <span class="text-sm font-semibold text-green-600 mt-2">
-					Bienvenido/a
-			</span>
+      <span class="text-sm font-semibold text-green-600 mt-2">
+        Bienvenido/a
+      </span>
       <h2 class="my-2 text-lg text-gray-700 font-extrabold">
-        {{dataUser.person.last_names}} {{dataUser.person.names}}
+        {{ dataUser.last_names }} {{ dataUser.names }}
       </h2>
+      <div
+        *ngIf="
+          (dataUser.rol == 'Organizador' || dataUser.rol == 'Ponente') &&
+          profile_picture_url !== ''
+        "
+        class="flex mt-4 w-full justify-center"
+      >
+        <img [src]="profile_picture_url" class="w-32" alt="Foto de Perfil" />
+      </div>
       <span class="text-sm font-semibold text-green-600">
-					{{dataUser.person.rol}}
-			</span>
+        {{ dataUser.rol }}
+      </span>
     </div>
 
-    <ul class="mt-2 text-gray-700">
-
-      <li *ngIf="dataUser.person.rol !== 'Asistente' && dataUser.person.rol !== 'Ponente' && dataUser.person.rol !== 'Revisor'" 
-        class="mt-8">
-        <a routerLink="../new-reviewer" class="flex hover:text-green-700">
-          <i class="fa fa-university h-5 w-5 mt-1"></i>
-          <span class="ml-2 capitalize font-medium">
-						Crear Revisor
-					</span>
+    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Organizador'">
+      <div id="item" class="flex flex-col py-2">
+        <a
+          routerLink="../congresses"
+          class="flex items-center hover:text-green-700"
+        >
+          <i class="fa fa-university"></i>
+          <span class="ml-2 capitalize font-medium"> Congreso </span>
         </a>
-      </li>
+
+        <div id="desple" class="ml-6 py-2 flex flex-col items-center">
+          <a
+            *ngIf="congressCreated == false"
+            routerLink="../create-congress"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-plus-square"></i>
+            <span class="ml-2 capitalize font-medium"> Crear congreso </span>
+          </a>
+
+          <a
+            routerLink="../new-reviewer"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-user-plus"></i>
+            <span class="ml-2 capitalize font-medium"> Crear Revisor </span>
+          </a>
+
+          <a
+            *ngIf="congressCreated == true && reviewersCreated == true"
+            routerLink="../assignment"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-map-signs"></i>
+            <span class="ml-2 capitalize font-medium"> Asignación </span>
+          </a>
+
+          <button
+            *ngIf="congressCreated == true && rubricCreated == false"
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-user-plus"></i>
+            <span class="ml-2 capitalize font-medium"> Crear Rúbrica </span>
+          </button>
+
+          <button
+            *ngIf="congressCreated == true && rubricCreated == true"
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-eye"></i>
+            <span class="ml-2 capitalize font-medium"> Ver Rúbrica </span>
+          </button>
+        </div>
+      </div>
+
+      <a
+        routerLink="../postulations"
+        class="flex items-center hover:text-green-700 py-2"
+      >
+        <i class="fa fa-tasks"></i>
+        <span class="ml-2 capitalize font-medium"> Postulaciones </span>
+      </a>
+
+      <div id="item" class="flex flex-col py-2">
+        <a routerLink="../users" class="flex items-center hover:text-green-700">
+          <i class="fa fa-users"></i>
+          <span class="ml-2 capitalize font-medium"> Usuarios </span>
+        </a>
+
+        <div id="desple" class="ml-6 py-2 flex flex-col items-center">
+          <a
+            routerLink="../participants"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-user"></i>
+            <span class="ml-2 capitalize font-medium"> Participantes </span>
+          </a>
+
+          <a
+            routerLink="../speakers"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-user"></i>
+            <span class="ml-2 capitalize font-medium"> Ponentes </span>
+          </a>
+
+          <a
+            routerLink="../reviewer"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-user"></i>
+            <span class="ml-2 capitalize font-medium"> Revisor </span>
+          </a>
+        </div>
+      </div>
+      <a
+        routerLink="../list-conference"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Listado de Conferencia </span>
+      </a>
       
-      <li class="mt-8">
-        <a routerLink="../congresses" class="flex hover:text-green-700">
-          <i class="fa fa-university h-5 w-5 mt-1"></i>
-          <span class="ml-2 capitalize font-medium">
-						Congreso
-					</span>
-        </a>
-      </li>
-
-      <li
-        *ngIf="dataUser.person.rol !== 'Asistente' && dataUser.person.rol !== 'Ponente'"
-        class="mt-8">
-        <a routerLink="../postulations" class="flex hover:text-green-700">
-          <i class="fa fa-tasks h-5 w-5 mt-1"></i>
-          <span class="ml-2 capitalize font-medium">
-						Postulaciones
-					</span>
-        </a>
-      </li>
-
-      <li *ngIf="dataUser.person.rol == 'Ponente'" class="mt-8">
-        <a routerLink="../postulations" class="flex hover:text-green-700">
-          <i class="fa fa-tasks h-5 w-5 mt-1"></i>
-          <span class="ml-2 capitalize font-medium">
-						Mis proyectos
-					</span>
-        </a>
-      </li>
-
-      <li id="item" *ngIf="dataUser.person.rol !== 'Asistente' && dataUser.person.rol !== 'Ponente'" class="mt-8">
-        <a routerLink="../users" class="flex hover:text-green-700">
-          <i class="fa fa-users h-5 w-5 mt-1"></i>
-          <span class="ml-2 capitalize font-medium">
-            Usuarios
-          </span>
-        </a>
-
-        <ul id="desple">
-
-          <li class="mt-4 ml-6">
-            <a routerLink="../participants" class="flex hover:text-green-700" href="#">
-              <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-                <path d="M12 4a4 4 0 014 4 4 4 0 01-4 4 4 4 0 01-4-4 4 4 0
-                      014-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4
-                      8-4z"></path>
-              </svg>
-              <span class="ml-2 capitalize font-medium">
-                  Asistentes
-                </span>
-            </a>
-          </li>
-
-          <li class="mt-4 ml-6">
-            <a routerLink="../speakers" class="flex hover:text-green-700" href="#">
-              <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-                <path d="M12 4a4 4 0 014 4 4 4 0 01-4 4 4 4 0 01-4-4 4 4 0
-                    014-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4
-                    8-4z"></path>
-              </svg>
-              <span class="ml-2 capitalize font-medium">
-                  Ponentes
-                </span>
-            </a>
-          </li>
-
-          <li class="mt-4 ml-6">
-            <a routerLink="../reviewer" class="flex hover:text-green-700" href="#">
-              <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-                <path d="M12 4a4 4 0 014 4 4 4 0 01-4 4 4 4 0 01-4-4 4 4 0
-                    014-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4
-                    8-4z"></path>
-              </svg>
-              <span class="ml-2 capitalize font-medium">
-                  Revisor
-                </span>
-            </a>
-          </li>
-
-        </ul>
-
-      </li>
-
-      <li class="mt-8">
-        <a routerLink="../links" class="flex hover:text-green-700">
-          <svg class="fill-current h-5 w-5 dark:text-gray-300" viewBox="0 0 24 24">
-            <path d="M12 13H7v5h5v2H5V10h2v1h5v2M8
-							4v2H4V4h4m2-2H2v6h8V2m10 9v2h-4v-2h4m2-2h-8v6h8V9m-2
-							9v2h-4v-2h4m2-2h-8v6h8v-6z"></path>
-          </svg>
-          <span class="ml-2 capitalize font-medium">
-						Enlaces
-					</span>
-        </a>
-      </li>
-
-    </ul>
-
-    <div class="mt-auto flex items-center text-blue-800 text-center">
-      <a routerLink="/dashboard/put-user/{{dataUser.person._id}}" class="flex items-center"><i class="fa fa-user-edit"></i>
-        <span class="ml-2 font-medium">Editar perfil</span></a>
+      <!-- <a
+        routerLink="../links"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Enlaces </span>
+      </a> -->
     </div>
 
-    <div *ngIf="dataUser.person.rol !== 'Administrador'" class="mt-4 flex items-center text-red-700 text-center">
-      <a href="http://localhost:4200/home" class="flex items-center">
-        <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-          <path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
-						2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
-						0 012-2h9z"></path>
-        </svg>
-        <span class="ml-2 font-medium">Cerrar sesión</span>
+    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Participante'">
+      <!-- <a
+        routerLink="../links"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Enlaces </span>
+      </a> -->
+
+      <a
+        routerLink="../congresses"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Informacion General </span>
+      </a>
+      <a
+        routerLink="../list-topics"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Listado de Ponencias </span>
+      </a>
+      <a
+        routerLink="../list-conference"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Listado de Conferencia </span>
+      </a>
+      <a
+        routerLink="../list-postulation"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Ponencias Aprobadas</span>
       </a>
     </div>
 
-    <div *ngIf="dataUser.person.rol == 'Administrador'" class="mt-auto flex items-center text-red-700 text-center">
-      <a href="http://localhost:4200/home" class="flex items-center">
-        <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
-          <path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012
-						2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2
-						0 012-2h9z"></path>
-        </svg>
+    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Ponente'">
+      <a
+        routerLink="../congresses"
+        class="flex items-center hover:text-green-700 py-2"
+      >
+        <i class="fa fa-university"></i>
+        <span class="ml-2 capitalize font-medium"> Congreso </span>
+      </a>
+
+      <a
+        routerLink="../postulations"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fa fa-tasks"></i>
+        <span class="ml-2 capitalize font-medium"> Postular </span>
+      </a>
+
+      <div id="item" class="flex flex-col py-2">
+        <a
+          routerLink="../conference"
+          class="flex hover:text-green-700 items-center"
+        >
+          <i class="fa fa-tasks"></i>
+          <span class="ml-2 capitalize font-medium">Conferencia </span>
+        </a>
+
+        <div id="desple" class="ml-6 py-2 flex flex-col items-center">
+          <a
+            routerLink="../post-conference"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fa fa-tasks"></i>
+            <span class="ml-2 capitalize font-medium">
+              Generar Conferencia
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- <a
+        routerLink="../links"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Enlaces </span>
+      </a> -->
+    </div>
+
+    <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Revisor'">
+      <a
+        id="item"
+        routerLink="../congresses"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fa fa-university"></i>
+        <span class="ml-2 capitalize font-medium"> Congreso </span>
+      </a>
+
+      <a
+        routerLink="../postulations"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fa fa-tasks"></i>
+        <span class="ml-2 capitalize font-medium"> Postulaciones </span>
+      </a>
+
+      <!-- <a
+        routerLink="../links"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
+        <i class="fas fa-link"></i>
+        <span class="ml-2 capitalize font-medium"> Enlaces </span>
+      </a> -->
+    </div>
+
+    <div class="flex flex-col py-2">
+      <a
+        routerLink="/dashboard/put-user/{{ dataUser._id }}"
+        class="flex items-center text-blue-800 py-2"
+        ><i class="fa fa-user-edit"></i>
+        <span class="ml-2 font-medium">Editar perfil</span></a
+      >
+
+      <a
+        href="http://localhost:4200/home"
+        class="flex items-center text-red-700 py-2"
+      >
+        <i class="fas fa-sign-out-alt"></i>
         <span class="ml-2 font-medium">Cerrar sesión</span>
       </a>
     </div>
   </nav>
+
+  <div
+    class="
+      h-screen
+      p-0.5
+      rounded
+      text-sm
+      items-center
+      flex
+      -ml-1
+      overflow-hidden
+    "
+  >
+    <i
+      *ngIf="showSidebar == true"
+      class="
+        fas
+        fa-chevron-left
+        cursor-pointer
+        border
+        rounded-full
+        p-1
+        absolute
+        -ml-2
+        animate-pulse
+      "
+      (click)="handleSidebar()"
+    ></i>
+
+    <i
+      *ngIf="showSidebar == false"
+      class="
+        fas
+        fa-chevron-right
+        cursor-pointer
+        border
+        rounded-full
+        p-1
+        absolute
+        animate-pulse
+      "
+      (click)="handleSidebar()"
+    ></i>
+  </div>
 </div>

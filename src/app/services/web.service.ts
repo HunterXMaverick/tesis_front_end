@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {PermissionsService} from './permissions.service';
-import {HttpHeaders} from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { PermissionsService } from "./permissions.service";
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class WebService {
   private url: string;
 
   constructor(private permissions: PermissionsService) {
-    this.url = 'http://localhost:3500/api';
+    this.url = "http://localhost:3500/api";
   }
 
   obtainUrl(): string {
@@ -19,9 +19,18 @@ export class WebService {
   obtainHeaders(): object {
     return {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.permissions.obtainToken()
-      })
+        "Content-Type": "application/json",
+        Authorization: this.permissions.obtainToken(),
+      }),
+    };
+  }
+
+  obtainFileHeaders(): object {
+    return {
+      headers: new HttpHeaders({
+        // "Content-Type": "multipart/form-data",
+        Authorization: this.permissions.obtainToken(),
+      }),
     };
   }
 }

@@ -1,0 +1,256 @@
+<div class="flex overflow-hidden">
+  <app-sidebar></app-sidebar>
+
+  <div class="w-full p-2">
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+      Generar conferencia.
+    </h2>
+
+    <div class="w-full flex flex-col px-3">
+      <form [formGroup]="conference" class="w-full">
+        <div class="w-full flex justify-center py-6">
+          <div class="w-1/3 flex flex-col">
+            <label class="font-thin text-xl"> Postulación: </label>
+            <select
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              formControlName="postulation_id"
+            >
+              <option value="">Seleccione...</option>
+              <option
+                *ngFor="let postulation of postulations"
+                value="{{ postulation._id }}"
+              >
+                {{ postulation.title_project }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w-full flex flex-col p-3">
+          <h1 class="font-thin text-xl text-center py-3">
+            Selecciona tu plataforma preferida para crear tu conferencia.
+          </h1>
+
+          <div class="flex w-full justify-between py-3">
+            <button
+              (click)="goToVideoConferencePlatform('youtube')"
+              class="
+                align-middle
+                bg-red-500
+                hover:bg-red-600
+                text-center
+                py-2
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+              "
+            >
+              <i class="fas fa-hand-pointer mr-1"></i>
+              Youtube
+            </button>
+
+            <button
+              (click)="goToVideoConferencePlatform('zoom')"
+              class="
+                align-middle
+                bg-blue-500
+                hover:bg-blue-600
+                text-center
+                py-2
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+              "
+            >
+              <i class="fas fa-hand-pointer mr-1"></i>
+              Zoom
+            </button>
+
+            <button
+              (click)="goToVideoConferencePlatform('google-meet')"
+              class="
+                align-middle
+                bg-green-500
+                hover:bg-green-600
+                text-center
+                py-2
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+              "
+            >
+              <i class="fas fa-hand-pointer mr-1"></i>
+              Google Meet
+            </button>
+
+            <button
+              (click)="goToVideoConferencePlatform('facebook')"
+              class="
+                align-middle
+                bg-blue-500
+                hover:bg-blue-600
+                text-center
+                py-2
+                px-4
+                text-white text-sm
+                font-semibold
+                rounded-lg
+                shadow-lg
+                focus:outline-none
+                flex
+                items-center
+              "
+            >
+              <i class="fas fa-hand-pointer mr-1"></i>
+              Facebook Live
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <div
+            class="flex flex-col py-2 font-semibold text-gray-800 w-full px-2"
+          >
+            <label class="font-thin text-md"> Coloque la Dirección Web:</label>
+            <input
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              type="text"
+              formControlName="link"
+            />
+          </div>
+
+          <div
+            class="flex flex-col py-2 font-semibold text-gray-800 w-full px-2"
+          >
+            <label class="font-thin text-md"> Eliga su fecha </label>
+            <input
+              formControlName="date"
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              type="date"
+              min="{{ today }}"
+            />
+          </div>
+
+          <div
+            class="flex flex-col py-2 font-semibold text-gray-800 w-full px-2"
+          >
+            <label class="font-thin text-md"> Hora: </label>
+            <select
+              class="
+                focus:border-blue-500
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                leading-tight
+                focus:outline-none
+              "
+              formControlName="hour"
+            >
+              <option value="">Seleccione...</option>
+              <option *ngFor="let hour of hours" value="{{ hour }}">
+                {{ hour }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+
+      <div class="flex justify-center items-center my-8">
+        <button
+          routerLink="/dashboard/congresses"
+          class="
+            focus:outline-none
+            py-1
+            px-4
+            rounded-lg
+            shadow-sm
+            text-center text-gray-600
+            bg-white
+            hover:bg-gray-100
+            font-medium
+            border
+            flex
+            items-center
+            mx-2
+          "
+        >
+          <i class="fas fa-undo mr-1"> Cancelar </i>
+        </button>
+
+        <button
+          (click)="postConference()"
+          class="
+            focus:outline-none
+            border border-transparent
+            py-1
+            px-4
+            rounded-lg
+            shadow-sm
+            text-center text-white
+            bg-blue-500
+            hover:bg-blue-600
+            font-medium
+            flex
+            items-center
+            mx-2
+          "
+        >
+          <i class="fas fa-save mr-1"></i>
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

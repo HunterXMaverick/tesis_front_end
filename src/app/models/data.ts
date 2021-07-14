@@ -1,6 +1,6 @@
 export interface Data {
-  ok: boolean,
-  data: Array<any>,
-  sms: string,
-  token: string
+  ok: boolean;
+  data: Array<any>;
+  info: string;
+  token: string;
 }

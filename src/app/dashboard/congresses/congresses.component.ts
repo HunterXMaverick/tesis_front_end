@@ -1,61 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {CongressService} from '../../services/congress.service';
-import {PersonService} from '../../services/person.service';
+import { Component, OnInit } from '@angular/core';
+import { CongressService } from '../../services/congress.service';
 
 @Component({
   selector: 'app-congresses',
   templateUrl: './congresses.component.html',
-  styleUrls: ['./congresses.component.scss']
+  styleUrls: ['./congresses.component.scss'],
 })
 export class CongressesComponent implements OnInit {
+  persons: any = [];
+  congress: any;
+  dataUser: any;
 
-  persons: any = []
-  congress: any = []
-  dataUser: any = []
-  dataOrganizer: any = []
-
-  constructor(
-    private congressService: CongressService,
-    private personService: PersonService
-  ) {
+  constructor(private congressService: CongressService) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
   }
 
   ngOnInit() {
     this.getCongress();
-    this.getPersonByEmail();
-    this.getOrganizer();
   }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      res => {
-        this.congress = res;
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else if (res.data.length >= 1) {
+          this.congress = res.data[0];
+        }
       },
-      err => console.error(err)
-    )
-  }
-
-  getPersonByEmail() {
-    return this.personService.getUserByEmail(this.personService.email).subscribe(
-      res => {
-        this.dataUser = res
-      },
-      err => console.error(err)
-    )
-  }
-
-  getOrganizer() {
-    return this.personService.getUsers().subscribe(
-      res => {
-        this.persons = res
-        this.persons.persons.forEach(element => {
-            if (element.rol == 'Organizador') {
-              this.dataOrganizer = element
-            }
-          }
-        )
-      },
-      err => console.error(err)
-    )
+      (err) => console.error(err)
+    );
   }
 }
