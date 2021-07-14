@@ -31,11 +31,10 @@ export class EvaluationComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
-  }
-
-  ngOnInit(): void {
     this.getRubrics();
   }
+
+  ngOnInit(): void {}
 
   getRubrics() {
     return this.rubricsService.getRubrics().subscribe(
@@ -137,12 +136,10 @@ export class EvaluationComponent implements OnInit {
   }
 
   putStateQualification() {
-    let percentage: number =
-        (this.sumreviewersRatings * 100) /
-        Number(this.parameters.length + '00'),
-      postulationData;
+    let postulationData,
+      rate = Math.trunc(this.sumreviewersRatings);
 
-    if (percentage >= 70 || percentage <= 100) {
+    if (rate <= 100 && rate >= 70) {
       postulationData = {
         postulation: { status_quelification: true, status: 'Aprobado' },
       };

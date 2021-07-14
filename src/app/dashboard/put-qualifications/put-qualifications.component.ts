@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-put-qualifications',
   templateUrl: './put-qualifications.component.html',
-  styleUrls: ['./put-qualifications.component.scss']
+  styleUrls: ['./put-qualifications.component.scss'],
 })
 export class PutQualificationsComponent implements OnInit {
   rubrics: any = [];
@@ -23,6 +23,7 @@ export class PutQualificationsComponent implements OnInit {
   sumreviewersRatings: number = 0;
   remarks: Array<string> = [];
   qualificaty: number = 0;
+
   constructor(
     private rubricsService: RubricService,
     private qualificationService: QualificationService,
@@ -30,20 +31,18 @@ export class PutQualificationsComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
-   }
-
-  ngOnInit(): void {
     this.getRubrics();
     this.getQualifications();
   }
 
-  getQualifications(){
-  return this.qualificationService
-  .getQualificationById(this.postulations_id).subscribe((res:any)=>{
-    this.editQuailification = res.data[0]._id;
-    console.log(this.editQuailification);
-    console.log(res.data);
-  })
+  ngOnInit(): void {}
+
+  getQualifications() {
+    return this.qualificationService
+      .getQualificationById(this.postulations_id)
+      .subscribe((res: any) => {
+        this.editQuailification = res.data[0]._id;
+      });
   }
 
   getRubrics() {
@@ -122,7 +121,7 @@ export class PutQualificationsComponent implements OnInit {
       };
 
       this.qualificationService
-        .putQualification(this.editQuailification,qualificationData)
+        .putQualification(this.editQuailification, qualificationData)
         .subscribe((response) => {
           Swal.fire({
             position: 'top-end',
@@ -146,12 +145,10 @@ export class PutQualificationsComponent implements OnInit {
   }
 
   putStateQualification() {
-    let percentage: number =
-        (this.sumreviewersRatings * 100) /
-        Number(this.parameters.length + '00'),
-      postulationData;
-console.log(percentage)
-    if (percentage >= 70 || percentage <= 100) {
+    let postulationData,
+      rate = Math.trunc(this.sumreviewersRatings);
+
+    if (rate <= 100 && rate >= 70) {
       postulationData = {
         postulation: { status_quelification: true, status: 'Aprobado' },
       };
@@ -160,11 +157,11 @@ console.log(percentage)
         postulation: { status_quelification: true, status: 'Reprobado' },
       };
     }
-console.log(postulationData)
+    console.log(postulationData);
     this.postulationService
       .putPostulation(this.postulations_id, postulationData)
       .subscribe((res) => {
-console.log(res)
+        console.log(res);
         console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
       });
   }
