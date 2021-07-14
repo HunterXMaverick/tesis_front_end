@@ -18,6 +18,7 @@ import { RubricComponent } from "./rubric/rubric.component";
 import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { PutQualificationsComponent } from './put-qualifications/put-qualifications.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
 import { ConferenceComponent } from './conference/conference.component';
 import { PostConferenceComponent } from './conference/post-conference/post-conference.component';
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: "post-conference", component: PostConferenceComponent },
   { path: "list-conference", component: ListConferenceComponent },
   { path: "list-postulation", component: ListPostulationComponent },
+  {path:  "put-qualifications", component: PutQualificationsComponent},
 ];
 
 @NgModule({
