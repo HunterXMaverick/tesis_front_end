@@ -15,6 +15,7 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
+  congressEnabled: boolean = true;
   profile_picture_url: string = '';
   remarks: Array<any> = [];
   showPostulations: boolean = true;
@@ -210,6 +211,7 @@ export class PostulationsComponent implements OnInit {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
         this.congress = res.data[0];
+        this.congressEnabled = res.data[0].status_congress;
         this.knowledge_area = this.congress.knowledge_area.split(',');
       },
       (err) => console.error(err)

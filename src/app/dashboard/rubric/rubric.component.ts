@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CongressService } from 'src/app/services/congress.service';
 import { RubricService } from 'src/app/services/rubric.service';
 import Swal from 'sweetalert2';
 
@@ -9,12 +10,33 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rubric.component.scss'],
 })
 export class RubricComponent {
+  congressEnabled: boolean = true;
+  congressCreated: boolean = false;
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
   rubric: any;
 
-  constructor(private rubricService: RubricService, private router: Router) {
+  constructor(
+    private rubricService: RubricService,
+    private router: Router,
+    private congressService: CongressService
+  ) {
     this.getRubrics();
+    this.getCongress();
+  }
+
+  getCongress() {
+    return this.congressService.getCongress().subscribe(
+      async (res: any) => {
+        if ((await res.data.length) == 0) {
+          this.congressCreated = false;
+        } else if ((await res.data.length) >= 1) {
+          this.congressCreated = true;
+          this.congressEnabled = res.data[0].status_congress;
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   addQualificationCriteria() {

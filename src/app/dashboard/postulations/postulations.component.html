@@ -20,6 +20,7 @@
       </div>
       <div>
         <button
+          *ngIf="congressEnabled"
           routerLink="../post-postulation"
           class="
             focus:outline-none
@@ -125,7 +126,11 @@
             Observaciones
           </th>
           <th
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Revisor' &&
+              congressEnabled
+            "
             class="px-5 py-3 text-left text-sm text-gray-600"
           >
             Asignación de Participantes
@@ -144,7 +149,11 @@
             Nota Final
           </th>
           <th
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Organizador' &&
+              congressEnabled
+            "
             class="px-5 py-3 text-left text-sm text-gray-600"
           >
             Calificar
@@ -262,6 +271,7 @@
             class="px-5 py-5 flex justify-center text-sm"
           >
             <button
+              *ngIf="congressEnabled"
               (click)="assignParticipants(postulation._id)"
               class="
                 align-middle
@@ -386,7 +396,11 @@
             </button>
           </td>
           <td
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Organizador' &&
+              congressEnabled
+            "
             class="px-5 py-5 flex-1 text-sm text-center"
           >
             <div>

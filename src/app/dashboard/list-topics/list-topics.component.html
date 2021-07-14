@@ -54,7 +54,7 @@
             Datos del Ponente
           </th>
           <th
-            *ngIf="dataUser.rol !== 'Revisor'"
+            *ngIf="dataUser.rol !== 'Revisor' && congressEnabled"
             class="px-5 py-3 text-center text-sm text-gray-600"
           >
             Acciones
@@ -97,7 +97,7 @@
           </td> -->
 
           <td
-            *ngIf="dataUser.rol == 'Participante'"
+            *ngIf="dataUser.rol == 'Participante' && congressEnabled"
             class="px-5 py-5 flex text-sm justify-center"
           >
             <button
