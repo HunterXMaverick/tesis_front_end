@@ -401,6 +401,7 @@
             <div>
               <button
                 *ngIf="knowledge_area.status_quelification != false"
+                (click)="create(knowledge_area)"
                 routerLink="../evaluation"
                 class="tooltip appearance-none focus:outline-none ml-2"
               >
