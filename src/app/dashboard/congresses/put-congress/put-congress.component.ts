@@ -63,7 +63,7 @@ export class PutCongressComponent {
   putCongress(idCongress: any) {
     if (
       this.modelCongress.name &&
-      this.modelCongress.address_web &&
+      // this.modelCongress.address_web &&
       this.modelCongress.start_date &&
       this.modelCongress.end_date &&
       this.modelCongress.regulations &&

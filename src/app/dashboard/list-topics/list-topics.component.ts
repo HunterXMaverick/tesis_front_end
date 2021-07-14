@@ -15,6 +15,7 @@ import { PostulationPasticipantsService } from 'src/app/services/postulationPast
   styleUrls: ['./list-topics.component.scss'],
 })
 export class ListTopicsComponent implements OnInit {
+  congressEnabled: boolean = true;
   profile_picture_url: string = '';
   postulations: any = [];
   userById: any = [];
@@ -128,6 +129,7 @@ export class ListTopicsComponent implements OnInit {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
         this.congress = res.data[0];
+        this.congressEnabled = this.congress.status_congress;
         this.knowledge_area = this.congress.knowledge_area.split(',');
       },
       (err) => console.error(err)

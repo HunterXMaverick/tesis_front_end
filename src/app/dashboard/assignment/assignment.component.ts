@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./assignment.component.scss'],
 })
 export class AssignmentComponent implements OnInit {
+  congressEnabled: boolean = true;
   postulation: FormGroup | undefined;
   users: any = [];
   congress: any = [];
@@ -36,6 +37,7 @@ export class AssignmentComponent implements OnInit {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
         this.congress = res.data[0];
+        this.congressEnabled = res.data[0].status_congress;
         this.knowledge_area = this.congress.knowledge_area.split(',');
       },
       (err) => console.error(err)

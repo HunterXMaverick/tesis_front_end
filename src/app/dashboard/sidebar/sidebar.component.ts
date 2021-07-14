@@ -10,6 +10,7 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
+  congressEnabled: boolean = true;
   dataUser: any;
   showSidebar: boolean;
   congressCreated: boolean = false;
@@ -52,6 +53,7 @@ export class SidebarComponent {
           this.congressCreated = false;
         } else if ((await res.data.length) >= 1) {
           this.congressCreated = true;
+          this.congressEnabled = res.data[0].status_congress;
         }
       },
       (err) => console.error(err)
