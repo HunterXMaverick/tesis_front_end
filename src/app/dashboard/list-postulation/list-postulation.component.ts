@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostulationService } from 'src/app/services/postulation.service';
+import { PostulationService } from '../../services/postulation.service';
 
 @Component({
   selector: 'app-list-postulation',
@@ -21,10 +21,6 @@ export class ListPostulationComponent implements OnInit {
         res.data.forEach((element: any) => {
           if (element.status == 'Aprobado') {
             this.postulations.push(element);
-            // this.getUserById(element.person_id);
-            // if (element.person_id == this.dataUser._id) {
-            //   this.projectsSpeaker.push(element);
-            // }
           }
         });
       },
