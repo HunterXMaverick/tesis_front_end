@@ -92,7 +92,7 @@ export class PutQualificationsComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: 'Máximo 5 observaciones.',
+          title: `Máximo ${this.parameters.length} observaciones.`,
           showConfirmButton: false,
           timer: 1500,
         });
