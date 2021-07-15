@@ -79,7 +79,9 @@
             </a>
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            <p class="text-gray-900">{{ conference.date }}</p>
+            <p class="text-gray-900">
+              {{ conference.date | date: "dd/MM/yyyy" }}
+            </p>
           </td>
           <td class="px-5 py-5e text-sm text-center">{{ conference.hour }}</td>
         </tr>

@@ -40,13 +40,17 @@ export class ListConferenceComponent implements OnInit {
     return this.postulationParticipantService
       .getPostulationParticipantsController()
       .subscribe((res: any) => {
-        res.data.forEach((element: any) => {
-          if (element.person_id == this.dataUser._id) {
-            if (element.status == 'Aprobado') {
-              this.getConferences(element.postulation_id);
+        if (this.dataUser.rol == 'Organizador') {
+          this.getAllConferences();
+        } else {
+          res.data.forEach((element: any) => {
+            if (element.person_id == this.dataUser._id) {
+              if (element.status == 'Aprobado') {
+                this.getConferences(element.postulation_id);
+              }
             }
-          }
-        });
+          });
+        }
       });
   }
 
@@ -67,6 +71,12 @@ export class ListConferenceComponent implements OnInit {
           this.conferences.push(element);
         }
       });
+    });
+  }
+
+  getAllConferences() {
+    return this.conferenceService.getConference().subscribe((res: any) => {
+      this.conferences = res.data;
     });
   }
 
