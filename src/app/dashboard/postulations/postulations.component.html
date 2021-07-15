@@ -31,7 +31,7 @@
             font-medium
           "
         >
-          <i class="fa fa-plus pr-2"></i>Nueva Postulacion
+          <i class="fa fa-plus pr-2"></i>Nueva Postulación
         </button>
       </div>
     </div>
@@ -78,7 +78,7 @@
       <thead>
         <tr class="border-b-2 border-gray-200 bg-gray-200">
           <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Título del proyecto
+            Título del Proyecto
           </th>
           <th
             *ngIf="dataUser.rol == 'Ponente'"
@@ -99,7 +99,7 @@
             Datos del Autor
           </th>
           <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Área de conocimiento
+            Área de Conocimiento
           </th>
           <th
             *ngIf="dataUser.rol == 'Revisor'"
@@ -184,7 +184,7 @@
               class="tooltip appearance-none focus:outline-none mr-2"
             >
               <i class="fas fa-address-book text-blue-800 text-xl"></i>
-              <span class="tooltiptext">Datos del autor</span>
+              <span class="tooltiptext">Datos del Autor</span>
             </button>
           </td>
           <td class="px-5 py-5e text-sm text-center">
@@ -326,14 +326,14 @@
               class="tooltip appearance-none focus:outline-none mr-2"
             >
               <i class="fas fa-address-book text-blue-800 text-xl"></i>
-              <span class="tooltiptext">Datos del autor</span>
+              <span class="tooltiptext">Datos del Autor</span>
             </button>
             <button
               (click)="getFile(knowledge_area.files)"
               class="tooltip appearance-none focus:outline-none ml-2"
             >
               <i class="fas fa-file-invoice text-green-700 text-xl"></i>
-              <span class="tooltiptext">Archivo adjunto</span>
+              <span class="tooltiptext">Archivo Adjunto</span>
             </button>
           </td>
           <td
@@ -369,7 +369,7 @@
                     mr-2
                     tooltiptext
                   "
-                  >Por calificar</span
+                  >Por Calificar</span
                 >
               </button>
             </div>
@@ -391,7 +391,7 @@
                   mr-2
                   tooltiptext
                 "
-                >Ver nota</span
+                >Ver Nota</span
               >
             </button>
           </td>
@@ -577,7 +577,7 @@
     <div class="flex w-full px-3 items-center justify-between">
       <div class="h-auto text-2xl">
         <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Datos del autor
+        Datos del Autor
       </div>
 
       <div class="text-2xl">
@@ -616,7 +616,7 @@
           <p>{{ userData.rol }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+          <h2 class="font-bold mr-3">Tipo de Identificación:</h2>
           <p>{{ userData.type_dni }}</p>
         </div>
         <div class="flex py-2">
@@ -628,7 +628,7 @@
           <p>{{ userData.level_academy }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Titulo:</h2>
+          <h2 class="font-bold mr-3">Titulo Académico:</h2>
           <p>{{ userData.title }}</p>
         </div>
         <div class="flex py-2">
@@ -636,7 +636,7 @@
           <p>{{ userData.phone }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Correo electrónico:</h2>
+          <h2 class="font-bold mr-3">Correo Electrónico:</h2>
           <p>{{ userData.email }}</p>
         </div>
       </div>
