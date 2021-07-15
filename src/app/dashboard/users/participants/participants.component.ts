@@ -22,7 +22,11 @@ export class ParticipantsComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data;
+        res.data.forEach((element: any) => {
+          if (element.rol == 'Participante') {
+            this.users.push(element);
+          }
+        });
       },
       (err) => console.error(err)
     );

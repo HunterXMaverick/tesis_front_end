@@ -40,8 +40,12 @@ export class PutUserComponent {
       this.logUser = res.data;
 
       if (this.dataUser.profile_picture) {
-        this.profile_picture_url = `http://localhost:3500/api/file/${this.dataUser.profile_picture}`;
-        console.log(this.profile_picture_url);
+        if (this.dataUser.profile_picture) {
+          this.profile_picture_url = `http://localhost:3500/api/file/${this.dataUser.profile_picture}`;
+        } else {
+          this.profile_picture_url =
+            'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
+        }
 
         this.user.setValue({
           names: this.dataUser.names,

@@ -65,6 +65,15 @@ export class NewReviewerComponent implements OnInit {
             },
             (err) => {
               console.error(err);
+              if (err.error.info.keyPattern.dni == 1) {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'warning',
+                  title: 'Cédula duplicada.',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
             }
           );
         } else {

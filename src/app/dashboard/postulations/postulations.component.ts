@@ -61,7 +61,12 @@ export class PostulationsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
-        this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        if (res.data.profile_picture) {
+          this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        } else {
+          this.profile_picture_url =
+            'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
+        }
       },
       (err) => console.error(err)
     );

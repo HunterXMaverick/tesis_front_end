@@ -75,7 +75,12 @@ export class ListConferenceComponent implements OnInit {
     return this.personService.getUserById(id).subscribe(
       (res: any) => {
         this.userData = res.data;
-        this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        if (res.data.profle_picture) {
+          this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        } else {
+          this.profile_picture_url =
+            'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
+        }
       },
       (err) => console.error(err)
     );

@@ -106,7 +106,7 @@ export class SidebarComponent {
         if (res.data.profile_picture) {
           this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
         } else {
-          this.profile_picture_url = ``;
+          this.profile_picture_url = `https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png`;
         }
       });
   }
