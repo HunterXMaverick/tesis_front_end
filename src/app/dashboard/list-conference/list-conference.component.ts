@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostulationService } from '../../services/postulation.service';
 import { ConferenceService } from '../../services/conference.service';
 import { PersonService } from 'src/app/services/person.service';
+import { PostulationPasticipantsService } from 'src/app/services/postulationPasticipants.service';
 // import { PersonService } from '../../services/person.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ListConferenceComponent implements OnInit {
   dataUser: any = [];
   postulationData: any = [];
   postulations: any = [];
-  conferences: any = [];
+  conferences: Array<any> = [];
   // userById: any = [];
   // personId: any;
   userData: any = '';
@@ -23,15 +24,34 @@ export class ListConferenceComponent implements OnInit {
   constructor(
     private postulationService: PostulationService,
     private conferenceService: ConferenceService,
+    private postulationParticipantService: PostulationPasticipantsService,
     private personService: PersonService
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
-    this.getConferences();
+    this.getPostulationParticipantService();
   }
 
   ngOnInit(): void {
     this.handleModal(false);
     this.handleModalSpeaker(false);
+  }
+
+  getPostulationParticipantService() {
+    return this.postulationParticipantService
+      .getPostulationParticipantsController()
+      .subscribe((res: any) => {
+        if (this.dataUser.rol == 'Organizador') {
+          this.getAllConferences();
+        } else {
+          res.data.forEach((element: any) => {
+            if (element.person_id == this.dataUser._id) {
+              if (element.status == 'Aprobado') {
+                this.getConferences(element.postulation_id);
+              }
+            }
+          });
+        }
+      });
   }
 
   getPostulation(postulation_id: string) {
@@ -44,10 +64,19 @@ export class ListConferenceComponent implements OnInit {
     });
   }
 
-  getConferences() {
+  getConferences(postulation_id: string) {
+    return this.conferenceService.getConference().subscribe((res: any) => {
+      res.data.forEach((element: any) => {
+        if (element.postulation_id == postulation_id) {
+          this.conferences.push(element);
+        }
+      });
+    });
+  }
+
+  getAllConferences() {
     return this.conferenceService.getConference().subscribe((res: any) => {
       this.conferences = res.data;
-      console.log(this.conferences);
     });
   }
 
