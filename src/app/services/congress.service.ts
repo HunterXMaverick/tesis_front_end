@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebService } from "./web.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebService } from './web.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CongressService {
   private url: string;
@@ -14,8 +14,8 @@ export class CongressService {
 
   getCongress() {
     return this.http.get(
-      `${this.url}/getCongress`,
-      this.server.obtainHeaders()
+      `${this.url}/getCongress`
+      // this.server.obtainHeaders()
     );
   }
 

@@ -12,5 +12,6 @@ export interface Congress {
   capacity_speakers: number;
   capacity_participants: number;
   knowledge_area: string;
-  status_congress: boolean;
+  status_congress: string;
+  person_id: string;
 }

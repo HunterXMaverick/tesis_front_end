@@ -13,12 +13,14 @@ export class CongressesComponent implements OnInit {
   persons: any = [];
   congress: any;
   dataUser: any;
+  congressSelected: any;
 
   constructor(
     private congressService: CongressService,
     private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
   }
 
   ngOnInit() {
@@ -30,9 +32,17 @@ export class CongressesComponent implements OnInit {
       (res: any) => {
         if (res.data.length == 0) {
           this.congress = null;
-        } else if (res.data.length >= 1) {
-          this.congress = res.data[0];
-          this.congressEnabled = this.congress.status_congress;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressEnabled = element.status_congress;
+            }
+          });
         }
       },
       (err) => console.error(err)
@@ -52,23 +62,19 @@ export class CongressesComponent implements OnInit {
       if (result.isConfirmed) {
         let data = {
           congress: {
-            status_congress: false,
+            status_congress: 'Inhabilitado',
           },
         };
 
-        this.congressService
-          .putCongress(id, data)
-          .subscribe((response: any) => {
-            console.log(response);
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Congreso deshabilitado correctamente.',
-              showConfirmButton: false,
-              timer: 3000,
-            });
-          });
-        this.router.navigate(['/']);
+        this.congressService.putCongress(id, data).subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Congreso finalizado correctamente.',
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(() => this.router.navigate(['/']));
+        });
       }
     });
   }

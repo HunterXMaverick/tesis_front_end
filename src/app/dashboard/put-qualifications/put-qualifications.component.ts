@@ -15,6 +15,7 @@ export class PutQualificationsComponent implements OnInit {
   editQuailification: string = '';
   parameters: any = [];
 
+  congressSelected: any;
   inputreviewersRating: number = 0;
   inputremark: string = '';
   postulations_id: string = '';
@@ -31,6 +32,7 @@ export class PutQualificationsComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getRubrics();
     this.getQualifications();
   }
@@ -117,25 +119,27 @@ export class PutQualificationsComponent implements OnInit {
           remark: this.remarks,
           qualificaty: this.sumreviewersRatings,
           person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+          congress_id: this.congressSelected,
         },
       };
 
       this.qualificationService
         .putQualification(this.editQuailification, qualificationData)
-        .subscribe((response) => {
+        .subscribe(() => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Calificado exitosamente.',
             showConfirmButton: false,
             timer: 1800,
-          }).then;
-          this.putStateQualification();
-          this.router.navigate(['/dashboard/postulations']);
+          }).then(() => {
+            this.putStateQualification();
+            this.router.navigate(['/dashboard/postulations']);
+          });
         });
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Califique todos los criterios para continuar.',
         showConfirmButton: false,

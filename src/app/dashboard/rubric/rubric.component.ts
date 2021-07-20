@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CongressService } from 'src/app/services/congress.service';
 import { RubricService } from 'src/app/services/rubric.service';
@@ -9,30 +9,49 @@ import Swal from 'sweetalert2';
   templateUrl: './rubric.component.html',
   styleUrls: ['./rubric.component.scss'],
 })
-export class RubricComponent {
+export class RubricComponent implements OnInit {
+  congress: any;
   congressEnabled: boolean = true;
   congressCreated: boolean = false;
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
   rubric: any;
+  rubricsHistory: Array<any> = [];
+  congressSelected: any;
+  dataUser: any;
 
   constructor(
     private rubricService: RubricService,
     private router: Router,
     private congressService: CongressService
   ) {
-    this.getRubrics();
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getCongress();
+  }
+
+  ngOnInit() {
+    this.handleModal(false);
+    this.getRubrics();
   }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      async (res: any) => {
-        if ((await res.data.length) == 0) {
+      (res: any) => {
+        if (res.data.length == 0) {
           this.congressCreated = false;
-        } else if ((await res.data.length) >= 1) {
-          this.congressCreated = true;
-          this.congressEnabled = res.data[0].status_congress;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressCreated = true;
+              this.congressEnabled = element.status_congress;
+            }
+          });
         }
       },
       (err) => console.error(err)
@@ -80,10 +99,23 @@ export class RubricComponent {
     this.rubricService.getRubrics().subscribe((res: any) => {
       if (res.data.length == 0) {
         this.rubric = null;
-      } else if (res.data.length >= 1) {
-        this.rubric = res.data[0];
+      } else {
+        res.data.forEach((element: any) => {
+          if (
+            element.congress_id == this.congress._id &&
+            element.state == true
+          ) {
+            this.rubric = element;
+          }
+
+          if (
+            element.congress_id == this.congress._id &&
+            element.state == false
+          ) {
+            this.rubricsHistory.push(element);
+          }
+        });
       }
-      console.log(res);
     });
   }
 
@@ -91,35 +123,46 @@ export class RubricComponent {
     let rubricData = {
       rubric: {
         qualificationCriteria: this.qualificationCriterias,
-        ratingRange: '0-100',
-        reviewersRating: '',
+        state: true,
+        congress_id: this.congress._id,
       },
     };
 
-    this.rubricService.postRubric(rubricData).subscribe((response) => {
+    this.rubricService.postRubric(rubricData).subscribe(() => {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
-        title: 'Creación exitosa',
+        title: 'Rúbrica creada exitosamente',
         showConfirmButton: false,
         timer: 1500,
-      });
-      this.router.navigate(['/dashboard/congresses']);
+      }).then(() => this.router.navigate(['/dashboard/congresses']));
     });
   }
 
   deleteRubric() {
-    this.rubricService
-      .deleteRubric(this.rubric._id)
-      .subscribe((response: any) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Eliminado exitosamente',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.router.navigate(['/dashboard/congresses']);
-      });
+    let dataRubric = {
+      rubric: {
+        state: false,
+      },
+    };
+    this.rubricService.putRubric(this.rubric._id, dataRubric).subscribe(() => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Inhabilitado exitosamente.',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => this.router.navigate(['/dashboard/congresses']));
+    });
+  }
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
   }
 }

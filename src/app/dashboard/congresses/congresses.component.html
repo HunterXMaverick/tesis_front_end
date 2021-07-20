@@ -117,7 +117,7 @@
             <div class="flex flex-col w-1/2">
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == true"
+                *ngIf="congress.status_congress == 'Habilitado'"
               >
                 <b>Estado: </b
                 ><i
@@ -133,7 +133,7 @@
                   Habilitado</i
                 >
               </label>
-              <label
+              <!-- <label
                 class="font-thin text-xl mr-5"
                 *ngIf="congress.status_congress == false"
               >
@@ -141,7 +141,7 @@
                 ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
                   Finalizado</i
                 >
-              </label>
+              </label> -->
             </div>
 
             <div class="w-1/2 flex justify-end" *ngIf="congressEnabled">
@@ -308,7 +308,7 @@
             <div class="flex flex-col w-1/2">
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == true"
+                *ngIf="congress.status_congress == 'Habilitado'"
               >
                 <b>Estado: </b
                 ><i
@@ -326,7 +326,7 @@
               </label>
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == false"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
               >
                 <b>Estado: </b
                 ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
@@ -453,7 +453,7 @@
             <div class="flex flex-col w-1/2">
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == true"
+                *ngIf="congress.status_congress == 'Habilitado'"
               >
                 <b>Estado: </b
                 ><i
@@ -471,7 +471,7 @@
               </label>
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == false"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
               >
                 <b>Estado: </b
                 ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
@@ -598,7 +598,7 @@
             <div class="flex flex-col w-1/2">
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == true"
+                *ngIf="congress.status_congress == 'Habilitado'"
               >
                 <b>Estado: </b
                 ><i
@@ -616,7 +616,7 @@
               </label>
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == false"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
               >
                 <b>Estado: </b
                 ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
@@ -631,6 +631,8 @@
   </div>
 
   <div class="w-full p-2 flex justify-center self-center" *ngIf="!congress">
-    <p class="text-2xl font-bold uppercase">No hay congresos disponibles.</p>
+    <p class="text-2xl font-bold uppercase">
+      No hay congresos activos en este momento.
+    </p>
   </div>
 </div>

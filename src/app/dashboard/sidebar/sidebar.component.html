@@ -44,7 +44,6 @@
 
         <div id="desple" class="ml-6 py-2 flex flex-col items-center">
           <a
-            *ngIf="congressCreated == false && congressEnabled"
             routerLink="../create-congress"
             class="flex items-center hover:text-green-700 py-2"
           >
@@ -53,7 +52,7 @@
           </a>
 
           <a
-            *ngIf="congressEnabled"
+            *ngIf="congressEnabled == 'Habilitado'"
             routerLink="../new-reviewer"
             class="flex items-center hover:text-green-700 py-2"
           >
@@ -74,7 +73,7 @@
             *ngIf="
               congressCreated == true &&
               rubricCreated == false &&
-              congressEnabled
+              congressEnabled == 'Habilitado'
             "
             routerLink="/dashboard/rubric"
             class="flex hover:text-green-700 py-2 items-center"
@@ -111,7 +110,7 @@
         <div
           id="desple"
           class="ml-6 py-2 flex flex-col items-center"
-          *ngIf="congressEnabled"
+          *ngIf="congressEnabled == 'Habilitado'"
         >
           <a
             routerLink="../participants"
@@ -142,13 +141,12 @@
         routerLink="../list-conference"
         class="flex hover:text-green-700 py-2 items-center"
       >
-      <i class="far fa-list-alt"></i>
+        <i class="far fa-list-alt"></i>
         <span class="ml-2 capitalize font-medium">
           Listado de Conferencia
         </span>
       </a>
-      
-      
+
       <!-- <a
         routerLink="../links"
         class="flex hover:text-green-700 py-2 items-center"
@@ -171,14 +169,14 @@
         routerLink="../congresses"
         class="flex hover:text-green-700 py-2 items-center"
       >
-      <i class="fa fa-university"></i>
+        <i class="fa fa-university"></i>
         <span class="ml-2 capitalize font-medium"> Información General </span>
       </a>
       <a
         routerLink="../list-topics"
         class="flex hover:text-green-700 py-2 items-center"
       >
-      <i class="fas fa-bars"></i>
+        <i class="fas fa-bars"></i>
         <span class="ml-2 capitalize font-medium"> Listado de Ponencias </span>
       </a>
       <a
@@ -228,7 +226,7 @@
         <div
           id="desple"
           class="ml-6 py-2 flex flex-col items-center"
-          *ngIf="congressEnabled"
+          *ngIf="congressEnabled == 'Habilitado'"
         >
           <a
             routerLink="../post-conference"
@@ -280,7 +278,7 @@
 
     <div class="flex flex-col py-2">
       <a
-        *ngIf="congressEnabled"
+        *ngIf="congressEnabled == 'Habilitado'"
         routerLink="/dashboard/put-user/{{ dataUser._id }}"
         class="flex items-center text-blue-800 py-2"
         ><i class="fa fa-user-edit"></i>

@@ -11,12 +11,14 @@ export class ConferenceComponent implements OnInit {
   dataUser: any = [];
   postulationData: any = [];
   conferences: any = [];
+  congressSelected: any;
 
   constructor(
     private postulationService: PostulationService,
     private conferenceService: ConferenceService
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getConferences();
   }
 
@@ -36,11 +38,14 @@ export class ConferenceComponent implements OnInit {
 
   getConferences() {
     return this.conferenceService.getConference().subscribe((res: any) => {
+      this.conferences = [];
+
       res.data.forEach((element: any) => {
-        if (element.reviewer_id === this.dataUser['_id']) {
+        if (
+          element.reviewer_id === this.dataUser['_id'] &&
+          element.congress_id == this.congressSelected
+        ) {
           this.conferences.push(element);
-        } else {
-          this.conferences = null;
         }
       });
     });

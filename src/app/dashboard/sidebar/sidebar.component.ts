@@ -10,10 +10,12 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  congressEnabled: boolean = true;
+  congressEnabled: string = 'Pendiente';
+  congressSelected: any;
   dataUser: any;
   showSidebar: boolean;
   congressCreated: boolean = false;
+  congress: any;
   rubricCreated: boolean = false;
   reviewersCreated: boolean = false;
   postulationsCreated: boolean = false;
@@ -26,6 +28,7 @@ export class SidebarComponent {
     private postulationService: PostulationService
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.showSidebar = true;
     this.getUserProfilePic();
     this.getCongress();
@@ -48,12 +51,20 @@ export class SidebarComponent {
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      async (res: any) => {
-        if ((await res.data.length) == 0) {
+      (res: any) => {
+        if (res.data.length == 0) {
           this.congressCreated = false;
-        } else if ((await res.data.length) >= 1) {
-          this.congressCreated = true;
-          this.congressEnabled = res.data[0].status_congress;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congressCreated = true;
+              this.congressEnabled = element.status_congress;
+            }
+          });
         }
       },
       (err) => console.error(err)

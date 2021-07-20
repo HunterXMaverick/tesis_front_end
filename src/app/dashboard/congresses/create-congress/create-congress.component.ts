@@ -12,6 +12,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class CreateCongressComponent {
   public Editor = ClassicEditor;
+  dataUser: any;
   congress: any = [];
   today = new Date().toISOString().split('T')[0];
 
@@ -24,13 +25,16 @@ export class CreateCongressComponent {
     capacity_speakers: 0,
     capacity_participants: 0,
     knowledge_area: '',
-    status_congress: true,
+    status_congress: 'Pendiente',
+    person_id: '',
   };
 
   constructor(
     private congressService: CongressService,
     private router: Router
-  ) {}
+  ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+  }
 
   postCongress() {
     if (
@@ -47,6 +51,7 @@ export class CreateCongressComponent {
         this.modelCongress.start_date + 'T10:00:00.000+00:00';
       this.modelCongress.end_date =
         this.modelCongress.end_date + 'T15:00:00.000+00:00';
+      this.modelCongress.person_id = this.dataUser._id;
 
       let dataCongress = {
         congress: this.modelCongress,
@@ -55,13 +60,21 @@ export class CreateCongressComponent {
       this.congressService.postCongress(dataCongress).subscribe(
         (res) => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
-            title: 'Creación exitosa',
+            title: 'Congreso creado exitosamente.',
             showConfirmButton: false,
             timer: 1500,
+          }).then(() => {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title:
+                'Su congreso está guardado con el estado PENDIENTE de aprobación.',
+              showConfirmButton: false,
+              timer: 3000,
+            }).then(() => this.router.navigate(['/dashboard/congresses']));
           });
-          this.router.navigate(['/dashboard/congresses']);
         },
         (err) => {
           console.error(err);
@@ -69,9 +82,9 @@ export class CreateCongressComponent {
       );
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
-        title: 'Debes completar todos los datos',
+        title: 'Completa todos los campos para continuar.',
         showConfirmButton: false,
         timer: 1500,
       });

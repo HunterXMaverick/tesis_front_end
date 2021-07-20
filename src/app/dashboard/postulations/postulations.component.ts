@@ -16,6 +16,7 @@ import { RubricService } from 'src/app/services/rubric.service';
 })
 export class PostulationsComponent implements OnInit {
   congressEnabled: boolean = true;
+  congressSelected: any;
   profile_picture_url: string = '';
   remarks: Array<any> = [];
   showPostulations: boolean = true;
@@ -46,6 +47,7 @@ export class PostulationsComponent implements OnInit {
     private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
   }
 
   ngOnInit() {
@@ -102,7 +104,10 @@ export class PostulationsComponent implements OnInit {
         } else {
           this.postulations.forEach((element: any) => {
             this.getUserById(element.person_id);
-            if (element.person_id == this.dataUser._id) {
+            if (
+              element.person_id == this.dataUser._id &&
+              element.congress_id == this.congressSelected
+            ) {
               this.projectsSpeaker.push(element);
             }
           });
@@ -144,7 +149,7 @@ export class PostulationsComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.ok == true) {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Ponente Aceptado',
             showConfirmButton: false,
@@ -152,7 +157,7 @@ export class PostulationsComponent implements OnInit {
           });
         } else {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Ponente Rechazado',
             showConfirmButton: false,
@@ -215,9 +220,21 @@ export class PostulationsComponent implements OnInit {
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        this.congress = res.data[0];
-        this.congressEnabled = res.data[0].status_congress;
-        this.knowledge_area = this.congress.knowledge_area.split(',');
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressEnabled = element.status_congress;
+              this.knowledge_area = element.knowledge_area.split(',');
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );

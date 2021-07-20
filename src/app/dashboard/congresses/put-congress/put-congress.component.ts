@@ -12,6 +12,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class PutCongressComponent {
   public Editor = ClassicEditor;
+  congressSelected: any;
   congress: any = [];
   today = new Date().toISOString().split('T')[0];
 
@@ -24,37 +25,51 @@ export class PutCongressComponent {
     capacity_speakers: 0,
     capacity_participants: 0,
     knowledge_area: '',
-    status_congress: true,
+    status_congress: '',
+    person_id: '',
   };
 
   constructor(
     private congressService: CongressService,
     private router: Router
   ) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getCongress();
   }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      (res) => {
-        this.congress = res;
-        this.modelCongress.name = this.congress.data[0].name;
-        // this.modelCongress.address_web = this.congress.data[0].address_web;
-        this.modelCongress.start_date = this.congress.data[0].start_date;
-        this.modelCongress.end_date = this.congress.data[0].end_date;
-        this.modelCongress.regulations = this.congress.data[0].regulations;
-        this.modelCongress.capacity_speakers =
-          this.congress.data[0].capacity_speakers;
-        this.modelCongress.capacity_participants =
-          this.congress.data[0].capacity_participants;
-        this.modelCongress.knowledge_area =
-          this.congress.data[0].knowledge_area;
-        this.modelCongress.status_congress =
-          this.congress.data[0].status_congress;
-        let separatorSD = this.modelCongress.start_date.split('T');
-        let separatorED = this.modelCongress.end_date.split('T');
-        this.modelCongress.start_date = separatorSD[0];
-        this.modelCongress.end_date = separatorED[0];
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+
+              this.modelCongress.name = element.name;
+              // this.modelCongress.address_web = element.address_web;
+              this.modelCongress.start_date = element.start_date;
+              this.modelCongress.end_date = element.end_date;
+              this.modelCongress.regulations = element.regulations;
+              this.modelCongress.capacity_speakers = element.capacity_speakers;
+              this.modelCongress.capacity_participants =
+                element.capacity_participants;
+              this.modelCongress.knowledge_area = element.knowledge_area;
+              this.modelCongress.status_congress = element.status_congress;
+              let separatorSD = element.start_date.split('T');
+              let separatorED = element.end_date.split('T');
+              this.modelCongress.start_date = separatorSD[0];
+              this.modelCongress.end_date = separatorED[0];
+              this.modelCongress.status_congress = element.status_congress;
+              this.modelCongress.person_id = element.person_id;
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );
@@ -75,19 +90,20 @@ export class PutCongressComponent {
         this.modelCongress.start_date + 'T10:00:00.000+00:00';
       this.modelCongress.end_date =
         this.modelCongress.end_date + 'T15:00:00.000+00:00';
+
       let dataCongress = {
         congress: this.modelCongress,
       };
+
       this.congressService.putCongress(idCongress, dataCongress).subscribe(
         (res) => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
-            title: 'Actualización exitosa',
+            title: 'Congreso actualizado correctamente.',
             showConfirmButton: false,
             timer: 1500,
-          });
-          this.router.navigate(['/dashboard/congresses']);
+          }).then(() => this.router.navigate(['/dashboard/congresses']));
         },
         (err) => {
           console.error(err);
@@ -95,11 +111,11 @@ export class PutCongressComponent {
       );
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
-        title: 'Debes completar todos los datos',
+        title: 'Completa todos los campos para continuar.',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
       });
     }
   }

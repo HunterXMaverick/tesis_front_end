@@ -14,6 +14,7 @@ export class EvaluationComponent implements OnInit {
   rubrics: any = [];
   parameters: any = [];
 
+  congressSelected: any;
   inputreviewersRating: number = 0;
   inputremark: string = '';
   postulations_id: string = '';
@@ -31,6 +32,7 @@ export class EvaluationComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getRubrics();
   }
 
@@ -41,7 +43,9 @@ export class EvaluationComponent implements OnInit {
       (res: any) => {
         this.rubrics = res.data;
         this.rubrics.forEach((element: any) => {
-          this.parameters = element.qualificationCriteria;
+          if (element.congress_id == this.congressSelected) {
+            this.parameters = element.qualificationCriteria;
+          }
         });
       },
       (err) => {
@@ -108,14 +112,15 @@ export class EvaluationComponent implements OnInit {
           remark: this.remarks,
           qualificaty: this.sumreviewersRatings,
           person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+          congress_id: this.congressSelected,
         },
       };
 
       this.qualificationService
         .postQualification(qualificationData)
-        .subscribe((response) => {
+        .subscribe(() => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Calificado exitosamente.',
             showConfirmButton: false,
@@ -126,7 +131,7 @@ export class EvaluationComponent implements OnInit {
         });
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Califique todos los criterios para continuar.',
         showConfirmButton: false,
@@ -151,7 +156,7 @@ export class EvaluationComponent implements OnInit {
 
     this.postulationService
       .putPostulation(this.postulations_id, postulationData)
-      .subscribe((res) => {
+      .subscribe(() => {
         console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
       });
   }

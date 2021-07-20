@@ -11,6 +11,10 @@ import Swal from 'sweetalert2';
 })
 export class NewReviewerComponent implements OnInit {
   viewPassword = true;
+  dataUser: any;
+  congressSelected: any;
+  congress: any;
+
   person: Person = {
     rol: 'Revisor',
     type_dni: '',
@@ -24,9 +28,13 @@ export class NewReviewerComponent implements OnInit {
     email: '',
     password: '',
     status: true,
+    congress_id: '',
   };
 
-  constructor(private personService: PersonService, private router: Router) {}
+  constructor(private personService: PersonService, private router: Router) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
+  }
 
   ngOnInit() {}
 
@@ -43,31 +51,35 @@ export class NewReviewerComponent implements OnInit {
       this.person.email &&
       this.person.password
     ) {
+      this.person.congress_id = this.congressSelected;
+
       let dataPerson = {
         person: this.person,
       };
+
       let path =
         /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
       let validate = path.test(dataPerson.person.email!);
+
       let validateCI = this.validationDniCI(this.person.dni);
+
       if (validate) {
         if (validateCI) {
           this.personService.postPerson(dataPerson).subscribe(
             (res) => {
               Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'success',
-                title: 'Registro exitoso',
+                title: 'Creado exitosamente.',
                 showConfirmButton: false,
                 timer: 1500,
-              });
-              this.router.navigate(['/dashboard/congresses']);
+              }).then(() => this.router.navigate(['/dashboard/congresses']));
             },
             (err) => {
-              console.error(err);
               if (err.error.info.keyPattern.dni == 1) {
                 Swal.fire({
-                  position: 'top-end',
+                  position: 'center',
                   icon: 'warning',
                   title: 'Cédula duplicada.',
                   showConfirmButton: false,
@@ -78,7 +90,7 @@ export class NewReviewerComponent implements OnInit {
           );
         } else {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'warning',
             title: 'Por favor, ingrese una cédula válida',
             showConfirmButton: false,
@@ -87,18 +99,18 @@ export class NewReviewerComponent implements OnInit {
         }
       } else {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'warning',
-          title: 'Correo inválido',
+          title: 'Ingrese un correo válido.',
           showConfirmButton: false,
           timer: 1500,
         });
       }
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
-        title: 'Debes completar todos los datos',
+        title: 'Completa todos los campos para continuar.',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -156,17 +168,17 @@ export class NewReviewerComponent implements OnInit {
           digitValidator = 0;
         }
         if (digitValidator === latestDigit) {
-          console.log('Cédula válida');
+          // console.log('Cédula válida');
           return true;
         } else {
           return false;
         }
       } else {
-        console.log('Cédula no válida');
+        // console.log('Cédula no válida');
         return false;
       }
     } else {
-      console.log('Cédula con más de 10 dígitos');
+      // console.log('Cédula con más de 10 dígitos');
       return false;
     }
   }

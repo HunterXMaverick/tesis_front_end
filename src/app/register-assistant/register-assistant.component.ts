@@ -21,6 +21,7 @@ export class RegisterAssistantComponent implements OnInit {
     password: '',
     title: '',
     status: true,
+    congress_id: '',
   };
 
   constructor(private personService: PersonService, private router: Router) {}
