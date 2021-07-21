@@ -20,7 +20,7 @@ export class PostulationsComponent implements OnInit {
   profile_picture_url: string = '';
   remarks: Array<any> = [];
   showPostulations: boolean = true;
-  postulations: any = [];
+  postulations: Array<any> = [];
   assignments: any = '';
   knowledge_areas: any = [];
   userById: any = [];
@@ -98,16 +98,16 @@ export class PostulationsComponent implements OnInit {
   getPostulations() {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
-        this.postulations = res.data;
-        if (this.postulations.length == 0) {
+        if (res.data.length == 0) {
           this.showPostulations = false;
         } else {
-          this.postulations.forEach((element: any) => {
+          res.data.forEach((element: any) => {
             this.getUserById(element.person_id);
             if (
               element.person_id == this.dataUser._id &&
               element.congress_id == this.congressSelected
             ) {
+              this.postulations.push(element);
               this.projectsSpeaker.push(element);
             }
           });

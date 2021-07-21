@@ -60,6 +60,16 @@ export class LoginComponent implements OnInit {
                   this.congresses.push(element);
                 }
               });
+
+              if (this.congresses.length == 0) {
+                this.handleModalCongress(false);
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Inicio de Sesión Exitosa',
+                  showConfirmButton: false,
+                  timer: 1500,
+                }).then(() => this.router.navigate(['dashboard/congresses']));
+              }
             }
           },
           (err) => console.error(err)

@@ -16,6 +16,7 @@ export class ListConferenceComponent implements OnInit {
   postulationData: any = [];
   postulations: any = [];
   conferences: Array<any> = [];
+  congressSelected: any;
   // userById: any = [];
   // personId: any;
   userData: any = '';
@@ -28,6 +29,7 @@ export class ListConferenceComponent implements OnInit {
     private personService: PersonService
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getPostulationParticipantService();
   }
 
@@ -67,7 +69,10 @@ export class ListConferenceComponent implements OnInit {
   getConferences(postulation_id: string) {
     return this.conferenceService.getConference().subscribe((res: any) => {
       res.data.forEach((element: any) => {
-        if (element.postulation_id == postulation_id) {
+        if (
+          element.congress_id == this.congressSelected &&
+          element.postulation_id == postulation_id
+        ) {
           this.conferences.push(element);
         }
       });
@@ -76,7 +81,11 @@ export class ListConferenceComponent implements OnInit {
 
   getAllConferences() {
     return this.conferenceService.getConference().subscribe((res: any) => {
-      this.conferences = res.data;
+      res.data.forEach((element: any) => {
+        if (element.congress_id == this.congressSelected) {
+          this.conferences.push(element);
+        }
+      });
     });
   }
 

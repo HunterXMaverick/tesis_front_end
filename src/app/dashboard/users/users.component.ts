@@ -11,34 +11,40 @@ import { CongressService } from 'src/app/services/congress.service';
 export class UsersComponent implements OnInit {
   congressEnabled: boolean = true;
   congressCreated: boolean = false;
+  congressSelected: any;
   photo: any = '';
-  users: any = [];
+  users: Array<any> = [];
   status: boolean = false;
   page: number = 1;
 
-  dataUserLog: any = [];
-
   constructor(
     private personService: PersonService,
-
     private congressService: CongressService
   ) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getCongress();
   }
 
   ngOnInit() {
     this.getUsers();
-    this.getPersonByEmail();
+    // this.getPersonByEmail();
   }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
-      async (res: any) => {
-        if ((await res.data.length) == 0) {
+      (res: any) => {
+        if (res.data.length == 0) {
           this.congressCreated = false;
-        } else if ((await res.data.length) >= 1) {
-          this.congressCreated = true;
-          this.congressEnabled = res.data[0].status_congress;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congressCreated = true;
+              this.congressEnabled = element.status_congress;
+            }
+          });
         }
       },
       (err) => console.error(err)
@@ -48,7 +54,16 @@ export class UsersComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data;
+        if (res.data.length == 0) {
+          this.users = [];
+        } else {
+          res.data.forEach((element: any) => {
+            if (element.congress_id == this.congressSelected) {
+              this.users.push(element);
+              console.log(element);
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );
@@ -77,13 +92,5 @@ export class UsersComponent implements OnInit {
         });
       }
     });
-  }
-
-  getPersonByEmail() {
-    return this.personService
-      .getUserByEmail(this.personService.email)
-      .then((res) => {
-        this.dataUserLog = res.data;
-      });
   }
 }
