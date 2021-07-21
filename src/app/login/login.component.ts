@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
     private congressService: CongressService,
     private router: Router
   ) {
+    sessionStorage.clear();
+    localStorage.clear();
     this.loginData = this.formBuilder.group({
       email: ['organizador@gmail.com', Validators.required],
       password: ['1234', Validators.required],
