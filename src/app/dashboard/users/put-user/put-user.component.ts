@@ -29,6 +29,7 @@ export class PutUserComponent {
       last_names: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       profile_picture: [null],
+      password: ['']
     });
     this.idUser = this.router.snapshot.params.id;
     this.getUserById();
