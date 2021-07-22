@@ -12,7 +12,7 @@ import { FilesService } from 'src/app/services/files.service';
 })
 export class PutUserComponent {
   user: FormGroup;
-  idUser: string;
+  idUser: any;
   dataUser: any = [];
   logUser: any = [];
   profile_picture_url: string = '';
@@ -29,40 +29,46 @@ export class PutUserComponent {
       last_names: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       profile_picture: [null],
-      password: ['']
+      password: [''],
     });
-    this.idUser = this.router.snapshot.params.id;
+    this.idUser = JSON.parse(sessionStorage.getItem('_user-data')!);
     this.getUserById();
   }
 
   getUserById() {
-    return this.personService.getUserById(this.idUser).subscribe((res: any) => {
-      this.dataUser = res.data;
-      this.logUser = res.data;
+    return this.personService
+      .getUserById(this.idUser._id)
+      .subscribe((res: any) => {
+        console.log(res.data);
 
-      if (this.dataUser.profile_picture) {
+        this.dataUser = res.data;
+        this.logUser = res.data;
+
         if (this.dataUser.profile_picture) {
-          this.profile_picture_url = `http://localhost:3500/api/file/${this.dataUser.profile_picture}`;
-        } else {
-          this.profile_picture_url =
-            'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
-        }
+          if (this.dataUser.profile_picture) {
+            this.profile_picture_url = `http://localhost:3500/api/file/${this.dataUser.profile_picture}`;
+          } else {
+            this.profile_picture_url =
+              'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
+          }
 
-        this.user.setValue({
-          names: this.dataUser.names,
-          last_names: this.dataUser.last_names,
-          phone: this.dataUser.phone,
-          profile_picture: '',
-        });
-      } else {
-        this.user.setValue({
-          names: this.dataUser.names,
-          last_names: this.dataUser.last_names,
-          phone: this.dataUser.phone,
-          profile_picture: '',
-        });
-      }
-    });
+          this.user.setValue({
+            names: this.dataUser.names,
+            last_names: this.dataUser.last_names,
+            phone: this.dataUser.phone,
+            profile_picture: '',
+            password: this.dataUser.password,
+          });
+        } else {
+          this.user.setValue({
+            names: this.dataUser.names,
+            last_names: this.dataUser.last_names,
+            phone: this.dataUser.phone,
+            profile_picture: '',
+            password: this.dataUser.password,
+          });
+        }
+      });
   }
 
   putUser() {
@@ -92,7 +98,6 @@ export class PutUserComponent {
           }).then((result) => {
             if (result.isConfirmed) {
               let newPic = this.user.get('profile_picture')?.value;
-              console.log(newPic);
 
               if (newPic != '') {
                 const formData: any = new FormData();
@@ -128,7 +133,7 @@ export class PutUserComponent {
                     };
 
                     this.personService
-                      .putPerson(this.idUser, dataPerson)
+                      .putPerson(this.idUser._id, dataPerson)
                       .subscribe(
                         () => {
                           Swal.fire({
@@ -151,22 +156,24 @@ export class PutUserComponent {
                   person: this.user.value,
                 };
 
-                this.personService.putPerson(this.idUser, dataPerson).subscribe(
-                  () => {
-                    Swal.fire({
-                      position: 'center',
-                      icon: 'success',
-                      title: 'Actualización exitosa',
-                      showConfirmButton: false,
-                      timer: 1500,
-                    }).then(() =>
-                      this.routerLink.navigate(['/dashboard/congresses'])
-                    );
-                  },
-                  (err) => {
-                    console.error(err);
-                  }
-                );
+                this.personService
+                  .putPerson(this.idUser._id, dataPerson)
+                  .subscribe(
+                    () => {
+                      Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Actualización exitosa',
+                        showConfirmButton: false,
+                        timer: 1500,
+                      }).then(() =>
+                        this.routerLink.navigate(['/dashboard/congresses'])
+                      );
+                    },
+                    (err) => {
+                      console.error(err);
+                    }
+                  );
               }
             }
           });

@@ -3,6 +3,7 @@ import { PersonService } from '../services/person.service';
 import { Person } from '../models/person';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CongressService } from '../services/congress.service';
 
 @Component({
   selector: 'app-register-assistant',
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./register-assistant.component.scss'],
 })
 export class RegisterAssistantComponent implements OnInit {
+  congresses: Array<any> = [];
   viewPassword = true;
   person: Person = {
     rol: 'Participante',
@@ -24,9 +26,41 @@ export class RegisterAssistantComponent implements OnInit {
     congress_id: '',
   };
 
-  constructor(private personService: PersonService, private router: Router) {}
+  constructor(
+    private personService: PersonService,
+    private congressService: CongressService,
+    private router: Router
+  ) {
+    this.getCongress();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.handleModalCongress(false);
+  }
+
+  getCongress() {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        this.congresses = [];
+
+        if (res.data.length == 0) {
+          this.congresses = [];
+        } else {
+          res.data.forEach((elementCongress: any) => {
+            if (elementCongress.status_congress == 'Habilitado') {
+              this.congresses.push(elementCongress);
+            }
+          });
+        }
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  selectCongress(congress_id: string) {
+    this.person.congress_id = congress_id;
+    this.postPerson(this.person.dni);
+  }
 
   postPerson(ci: any) {
     if (
@@ -57,13 +91,13 @@ export class RegisterAssistantComponent implements OnInit {
               this.personService.postPerson(dataPerson).subscribe(
                 (res) => {
                   Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
-                    title: 'Registro exitoso',
+                    title:
+                      'Registrado exitosamente, inicia sesión para continuar',
                     showConfirmButton: false,
                     timer: 1500,
-                  });
-                  this.router.navigate(['/login']);
+                  }).then(() => this.router.navigate(['/login']));
                 },
                 (err) => {
                   console.error(err);
@@ -71,7 +105,7 @@ export class RegisterAssistantComponent implements OnInit {
               );
             } else {
               Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'warning',
                 title: 'Por favor, ingrese una cédula válida',
                 showConfirmButton: false,
@@ -84,15 +118,15 @@ export class RegisterAssistantComponent implements OnInit {
             );
             if (validatePassport) {
               this.personService.postPerson(dataPerson).subscribe(
-                (res) => {
+                () => {
                   Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
-                    title: 'Registro Exitoso',
+                    title:
+                      'Registrado exitosamente, inicia sesión para continuar',
                     showConfirmButton: false,
                     timer: 1500,
-                  });
-                  this.router.navigate(['/login']);
+                  }).then(() => this.router.navigate(['/login']));
                 },
                 (err) => {
                   console.error(err);
@@ -100,7 +134,7 @@ export class RegisterAssistantComponent implements OnInit {
               );
             } else {
               Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'warning',
                 title: 'Por favor, ingrese un pasaporte válido',
                 showConfirmButton: false,
@@ -110,16 +144,16 @@ export class RegisterAssistantComponent implements OnInit {
           }
         } else {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'warning',
-            title: 'Por favor, ingrese un correo válido',
+            title: 'Por favor, ingrese un correo electrónico válido',
             showConfirmButton: false,
             timer: 1500,
           });
         }
       } else {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'warning',
           title: 'Por favor, ingresar solo letras en nombres y apellidos',
           showConfirmButton: false,
@@ -128,9 +162,9 @@ export class RegisterAssistantComponent implements OnInit {
       }
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
-        title: 'Debes completar todos los datos',
+        title: 'Por favor, completa todos los campos para continuar.',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -200,6 +234,16 @@ export class RegisterAssistantComponent implements OnInit {
     } else {
       console.log('Cédula con más de 10 dígitos');
       return false;
+    }
+  }
+
+  handleModalCongress(showModal: boolean) {
+    let modal: any = document.getElementById('modal-congress');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
     }
   }
 }

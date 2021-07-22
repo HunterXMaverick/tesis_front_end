@@ -79,29 +79,28 @@
         </div>
 
         <div
-        *ngIf="logUser.rol !== 'Participante'"
-        class="flex flex-col mt-4 px-4"
-      >
-        <label class="font-thin text-xl mr-5"> Editar Contraseña: </label>
-        <input
-          formControlName="phone"
-          class="
-            focus:border-blue-500
-            appearance-none
-            border
-            rounded
-            w-full
-            py-2
-            px-3
-            text-gray-700
-            leading-tight
-            focus:outline-none
-          "
-          type="text"
-          placeholder="Ej: 0999999999"
-          maxlength="10"
-        />
-      </div>
+          *ngIf="logUser.rol !== 'Participante'"
+          class="flex flex-col mt-4 px-4"
+        >
+          <label class="font-thin text-xl mr-5"> Contraseña: </label>
+          <input
+            formControlName="password"
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="password"
+            placeholder="*********"
+          />
+        </div>
       </div>
 
       <div class="w-1/2 p-2">
