@@ -8,8 +8,10 @@ import { PostulationService } from '../../services/postulation.service';
 })
 export class ListPostulationComponent implements OnInit {
   postulations: any = [];
+  congressSelected: any;
 
   constructor(private postulationService: PostulationService) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getPostulations();
   }
 
@@ -19,7 +21,10 @@ export class ListPostulationComponent implements OnInit {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
         res.data.forEach((element: any) => {
-          if (element.status == 'Aprobado') {
+          if (
+            element.status == 'Aprobado' &&
+            element.congress_id == this.congressSelected
+          ) {
             this.postulations.push(element);
           }
         });

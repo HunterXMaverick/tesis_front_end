@@ -78,8 +78,8 @@
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Parametros
               </th>
-              <td *ngFor="let parametro of parameters">
-                {{ parametro }}
+              <td *ngFor="let parametro of parameters ; let i = index">
+                {{i+1}}: {{ parametro }}
               </td>
             </tr>
             <tr>
