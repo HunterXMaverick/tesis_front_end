@@ -37,7 +37,13 @@ export class PutQualificationsComponent implements OnInit {
     this.getQualifications();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   this.opeModal();
+  }
+
+  opeModal() {
+    document.getElementById('myModal');
+ }
 
   getQualifications() {
     return this.qualificationService
