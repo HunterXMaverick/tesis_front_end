@@ -14,6 +14,7 @@ export class CongressesComponent implements OnInit {
   congress: any;
   dataUser: any;
   congressSelected: any;
+  see_logo: string = '';
 
   constructor(
     private congressService: CongressService,
@@ -41,6 +42,7 @@ export class CongressesComponent implements OnInit {
             ) {
               this.congress = element;
               this.congressEnabled = element.status_congress;
+              this.see_logo = `http://localhost:3500/api/file/${element.logo}`;
             }
           });
         }
