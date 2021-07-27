@@ -24,6 +24,7 @@ import { ConferenceComponent } from './conference/conference.component';
 import { PostConferenceComponent } from './conference/post-conference/post-conference.component';
 import { ListConferenceComponent } from './list-conference/list-conference.component';
 import { ListPostulationComponent } from './list-postulation/list-postulation.component';
+import { GeneralHistoryComponent } from './general-history/general-history.component'; 
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: "list-conference", component: ListConferenceComponent },
   { path: "list-postulation", component: ListPostulationComponent },
   {path:  "put-qualifications", component: PutQualificationsComponent},
+  {path:  "general-history", component: GeneralHistoryComponent},
 ];
 
 @NgModule({
