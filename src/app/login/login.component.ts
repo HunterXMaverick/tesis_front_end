@@ -23,7 +23,9 @@ export class LoginComponent implements OnInit {
     private congressService: CongressService,
     private router: Router
   ) {
-    sessionStorage.clear();
+    if (sessionStorage.getItem('activeCongress') == null) {
+      this.router.navigate(['home']);
+    }
     localStorage.clear();
     this.loginData = this.formBuilder.group({
       email: ['organizador@gmail.com', Validators.required],
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
           (res: any) => {
             if (res.data.length == 0) {
               // this.congresses = [];
-              this.handleModalCongress(false);
+              // this.handleModalCongress(false);
               Swal.fire({
                 icon: 'success',
                 title: 'Inicio de Sesión Exitosa',
@@ -64,7 +66,7 @@ export class LoginComponent implements OnInit {
               });
 
               if (this.congresses.length == 0) {
-                this.handleModalCongress(false);
+                // this.handleModalCongress(false);
                 Swal.fire({
                   icon: 'success',
                   title: 'Inicio de Sesión Exitosa',
@@ -139,11 +141,14 @@ export class LoginComponent implements OnInit {
           (data: any) => {
             if (data.ok == true) {
               if (this.permissions.decodeToken(data.token)) {
-                this.handleModalCongress(true);
-                let dataUser = JSON.parse(
-                  sessionStorage.getItem('_user-data')!
-                );
-                this.getCongress(dataUser._id, dataUser.rol);
+                // this.handleModalCongress(true);
+
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Inicio de Sesión Exitosa',
+                  showConfirmButton: false,
+                  timer: 1500,
+                }).then(() => this.router.navigate(['dashboard/congresses']));
               } else {
                 email = '';
                 password = '';

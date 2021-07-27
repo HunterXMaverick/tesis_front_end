@@ -1,46 +1,84 @@
 <div class="w-full h-full">
   <app-header></app-header>
+
   <div class="flex bg-white" style="height: 600px">
-    <div class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
-      <div>
-        <div>
-          <h2 class="text-3xl font-semibold text-gray-800 md:text-4xl">
-            <span class="text-indigo-600">{{congress_habilitado.name}}</span>
-          </h2>
-          <img class="bg-top bg-cover w-full h-1/2 rounded-t" [src]="see_logo" alt="congress.name" />
-        </div>
-        <div>
+    <div
+      class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2"
+    >
+      <div class="w-full h-full justify-center py-6 flex flex-col">
+        <div class="w-full h-full flex flex-col items-center justify-center">
           <h2 class="text-3xl font-semibold text-gray-800 md:text-4xl">
             Proyectando un mejor <span class="text-indigo-600">Futuro</span>
           </h2>
           <p class="mt-2 text-sm text-gray-500 md:text-base">
-            Con una mejor experiencia para la presentación de tus proyectos, desde
-            la comodidad de tu hogar hacia el mundo
+            Con una mejor experiencia para la presentación de tus proyectos,
+            desde la comodidad de tu hogar hacia el mundo
           </p>
-          <div class="flex justify-center lg:justify-start mt-6">
-            <button (click)="handleModal(true)" class="
-        py-1
-        px-4
-        flex
-        items-center
-        bg-gray-300
-        text-gray-900 text-base
-        font-semibold
-        rounded
-        hover:bg-gray-400
-      ">
-              <i class="fas fa-user-plus mr-1"></i>
-              Regístrate
-            </button>
+        </div>
+
+        <div class="w-full h-full flex items-center">
+          <button
+            (click)="handleSidebar(true)"
+            class="
+              w-1/2
+              h-full
+              px-1
+              border
+              hover:border-indigo-600
+              animate-pulse
+              rounded
+            "
+          >
+            <h2
+              class="
+                text-xl text-center
+                uppercase
+                h-1/4
+                font-semibold
+                text-indigo-600
+              "
+            >
+              {{ congress_habilitado.name }}
+            </h2>
+            <img
+              class="bg-top bg-cover w-full h-3/4 rounded-t"
+              [src]="see_logo"
+              alt="{{ congress_habilitado.name }}"
+            />
+          </button>
+
+          <div class="w-1/2 px-1 flex flex-col self-start text-center">
+            <h2
+              class="
+                text-xl text-center
+                uppercase
+                h-1/4
+                font-semibold
+                text-indigo-600
+              "
+            >
+              Congresos Futuros
+            </h2>
+            <p *ngFor="let congress of congress_pendientes">
+              <i class="fas fa-calendar mr-1"></i>
+              {{ congress.name }}
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="hidden lg:block lg:w-1/2" style="clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%)">
-      <div class="w-full h-full bg-cover" style="
+
+    <div
+      class="hidden lg:block lg:w-1/2"
+      style="clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%)"
+    >
+      <div
+        class="w-full h-full bg-cover"
+        style="
           background-image: url(../../assets/img/congresos.jpg);
           background-repeat: no-repeat;
-        ">
+        "
+      >
         <div class="h-full bg-black opacity-25"></div>
       </div>
     </div>
@@ -48,7 +86,9 @@
 </div>
 
 <!-- MODAL -->
-<div id="modal" class="
+<div
+  id="modal"
+  class="
     flex
     items-center
     justify-center
@@ -58,24 +98,30 @@
     w-full
     h-full
     bg-gray-800 bg-opacity-75
-  ">
+  "
+>
   <div class="flex flex-col w-1/3 h-auto p-3 bg-white">
     <div class="flex w-full h-auto items-center">
       <div class="flex w-10/12 h-auto py-3 text-xl md:text-2xl ml-5">
         Selecciona el rol que desempeñaras
       </div>
-      <i class="
+      <i
+        class="
           fas
           fa-window-close
           text-2xl
           cursor-pointer
           text-red-500
           hover:text-red-700
-        " (click)="handleModal(false)"></i>
+        "
+        (click)="handleModal(false)"
+      ></i>
     </div>
     <div class="w-full h-auto py-10 justify-center items-center text-center">
       <div class="w-full md:w-full px-3 mb-4">
-        <button routerLink="/register-assistant" class="
+        <button
+          routerLink="/register-assistant"
+          class="
             appearance-none
             w-full
             border border-gray-900
@@ -89,13 +135,16 @@
             flex
             items-center
             justify-center
-          ">
+          "
+        >
           <i class="fas fa-user-plus mr-1"></i>
           Participante
         </button>
       </div>
       <div class="w-full md:w-full px-3 mb-4">
-        <button routerLink="/register-speaker" class="
+        <button
+          routerLink="/register-speaker"
+          class="
             appearance-none
             w-full
             border border-gray-900
@@ -109,13 +158,16 @@
             flex
             items-center
             justify-center
-          ">
+          "
+        >
           <i class="fas fa-user-plus mr-1"></i>
           Ponente
         </button>
       </div>
       <div class="w-full md:w-full px-3" style="display: none">
-        <button routerLink="/register-reviewer" class="
+        <button
+          routerLink="/register-reviewer"
+          class="
             appearance-none
             block
             w-full
@@ -127,10 +179,56 @@
             px-3
             leading-tight
             focus:outline-none
-          ">
+          "
+        >
           Revisor
         </button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="fixed top-0 right-0 w-1/4 h-full">
+  <nav
+    id="menu"
+    class="flex flex-col h-full bg-blue-800 w-full px-12 py-4 rounded-r"
+  >
+    <button class="text-right" (click)="handleSidebar(false)">
+      <i class="fas fa-times-circle text-red-500 text-2xl"></i>
+    </button>
+
+    <div class="flex flex-col items-center text-white py-2">
+      <button
+        (click)="logIn()"
+        class="
+          rounded
+          hover:bg-gray-900 hover:text-gray-100 hover:font-medium
+          py-2
+          px-3
+          md:mx-2
+        "
+      >
+        <i class="fas fa-user py-2 mr-2"></i>Iniciar sesión
+      </button>
+
+      <button
+        (click)="handleModal(true)"
+        class="
+          rounded
+          hover:bg-gray-900 hover:text-gray-100 hover:font-medium
+          py-2
+          px-3
+          md:mx-2
+        "
+      >
+        <i class="fas fa-home py-2 mr-2"></i>Regístrate
+      </button>
+    </div>
+
+    <hr />
+
+    <!-- <div class="flex flex-col items-center text-white py-2">
+      congress details
+    </div> -->
+  </nav>
 </div>

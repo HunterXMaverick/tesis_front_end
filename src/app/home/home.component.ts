@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CongressService } from '../services/congress.service';
 
 @Component({
@@ -8,17 +9,22 @@ import { CongressService } from '../services/congress.service';
 })
 export class HomeComponent implements OnInit {
   congress_habilitado: any;
-  congress_pendientes: any= [];
+  congress_pendientes: any = [];
   congress: any;
+  showSidebar: boolean = false;
   see_logo: string = '';
 
   constructor(
     private congressService: CongressService,
-  ){
+    private router: Router
+  ) {
+    sessionStorage.clear();
+    this.getCongress();
   }
+
   ngOnInit() {
     this.handleModal(false);
-    this.getCongress(); 
+    this.handleSidebar(false);
   }
 
   getCongress() {
@@ -28,15 +34,11 @@ export class HomeComponent implements OnInit {
           this.congress = null;
         } else {
           res.data.forEach((element: any) => {
-            if (
-              element.status_congress == 'Habilitado'
-            ) {
+            if (element.status_congress == 'Habilitado') {
               this.congress_habilitado = element;
               this.see_logo = `http://localhost:3500/api/file/${element.logo}`;
             }
-            if(
-              element.status_congress == 'Pendiente'
-            ){
+            if (element.status_congress == 'Pendiente') {
               this.congress_pendientes.push(element);
             }
           });
@@ -54,5 +56,21 @@ export class HomeComponent implements OnInit {
     } else {
       modal.classList.add('hidden');
     }
+  }
+
+  handleSidebar(showSidebar: boolean) {
+    let sidebar: any = document.getElementById('menu');
+
+    if (showSidebar) {
+      sidebar.classList.remove('hidden');
+    } else {
+      sidebar.classList.add('hidden');
+    }
+  }
+
+  logIn() {
+    let id_congress = this.congress_habilitado._id;
+    sessionStorage.setItem('activeCongress', id_congress);
+    this.router.navigate(['login']);
   }
 }
