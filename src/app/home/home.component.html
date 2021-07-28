@@ -15,7 +15,10 @@
             desde la comodidad de tu hogar hacia el mundo
           </p>
         </div>
-
+        <h2 class="text-2xl font-semibold text-gray-800 md:text-4xl">
+          Congreso en <span class="text-indigo-600">Curso</span>
+        </h2>
+        <br>
         <div class="w-full h-full flex items-center">
           <button
             (click)="handleSidebar(true)"
@@ -45,8 +48,9 @@
               [src]="see_logo"
               alt="{{ congress_habilitado.name }}"
             />
+          <p class="text-sm font-medium text-white sm:mb-1 sm:text-indigo-600">Click Aquí</p>
+          <i class="fas fa-mouse text-indigo-600"></i>
           </button>
-
           <div class="w-1/2 px-1 flex flex-col self-start text-center">
             <h2
               class="
