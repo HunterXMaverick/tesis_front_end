@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Congress } from 'src/app/models/congress';
 import { CongressService } from '../../services/congress.service';
+import { ConferenceService } from '../../services/conference.service';
+import { PostulationService } from '../../services/postulation.service';
+
 
 @Component({
   selector: 'app-general-history',
@@ -9,12 +11,20 @@ import { CongressService } from '../../services/congress.service';
 })
 export class GeneralHistoryComponent implements OnInit {
   congress: any = [];
+  congressData: any = [];
+  postulationData: any = [];
+  conferences: Array<any> = [];
 
-  constructor(private congressService: CongressService) {
+  constructor(
+    private conferenceService: ConferenceService,
+    private congressService: CongressService
+    ) {
     this.getCongress();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.handleModal(false);
+  }
 
   // getCongress() {
   //   return this.congressService.getCongress().subscribe(
@@ -32,8 +42,6 @@ export class GeneralHistoryComponent implements OnInit {
         } else {
           res.data.forEach((element: any) => {
             if (
-              // element.person_id == this.dataUser._id &&
-              // element._id == this.congress &&
               element.status_congress == 'Inhabilitado'
             ) {
               this.congress.push(element);
@@ -45,5 +53,38 @@ export class GeneralHistoryComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+
+  getPostulationById(_id: string) {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        this.congressData = res.data;
+      }
+    )
+  }
+
+  getConferenceById(){
+    return this.conferenceService.getConference().subscribe((res: any) => {
+      res.data.forEach((element: any) => {
+        if (
+          element.congress_id == this.congressData
+        ) {
+          this.conferences.push(element);
+        }
+      });
+    });
+  }
+
+  
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
 
 }
