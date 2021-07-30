@@ -6,10 +6,11 @@
       Calificar
 
       <button class="tooltip appearance-none  px-7 font-semibold text-gray-800 border-b"
-        onclick="document.getElementById('myModal').showModal()" id="btn">
-        <span class="tooltiptext text-red-800">Ayuda</span>
-        <i class="fas fa-question font-semibold text-red-800 border-b"></i>
-      </button>
+      onclick="document.getElementById('myModal').showModal()" id="btn">
+      <p class="text-red-800">Ayuda
+      <i class="fas fa-question font-semibold text-red-800 border-b"></i>
+      </p>
+    </button>
 
     </h2>
     <div class="block md:flex items-center">
@@ -22,7 +23,7 @@
       <form class="form-horizontal mx-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b-2 border-gray-200 bg-gray-200">
+            <tr class="border-b-2 border-gray-200 bg-gray-200">.
               <br>
               <th class="px-5 py-3 text-left text-sm text-gray-600">Nota</th>
               <th class="px-5 py-3 text-left text-sm text-gray-600">
@@ -34,7 +35,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b-2 border-gray-200 bg-gray-200">
+            <tr class="border-b border-gray-200 hover:bg-gray-200">
               <br>
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 <input class="
@@ -77,12 +78,12 @@
         </div>
         <br>
         <table class="w-full">
-          <thead class="border-b-2 border-gray-200 bg-blue-200">
-            <tr>
+          <thead>
+            <tr class="border-b-2 border-gray-200 bg-blue-200">
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Parametros
               </th>
-              <td *ngFor="let parametro of parameters ; let i = index">
+              <td *ngFor="let parametro of parameters; let i = index">
                 {{i+1}}: {{ parametro }}
               </td>
             </tr>
@@ -102,7 +103,7 @@
             </tr>
           </thead>
         </table>
-        <br>
+
         <div class="block md:flex items-center justify-between">
           <button (click)="editQualification()" class="
               align-middle
