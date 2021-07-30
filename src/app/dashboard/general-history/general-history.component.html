@@ -58,7 +58,7 @@
 </div>
 
 <!-- MODAL -->
-<!-- <div id="modal" class="
+ <div id="modal" class="
     flex
     items-center
     justify-center
@@ -76,7 +76,7 @@
       </div>
 
       <div class="text-2xl">
-        <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
+        <!-- <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i> -->
       </div>
     </div>
 
@@ -91,95 +91,15 @@
         bg-gray-200
         rounded
         text-gray-800">
-      <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
+      <div class="flex flex-col w-1/2 justify-center" *ngIf="congressData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Nombres:</h2>
-          <p>{{ userData.names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Apellidos:</h2>
-          <p>{{ userData.last_names }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Rol:</h2>
-          <p>{{ userData.rol }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Tipo de Identificación:</h2>
-          <p>{{ userData.type_dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Número de identificación:</h2>
-          <p>{{ userData.dni }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nivel académico:</h2>
-          <p>{{ userData.level_academy }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Titulo Académico:</h2>
-          <p>{{ userData.title }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Teléfono:</h2>
-          <p>{{ userData.phone }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3">Correo Electrónico:</h2>
-          <p>{{ userData.email }}</p>
+          <!-- <p>{{ userData.names }}</p> -->
         </div>
       </div>
 
-      <div class="flex w-1/2 justify-center" *ngIf="
-          (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
-          profile_picture_url !== ''
-        ">
-        <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
-      </div>
+
+
     </div>
   </div>
 </div>
-
-<div id="modal-remark" class="
-    flex
-    items-center
-    justify-center
-    fixed
-    left-0
-    bottom-0
-    w-full
-    h-full
-    bg-gray-800 bg-opacity-75
-  ">
-  <div class="flex flex-col w-1/3 bg-white">
-    <div class="flex w-full px-3 items-center justify-between">
-      <div class="h-auto text-2xl">
-        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Observaciones
-      </div>
-
-      <div class="text-2xl">
-        <i (click)="handleModalRemark(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
-      </div>
-    </div>
-
-    <div class="
-        flex
-        w-full
-        h-auto
-        py-6
-        px-10
-        items-center
-        justify-between
-        bg-gray-200
-        rounded 
-        text-gray-800">
-      <div class="flex flex-col justify-center w-full" *ngIf="remarks">
-        <div *ngFor="let remark of remarks" class="flex">
-          <p class="px-2 w-1/2">{{ remark.criteria }}</p>
-          <p class="px-2 w-1/2">{{ remark.remark }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

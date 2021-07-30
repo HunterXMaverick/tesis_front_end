@@ -13,7 +13,7 @@ export class GeneralHistoryComponent implements OnInit {
   congress: any = [];
   congressData: any = [];
   postulationData: any = [];
-  conferences: Array<any> = [];
+  conferencesData: Array<any> = [];
 
   constructor(
     private conferenceService: ConferenceService,
@@ -57,7 +57,7 @@ export class GeneralHistoryComponent implements OnInit {
   getPostulationById(_id: string) {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        this.congressData = res.data;
+        this.postulationData = res.data;
       }
     )
   }
@@ -68,7 +68,7 @@ export class GeneralHistoryComponent implements OnInit {
         if (
           element.congress_id == this.congressData
         ) {
-          this.conferences.push(element);
+          this.conferencesData.push(element);
         }
       });
     });
