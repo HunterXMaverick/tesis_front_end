@@ -68,7 +68,7 @@
         <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
       </div>
     </div>
-
+    <h2>Listado de Conferencias</h2>
     <div class="
         flex
         w-full
@@ -80,6 +80,7 @@
         bg-gray-200
         rounded
         text-gray-800">
+        
       <div class="flex flex-col w-1/2 justify-center" *ngFor="let conference of conferencesData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Enlace:</h2>
@@ -95,7 +96,7 @@
         </div>
       </div>
     </div>
-
+    <h2>Listado de Ponencias</h2>
     <div class="
         flex
         w-full
@@ -107,6 +108,7 @@
         bg-gray-200
         rounded
         text-gray-800">
+        
       <div class="flex flex-col w-1/2 justify-center" *ngFor="let postulations of postulationData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Título del Proyecto:</h2>
@@ -126,7 +128,7 @@
             <p>{{ postulations.status }}</p>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>
