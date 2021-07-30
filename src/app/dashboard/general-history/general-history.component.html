@@ -21,28 +21,26 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let postulation of congress" class="border-b border-gray-200 hover:bg-gray-100">
+        <tr *ngFor="let element of congress" class="border-b border-gray-200 hover:bg-gray-100">
           <td class="px-1 py-5 text-sm flex justify-center">
-            {{ postulation.name }}
+            {{ element.name }}
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            <iframe class="text-xl text-justify w-full" srcdoc="{{ postulation.regulations }}" frameborder="0"></iframe>
+            <iframe class="text-xl text-justify w-full" srcdoc="{{ element.regulations }}" frameborder="0"></iframe>
           </td>
 
           <td class="px-5 py-5e text-sm text-center">
-            {{ postulation.knowledge_area }}
+            {{ element.knowledge_area }}
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            {{ postulation.start_date | date: "dd/MM/yyyy"}}
+            {{ element.start_date | date: "dd/MM/yyyy"}}
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            {{ postulation.end_date | date: "dd/MM/yyyy" }}
+            {{ element.end_date | date: "dd/MM/yyyy" }}
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            <!-- (click)="getCongressById(id)" 
-            (click)="handleModal(true)" -->
-            <button 
-            class="tooltip appearance-none focus:outline-none mr-2">
+
+            <button (click)="getGeneralHistory(element._id)" class="tooltip appearance-none focus:outline-none mr-2">
               <i class="fas fa-info-circle text-xl text-blue-700"></i>
               <span class="tooltiptext">Información</span>
             </button>
@@ -58,7 +56,7 @@
 </div>
 
 <!-- MODAL -->
- <div id="modal" class="
+<div id="modal" class="
     flex
     items-center
     justify-center
@@ -76,7 +74,7 @@
       </div>
 
       <div class="text-2xl">
-        <!-- <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i> -->
+        <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
       </div>
     </div>
 
@@ -91,15 +89,52 @@
         bg-gray-200
         rounded
         text-gray-800">
-      <div class="flex flex-col w-1/2 justify-center" *ngIf="congressData">
+      <div class="flex flex-col w-1/2 justify-center" *ngFor="let conference of conferencesData">
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nombres:</h2>
-          <!-- <p>{{ userData.names }}</p> -->
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ conference.link }}</p>
+        </div>
+
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ conference.start_date }}</p>
+        </div>
+
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ conference.end_date }}</p>
+        </div>
+
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ conference.hour }}</p>
+        </div>
+
+      </div>
+
+      <div class="flex flex-col w-1/2 justify-center" *ngFor="let postulations of postulationData">
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ postulations.title_project }}</p>
+        </div>
+
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ postulations.summary_project }}</p>
         </div>
       </div>
 
+      <div class="flex flex-col w-1/2 justify-center" *ngFor="let postulations of postulationData">
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ postulations.title_project }}</p>
+        </div>
 
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Enlace:</h2>
+          <p>{{ postulations.status }}</p>
+        </div>
+      </div>
 
     </div>
   </div>
-</div>

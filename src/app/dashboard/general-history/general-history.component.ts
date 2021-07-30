@@ -12,17 +12,19 @@ import { PostulationService } from '../../services/postulation.service';
 export class GeneralHistoryComponent implements OnInit {
   congress: any = [];
   congressData: any = [];
-  postulationData: any = [];
+  postulationData: Array<any> = [];
   conferencesData: Array<any> = [];
 
   constructor(
     private conferenceService: ConferenceService,
-    private congressService: CongressService
-    ) {
+    private congressService: CongressService,
+    private postulationService: PostulationService
+  ) {
     this.getCongress();
+
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.handleModal(false);
   }
 
@@ -54,27 +56,37 @@ export class GeneralHistoryComponent implements OnInit {
     );
   }
 
-  getPostulationById(_id: string) {
-    return this.congressService.getCongress().subscribe(
+  getGeneralHistory(id: string) {
+    this.handleModal(true);
+
+    this.conferenceService.getConference().subscribe(
       (res: any) => {
-        this.postulationData = res.data;
-      }
-    )
-  }
-
-  getConferenceById(){
-    return this.conferenceService.getConference().subscribe((res: any) => {
-      res.data.forEach((element: any) => {
-        if (
-          element.congress_id == this.congressData
-        ) {
-          this.conferencesData.push(element);
-        }
+        res.data.forEach(
+          (conference: any) => {
+            
+            console.log(conference.congress_id)
+            console.log(id)
+            if (conference.congress_id == id) {
+              this.conferencesData.push(conference);
+            }
+          })
       });
-    });
+
+      this.postulationService.getPostulations().subscribe(
+        (res: any) => {
+          res.data.forEach(
+            (postulation: any) => {
+              console.log(postulation.congress_id)
+              if (postulation.congress_id == id) {
+                this.postulationData.push(postulation);
+              }
+            })
+        });
+
+        //s
   }
 
-  
+
 
   handleModal(showModal: boolean) {
     let modal: any = document.getElementById('modal');
