@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../../services/person.service';
-import Swal from 'sweetalert2';
 import { CongressService } from 'src/app/services/congress.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    // this.getPersonByEmail();
   }
 
   getCongress() {
@@ -60,7 +59,6 @@ export class UsersComponent implements OnInit {
           res.data.forEach((element: any) => {
             if (element.congress_id == this.congressSelected) {
               this.users.push(element);
-              console.log(element);
             }
           });
         }

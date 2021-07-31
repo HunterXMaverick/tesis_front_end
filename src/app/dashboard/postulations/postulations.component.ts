@@ -101,12 +101,10 @@ export class PostulationsComponent implements OnInit {
         if (res.data.length == 0) {
           this.showPostulations = false;
         } else {
+          this.postulations = [];
           res.data.forEach((element: any) => {
             this.getUserById(element.person_id);
-            if (
-              element.person_id == this.dataUser._id &&
-              element.congress_id == this.congressSelected
-            ) {
+            if (element.congress_id == this.congressSelected) {
               this.postulations.push(element);
               this.projectsSpeaker.push(element);
             }
@@ -208,8 +206,10 @@ export class PostulationsComponent implements OnInit {
 
             res.data.forEach((element: any) => {
               this.getSpeakerName(element.person_id);
-              element.speakerName = this.nameSpeakerTemp;
-              this.postulations.push(element);
+              if (element.congress_id == this.congressSelected) {
+                element.speakerName = this.nameSpeakerTemp;
+                this.postulations.push(element);
+              }
             });
           },
           (err) => console.error(err)

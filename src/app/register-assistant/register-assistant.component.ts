@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PersonService } from '../services/person.service';
 import { Person } from '../models/person';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CongressService } from '../services/congress.service';
 
 @Component({
   selector: 'app-register-assistant',
   templateUrl: './register-assistant.component.html',
   styleUrls: ['./register-assistant.component.scss'],
 })
-export class RegisterAssistantComponent implements OnInit {
+export class RegisterAssistantComponent {
   congresses: Array<any> = [];
+  congressSelected: any;
   viewPassword = true;
   person: Person = {
     rol: 'Participante',
@@ -26,43 +26,11 @@ export class RegisterAssistantComponent implements OnInit {
     congress_id: '',
   };
 
-  constructor(
-    private personService: PersonService,
-    private congressService: CongressService,
-    private router: Router
-  ) {
-    this.getCongress();
+  constructor(private personService: PersonService, private router: Router) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
   }
 
-  ngOnInit() {
-    this.handleModalCongress(false);
-  }
-
-  getCongress() {
-    return this.congressService.getCongress().subscribe(
-      (res: any) => {
-        this.congresses = [];
-
-        if (res.data.length == 0) {
-          this.congresses = [];
-        } else {
-          res.data.forEach((elementCongress: any) => {
-            if (elementCongress.status_congress == 'Habilitado') {
-              this.congresses.push(elementCongress);
-            }
-          });
-        }
-      },
-      (err) => console.error(err)
-    );
-  }
-
-  selectCongress(congress_id: string) {
-    this.person.congress_id = congress_id;
-    this.postPerson(this.person.dni);
-  }
-
-  postPerson(ci: any) {
+  postPerson() {
     if (
       this.person.type_dni &&
       this.person.dni &&
@@ -71,6 +39,8 @@ export class RegisterAssistantComponent implements OnInit {
       this.person.email &&
       this.person.password
     ) {
+      this.person.congress_id = this.congressSelected;
+
       let dataPerson = {
         person: this.person,
       };
@@ -83,7 +53,7 @@ export class RegisterAssistantComponent implements OnInit {
       let validateLastNames = pathOnlyLetters.test(
         dataPerson.person.last_names
       );
-      let validateCI = this.validationDniCI(ci);
+      let validateCI = this.validationDniCI(this.person.dni);
       if (validateNames && validateLastNames) {
         if (validateEmail) {
           if (this.person.type_dni == 'Cédula') {
@@ -234,16 +204,6 @@ export class RegisterAssistantComponent implements OnInit {
     } else {
       console.log('Cédula con más de 10 dígitos');
       return false;
-    }
-  }
-
-  handleModalCongress(showModal: boolean) {
-    let modal: any = document.getElementById('modal-congress');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
     }
   }
 }

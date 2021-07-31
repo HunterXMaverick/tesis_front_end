@@ -15,7 +15,7 @@ export class RubricComponent implements OnInit {
   congressCreated: boolean = false;
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
-  rubric: any;
+  rubric: any = null;
   rubricsHistory: Array<any> = [];
   congressSelected: any;
   dataUser: any;
@@ -115,6 +115,15 @@ export class RubricComponent implements OnInit {
             this.rubricsHistory.push(element);
           }
         });
+
+        if (this.rubric == null) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Recuerda que tienes un máximo de 5 criterios por rúbrica.',
+            showConfirmButton: true,
+          });
+        }
       }
     });
   }

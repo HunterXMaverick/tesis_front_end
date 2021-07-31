@@ -29,7 +29,7 @@ export class PutUserComponent {
       last_names: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       profile_picture: [null],
-      password: [''],
+      password: ['', [Validators.required]],
     });
     this.idUser = JSON.parse(sessionStorage.getItem('_user-data')!);
     this.getUserById();
@@ -39,8 +39,6 @@ export class PutUserComponent {
     return this.personService
       .getUserById(this.idUser._id)
       .subscribe((res: any) => {
-        console.log(res.data);
-
         this.dataUser = res.data;
         this.logUser = res.data;
 
@@ -57,7 +55,7 @@ export class PutUserComponent {
             last_names: this.dataUser.last_names,
             phone: this.dataUser.phone,
             profile_picture: '',
-            password: this.dataUser.password,
+            password: '',
           });
         } else {
           this.user.setValue({
@@ -65,7 +63,7 @@ export class PutUserComponent {
             last_names: this.dataUser.last_names,
             phone: this.dataUser.phone,
             profile_picture: '',
-            password: this.dataUser.password,
+            password: '',
           });
         }
       });

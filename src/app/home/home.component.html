@@ -18,7 +18,7 @@
         <h2 class="text-2xl font-semibold text-gray-800 md:text-4xl">
           Congreso en <span class="text-indigo-600">Curso</span>
         </h2>
-        <br>
+        <br />
         <div class="w-full h-full flex items-center">
           <button
             (click)="handleSidebar(true)"
@@ -48,8 +48,12 @@
               [src]="see_logo"
               alt="{{ congress_habilitado.name }}"
             />
-          <p class="text-sm font-medium text-white sm:mb-1 sm:text-indigo-600">Click Aquí</p>
-          <i class="fas fa-mouse text-indigo-600"></i>
+            <p
+              class="text-sm font-medium text-white sm:mb-1 sm:text-indigo-600"
+            >
+              Click Aquí
+            </p>
+            <i class="fas fa-mouse text-indigo-600"></i>
           </button>
           <div class="w-1/2 px-1 flex flex-col self-start text-center">
             <h2
@@ -105,8 +109,19 @@
   "
 >
   <div class="flex flex-col w-1/3 h-auto p-3 bg-white">
-    <div class="flex w-full h-auto items-center">
-      <div class="flex w-10/12 h-auto py-3 text-xl md:text-2xl ml-5">
+    <div class="flex items-center w-full h-full justify-between">
+      <div
+        class="
+          flex
+          justify-between
+          py-3
+          font-bold
+          text-md
+          px-2
+          uppercase
+          text-black
+        "
+      >
         Selecciona el rol que desempeñaras
       </div>
       <i
@@ -121,16 +136,19 @@
         (click)="handleModal(false)"
       ></i>
     </div>
-    <div class="w-full h-auto py-10 justify-center items-center text-center">
+
+    <hr />
+
+    <div class="w-full h-auto py-6 justify-center items-center text-center">
       <div class="w-full md:w-full px-3 mb-4">
         <button
-          routerLink="/register-assistant"
+          (click)="signUpAssitant()"
           class="
             appearance-none
             w-full
-            border border-gray-900
-            text-gray-900
-            hover:bg-gray-900 hover:text-gray-100
+            border border-black
+            text-black
+            hover:bg-blue-700 hover:text-white
             rounded-lg
             py-3
             px-3
@@ -147,13 +165,13 @@
       </div>
       <div class="w-full md:w-full px-3 mb-4">
         <button
-          routerLink="/register-speaker"
+          (click)="signUpSpeaker()"
           class="
             appearance-none
             w-full
-            border border-gray-900
-            text-gray-900
-            hover:bg-gray-900 hover:text-gray-100
+            border border-black
+            text-black
+            hover:bg-blue-700 hover:text-white
             rounded-lg
             py-3
             px-3
@@ -168,38 +186,26 @@
           Ponente
         </button>
       </div>
-      <div class="w-full md:w-full px-3" style="display: none">
-        <button
-          routerLink="/register-reviewer"
-          class="
-            appearance-none
-            block
-            w-full
-            border border-gray-900
-            text-gray-900
-            hover:bg-gray-900 hover:text-gray-100
-            rounded-lg
-            py-3
-            px-3
-            leading-tight
-            focus:outline-none
-          "
-        >
-          Revisor
-        </button>
-      </div>
     </div>
   </div>
 </div>
 
+<!-- Drawer -->
 <div class="fixed top-0 right-0 w-1/4 h-full">
   <nav
     id="menu"
-    class="flex flex-col h-full bg-blue-800 w-full px-12 py-4 rounded-r"
+    class="flex flex-col h-full bg-blue-800 w-full px-4 py-4 rounded-l"
   >
-    <button class="text-right" (click)="handleSidebar(false)">
-      <i class="fas fa-times-circle text-red-500 text-2xl"></i>
-    </button>
+    <div class="flex justify-between items-center pb-5">
+      <h1 class="text-xl text-white uppercase font-bold"></h1>
+      <button class="text-right" (click)="handleSidebar(false)">
+        <i
+          class="fas fa-window-close text-red-500 text-xl hover:text-red-700"
+        ></i>
+      </button>
+    </div>
+
+    <hr />
 
     <div class="flex flex-col items-center text-white py-2">
       <button
@@ -210,6 +216,7 @@
           py-2
           px-3
           md:mx-2
+          w-full
         "
       >
         <i class="fas fa-user py-2 mr-2"></i>Iniciar sesión
@@ -223,6 +230,7 @@
           py-2
           px-3
           md:mx-2
+          w-full
         "
       >
         <i class="fas fa-home py-2 mr-2"></i>Regístrate
@@ -231,8 +239,41 @@
 
     <hr />
 
-    <!-- <div class="flex flex-col items-center text-white py-2">
-      congress details
-    </div> -->
+    <div class="flex flex-col text-white py-4 justify-between h-full">
+      <h1 class="text-center uppercase font-bold">Información del congreso.</h1>
+
+      <h1 class="font-bold text-2xl text-center border rounded">
+        {{ congress_habilitado.name }}
+      </h1>
+
+      <div class="flex">
+        <h4>Fecha de Inicio:</h4>
+        <p class="font-bold text-center">
+          {{ congress_habilitado.start_date | date: "dd/MM/yyyy" }}
+        </p>
+      </div>
+
+      <div class="flex">
+        <h4>Fecha de Finalización:</h4>
+        <p class="font-bold text-center">
+          {{ congress_habilitado.end_date | date: "dd/MM/yyyy" }}
+        </p>
+      </div>
+
+      <div class="flex flex-col">
+        <b>Reglamento:</b>
+        <iframe
+          class="text-xl text-justify w-full text-white"
+          srcdoc="{{ congress_habilitado.regulations }}"
+        ></iframe>
+      </div>
+
+      <div class="flex flex-col">
+        <b class="mr-2">Áreas de Conocimiento:</b>
+        <p>
+          {{ congress_habilitado.knowledge_area }}
+        </p>
+      </div>
+    </div>
   </nav>
 </div>

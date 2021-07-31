@@ -73,4 +73,16 @@ export class HomeComponent implements OnInit {
     sessionStorage.setItem('activeCongress', id_congress);
     this.router.navigate(['login']);
   }
+
+  signUpAssitant() {
+    let id_congress = this.congress_habilitado._id;
+    sessionStorage.setItem('activeCongress', id_congress);
+    this.router.navigate(['register-assistant']);
+  }
+
+  signUpSpeaker() {
+    let id_congress = this.congress_habilitado._id;
+    sessionStorage.setItem('activeCongress', id_congress);
+    this.router.navigate(['register-speaker']);
+  }
 }
