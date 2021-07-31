@@ -5,12 +5,12 @@
     <h2 class="py-4  text-2xl font-semibold text-gray-800 border-b">
       Calificar
 
-      <button class="tooltip appearance-none  px-7 font-semibold text-gray-800 border-b"
-      onclick="document.getElementById('myModal').showModal()" id="btn">
-      <p class="text-red-800">Ayuda
-      <i class="fas fa-question font-semibold text-red-800 border-b"></i>
-      </p>
-    </button>
+      <button class="tooltip appearance-none  px-7 font-semibold text-gray-800 border-b" (click)="handleModal(true)"
+        id="btn">
+        <p class="text-red-800">Ayuda
+          <i class="fas fa-question font-semibold text-red-800 border-b"></i>
+        </p>
+      </button>
 
     </h2>
     <div class="block md:flex items-center">
@@ -123,26 +123,51 @@
           </button>
         </div>
       </form>
+
       <!-- MODAL -->
-      <dialog id="myModal" class="lex flex-col w-flex h-flex">
-        <div class="flex flex-col">
-          <div class="flex w-full h-auto justify-between">
-            <div class="h-auto pb-5 pl-2 text-2xl">
-              <i class="fas fa-book-open text-blue-800 text-2xl mr-2"></i>
+      <div id="modal" class="
+  flex
+  items-center
+  justify-center
+  fixed
+  left-0
+  bottom-0
+  w-full
+  h-full
+  bg-gray-800 bg-opacity-75
+">
+        <div class="h-auto pb-5 pl-2 text-2xl bg-white">
+          <div class="flex w-full px-3 items-center justify-between">
+            <div class="h-auto text-2xl">
+              <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
               Indicaciones
-              <div class="h-auto pb-5 pr-2 text-2xl">
-                <i onclick="document.getElementById('myModal').close();"
-                  class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
-              </div>
-              <div class="w-full h-full items-center bg-gray-200 rounded text-gray-800">
-                <div class="flex">
-                  <img src="/assets/img/ayuda.png" alt="">
-                </div>
+            </div>
+
+            <div class="text-2xl">
+              <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
+            </div>
+          </div>
+
+          <div class="
+      flex
+      w-full
+      h-auto
+      py-6
+      px-10
+      items-center
+      justify-between
+      bg-gray-200
+      rounded
+      text-gray-800
+    ">
+            <div class="w-full h-full items-center bg-gray-200 rounded text-gray-800">
+              <div class="flex">
+                <img src="/assets/img/ayuda.png" alt="">
               </div>
             </div>
           </div>
         </div>
-      </dialog>
+      </div>
     </div>
   </div>
 </div>

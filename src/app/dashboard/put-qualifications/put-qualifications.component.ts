@@ -38,13 +38,19 @@ export class PutQualificationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.opeModal();
+    this.handleModal(true);
   }
 
-  opeModal() {
-    document.getElementById('myModal');
- }
+  
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
 
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
   getQualifications() {
     return this.qualificationService
       .getQualificationById(this.postulations_id)

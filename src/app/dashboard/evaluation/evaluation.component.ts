@@ -36,7 +36,19 @@ export class EvaluationComponent implements OnInit {
     this.getRubrics();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.handleModal(true);
+  }
+
+  handleModal(showModal: boolean) {
+    let modal: any = document.getElementById('modal');
+
+    if (showModal) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
 
   getRubrics() {
     return this.rubricsService.getRubrics().subscribe(
