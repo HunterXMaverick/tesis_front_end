@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CongressService } from '../../services/congress.service';
 import { ConferenceService } from '../../services/conference.service';
 import { PostulationService } from '../../services/postulation.service';
-
+import { QualificationService } from 'src/app/services/qualification';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-general-history',
@@ -14,18 +15,22 @@ export class GeneralHistoryComponent implements OnInit {
   congressData: any = [];
   postulationData: Array<any> = [];
   conferencesData: Array<any> = [];
+  dataUser: any;
 
   constructor(
     private conferenceService: ConferenceService,
     private congressService: CongressService,
-    private postulationService: PostulationService
+    private postulationService: PostulationService,
+    private qualificationService: QualificationService,
   ) {
     this.getCongress();
-
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    console.log(this.dataUser);
   }
 
   ngOnInit(): void {
-    this.handleModal(false);
+    this.handleModalParticipante(false);
+    this.handleModalRevisor(false);
   }
 
   // getCongress() {
@@ -56,14 +61,12 @@ export class GeneralHistoryComponent implements OnInit {
     );
   }
 
-  getGeneralHistory(id: string) {
-    this.handleModal(true);
-
+  getGeneralHistoryParticipante(id: string) {
     this.conferenceService.getConference().subscribe(
       (res: any) => {
         res.data.forEach(
           (conference: any) => {
-            
+
             console.log(conference.congress_id)
             console.log(id)
             if (conference.congress_id == id) {
@@ -72,26 +75,61 @@ export class GeneralHistoryComponent implements OnInit {
           })
       });
 
-      this.postulationService.getPostulations().subscribe(
-        (res: any) => {
-          res.data.forEach(
-            (postulation: any) => {
-              console.log(postulation.congress_id)
-              if (postulation.congress_id == id) {
-                this.postulationData.push(postulation);
-              }
-            })
-        });
-
-        //s
+    this.postulationService.getPostulations().subscribe(
+      (res: any) => {
+        res.data.forEach(
+          (postulation: any) => {
+            console.log(postulation.congress_id)
+            if (postulation.congress_id == id) {
+              this.postulationData.push(postulation);
+            }
+          })
+      });
   }
 
 
+  getGeneralHistoryRevisor(id: string) {
+    this.postulationService.getPostulations().subscribe(
+      (res: any) => {
+        res.data.forEach(
+          (postulation: any) => {
+            if (postulation.congress_id == id) {
+              this.postulationData.push(postulation);
+            }
+          })
+      });
+  }
 
-  handleModal(showModal: boolean) {
+  showGrade(id: string) {
+    this.qualificationService.getQualification().subscribe((response: any) => {
+      response.data.forEach((element: any) => {
+        if (element.postulation_id == id) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: `Su calificación final es: ${element.qualificaty}`,
+            showConfirmButton: true,
+            timer: 3000,
+          });
+        }
+      });
+    });
+  }
+
+  handleModalParticipante(showModalP: boolean) {
     let modal: any = document.getElementById('modal');
 
-    if (showModal) {
+    if (showModalP) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
+  handleModalRevisor(showModalR: boolean) {
+    let modal: any = document.getElementById('modalRevisor');
+
+    if (showModalR) {
       modal.classList.remove('hidden');
     } else {
       modal.classList.add('hidden');
