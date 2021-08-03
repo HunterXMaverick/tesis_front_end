@@ -224,7 +224,7 @@ export class ListTopicsComponent implements OnInit {
                 position: 'center',
                 icon: 'success',
                 title:
-                  'Se ha recibido su petición de participar en la ponencia, espere a su confirmación.',
+                  'Se ha enviado su petición de participar en la ponencia, espere a su confirmación.',
                 showConfirmButton: false,
                 timer: 3000,
               });
