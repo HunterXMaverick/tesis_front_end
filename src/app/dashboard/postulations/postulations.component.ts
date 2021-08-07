@@ -104,7 +104,10 @@ export class PostulationsComponent implements OnInit {
           this.postulations = [];
           res.data.forEach((element: any) => {
             this.getUserById(element.person_id);
-            if (element.congress_id == this.congressSelected && this.dataUser._id == element.person_id) {
+            if (
+              element.congress_id == this.congressSelected &&
+              this.dataUser._id == element.person_id
+            ) {
               this.postulations.push(element);
               this.projectsSpeaker.push(element);
             }

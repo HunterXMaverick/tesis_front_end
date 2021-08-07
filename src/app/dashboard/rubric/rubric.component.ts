@@ -33,6 +33,13 @@ export class RubricComponent implements OnInit {
   ngOnInit() {
     this.handleModal(false);
     this.getRubrics();
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: 'Solo puedes agregar un máximo de 5 criterios.',
+      showConfirmButton: false,
+      timer: 2000,
+    });
   }
 
   getCongress() {

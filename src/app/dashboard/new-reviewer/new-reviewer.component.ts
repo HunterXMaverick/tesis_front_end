@@ -48,10 +48,10 @@ export class NewReviewerComponent implements OnInit {
       // this.person.specialty &&
       this.person.title &&
       this.person.phone &&
-      this.person.email &&
-      this.person.password
+      this.person.email
     ) {
       this.person.congress_id = this.congressSelected;
+      this.person.password = this.person.dni;
 
       let dataPerson = {
         person: this.person,
@@ -67,7 +67,7 @@ export class NewReviewerComponent implements OnInit {
       if (validate) {
         if (validateCI) {
           this.personService.postPerson(dataPerson).subscribe(
-            (res) => {
+            () => {
               Swal.fire({
                 position: 'center',
                 icon: 'success',

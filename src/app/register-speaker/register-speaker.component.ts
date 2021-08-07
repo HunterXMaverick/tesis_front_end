@@ -81,7 +81,15 @@ export class RegisterSpeakerComponent {
                     }).then(() => this.router.navigate(['/login']));
                   },
                   (err) => {
-                    console.error(err);
+                    if (err.error.info.keyPattern.dni == 1) {
+                      Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: 'Cédula duplicada.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                    }
                   }
                 );
               } else {

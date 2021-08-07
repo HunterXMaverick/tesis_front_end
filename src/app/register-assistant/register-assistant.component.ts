@@ -59,7 +59,7 @@ export class RegisterAssistantComponent {
           if (this.person.type_dni == 'Cédula') {
             if (validateCI) {
               this.personService.postPerson(dataPerson).subscribe(
-                (res) => {
+                () => {
                   Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -70,7 +70,15 @@ export class RegisterAssistantComponent {
                   }).then(() => this.router.navigate(['/login']));
                 },
                 (err) => {
-                  console.error(err);
+                  if (err.error.info.keyPattern.dni == 1) {
+                    Swal.fire({
+                      position: 'center',
+                      icon: 'warning',
+                      title: 'Cédula duplicada.',
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
                 }
               );
             } else {
