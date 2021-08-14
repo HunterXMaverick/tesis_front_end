@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CongressService } from '../services/congress.service';
 
@@ -7,12 +7,14 @@ import { CongressService } from '../services/congress.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   congress_habilitado: any;
   congress_pendientes: any = [];
   congress: any;
   showSidebar: boolean = false;
+  showModal: boolean = false;
   see_logo: string = '';
+  loading: boolean = true;
 
   constructor(
     private congressService: CongressService,
@@ -20,11 +22,6 @@ export class HomeComponent implements OnInit {
   ) {
     sessionStorage.clear();
     this.getCongress();
-  }
-
-  ngOnInit() {
-    this.handleModal(false);
-    this.handleSidebar(false);
   }
 
   getCongress() {
@@ -42,6 +39,7 @@ export class HomeComponent implements OnInit {
               this.congress_pendientes.push(element);
             }
           });
+          this.loading = false;
         }
       },
       (err) => console.error(err)
@@ -49,23 +47,11 @@ export class HomeComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   handleSidebar(showSidebar: boolean) {
-    let sidebar: any = document.getElementById('menu');
-
-    if (showSidebar) {
-      sidebar.classList.remove('hidden');
-    } else {
-      sidebar.classList.add('hidden');
-    }
+    this.showSidebar = showSidebar;
   }
 
   logIn() {

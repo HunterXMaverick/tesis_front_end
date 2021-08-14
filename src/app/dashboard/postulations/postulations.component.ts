@@ -37,6 +37,8 @@ export class PostulationsComponent implements OnInit {
   knowledge_area: Array<string> = [];
   congress: any = [];
   rubricCreated: boolean = false;
+  showModal: boolean = false;
+  showModalRemark: boolean = false;
 
   constructor(
     private postulationService: PostulationService,
@@ -53,8 +55,6 @@ export class PostulationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.handleModal(false);
-    this.handleModalRemark(false);
     this.getRubric();
     this.getPostulations();
     this.getPostulationsOrganizer();
@@ -203,23 +203,11 @@ export class PostulationsComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   handleModalRemark(showModal: boolean) {
-    let modal: any = document.getElementById('modal-remark');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModalRemark = showModal;
   }
 
   getSpeakerName(id: string) {
@@ -251,6 +239,7 @@ export class PostulationsComponent implements OnInit {
               if (element.congress_id == this.congressSelected) {
                 element.speakerName = this.nameSpeakerTemp;
                 this.postulations.push(element);
+                this.postulationsOrganizer.push(element);
               }
             });
           },

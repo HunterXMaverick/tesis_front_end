@@ -1,123 +1,119 @@
-<div class="w-full h-full">
-  <app-header></app-header>
+<app-header></app-header>
 
-  <div class="flex bg-white" style="height: 600px">
-    <div
-      class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2"
-    >
-      <div class="w-full h-full justify-center py-6 flex flex-col">
-        <div class="w-full h-full flex flex-col items-center justify-center">
-          <h2 class="text-3xl font-semibold text-gray-800 md:text-4xl">
-            Proyectando un mejor <span class="text-indigo-600">Futuro</span>
-          </h2>
-          <p class="mt-2 text-sm text-gray-500 md:text-base">
-            Con una mejor experiencia para la presentación de tus proyectos,
-            desde la comodidad de tu hogar hacia el mundo
-          </p>
-        </div>
-        <h2 class="text-xl font-semibold text-gray-800 md:text-2xl">
-          Congreso en <span class="text-indigo-600">Curso</span>
+<div class="flex w-full" style="height: 600px">
+  <div
+    class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2"
+  >
+    <div class="w-full h-full justify-center py-6 flex flex-col">
+      <div class="w-full h-full flex flex-col items-center justify-center">
+        <h2 class="text-3xl font-semibold text-gray-800 md:text-4xl">
+          Proyectando un mejor <span class="text-indigo-600">Futuro</span>
         </h2>
-        <br />
-        <div class="w-full h-full flex items-center">
-          <button
-            (click)="handleSidebar(true)"
-            *ngIf="congress_habilitado"
+        <p class="mt-2 text-sm text-gray-500 md:text-base">
+          Con una mejor experiencia para la presentación de tus proyectos, desde
+          la comodidad de tu hogar hacia el mundo
+        </p>
+      </div>
+      <h2 class="text-xl font-semibold text-gray-800 md:text-2xl">
+        Congreso en <span class="text-indigo-600">Curso</span>
+      </h2>
+      <br />
+      <div class="w-full h-full flex items-center">
+        <button
+          (click)="handleSidebar(true)"
+          *ngIf="congress_habilitado"
+          class="
+            w-1/2
+            h-full
+            px-1
+            border
+            hover:border-indigo-600
+            animate-pulse
+            rounded
+          "
+        >
+          <h2
             class="
-              w-1/2
-              h-full
-              px-1
-              border
-              hover:border-indigo-600
-              animate-pulse
-              rounded
+              text-xl text-center
+              uppercase
+              h-1/4
+              font-semibold
+              text-indigo-600
             "
           >
-            <h2
-              class="
-                text-xl text-center
-                uppercase
-                h-1/4
-                font-semibold
-                text-indigo-600
-              "
-            >
-              {{ congress_habilitado.name }}
-            </h2>
-            <img
-              class="bg-top bg-cover w-full h-3/4 rounded-t"
-              [src]="see_logo"
-              alt="{{ congress_habilitado.name }}"
-            />
-            <p
-              class="text-sm font-medium text-white sm:mb-1 sm:text-indigo-600"
-            >
-              Click Aquí
-            </p>
-            <i class="fas fa-mouse text-indigo-600"></i>
-          </button>
+            {{ congress_habilitado.name }}
+          </h2>
+          <img
+            class="bg-top bg-cover w-full h-3/4 rounded-t"
+            [src]="see_logo"
+            alt="{{ congress_habilitado.name }}"
+          />
+          <p class="text-sm font-medium text-white sm:mb-1 sm:text-indigo-600">
+            Click Aquí
+          </p>
+          <i class="fas fa-mouse text-indigo-600"></i>
+        </button>
 
-          <button
-            *ngIf="!congress_habilitado"
-            (click)="newCongress()"
+        <button
+          *ngIf="!congress_habilitado"
+          (click)="newCongress()"
+          class="
+            w-1/2
+            h-full
+            px-1
+            border
+            hover:border-indigo-600
+            animate-pulse
+            rounded
+            flex
+            items-center
+            justify-center
+          "
+        >
+          ¿Eres organizador? Ingresa
+          <p class="uppercase animate-bounce ml-1">aquí</p>
+        </button>
+
+        <div class="w-1/2 px-1 flex flex-col self-start text-center">
+          <h2
             class="
-              w-1/2
-              h-full
-              px-1
-              border
-              hover:border-indigo-600
-              animate-pulse
-              rounded
-              flex
-              items-center
-              justify-center
+              text-xl text-center
+              uppercase
+              h-1/4
+              font-semibold
+              text-indigo-600
             "
           >
-            ¿Eres organizador? Ingresa
-            <p class="uppercase animate-bounce ml-1">aquí</p>
-          </button>
-
-          <div class="w-1/2 px-1 flex flex-col self-start text-center">
-            <h2
-              class="
-                text-xl text-center
-                uppercase
-                h-1/4
-                font-semibold
-                text-indigo-600
-              "
-            >
-              Congresos Futuros
-            </h2>
-            <p *ngFor="let congress of congress_pendientes">
-              <i class="fas fa-calendar mr-1"></i>
-              {{ congress.name }}
-            </p>
-          </div>
+            Congresos Futuros
+          </h2>
+          <p *ngFor="let congress of congress_pendientes">
+            <i class="fas fa-calendar mr-1"></i>
+            {{ congress.name }}
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
+  <div
+    class="hidden lg:block lg:w-1/2"
+    style="clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%)"
+  >
     <div
-      class="hidden lg:block lg:w-1/2"
-      style="clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%)"
+      class="w-full h-full bg-cover"
+      style="
+        background-image: url(../../assets/img/congresos.jpg);
+        background-repeat: no-repeat;
+      "
     >
-      <div
-        class="w-full h-full bg-cover"
-        style="
-          background-image: url(../../assets/img/congresos.jpg);
-          background-repeat: no-repeat;
-        "
-      >
-        <div class="h-full bg-black opacity-25"></div>
-      </div>
+      <div class="h-full bg-black opacity-25"></div>
     </div>
   </div>
 </div>
 
 <!-- MODAL -->
 <div
-  id="modal"
+  *ngIf="showModal"
   class="
     flex
     items-center
@@ -215,7 +211,7 @@
 
 <!-- Drawer -->
 <div
-  id="menu"
+  *ngIf="showSidebar"
   class="
     flex
     items-center
