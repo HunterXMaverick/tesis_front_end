@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
     }
     localStorage.clear();
     this.loginData = this.formBuilder.group({
-      email: ['organizador@gmail.com', Validators.required],
-      password: ['1234', Validators.required],
-      rol: ['Organizador', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      rol: ['', Validators.required],
     });
   }
 

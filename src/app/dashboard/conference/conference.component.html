@@ -22,10 +22,11 @@
 
       <tbody>
         <tr
-          *ngFor="let conference of conferences"
+          *ngFor="let conference of conferences; let i = index"
           class="border-b border-gray-200 hover:bg-gray-100"
         >
-          <td class="px-1 py-5 text-sm flex justify-center">
+          <td class="px-1 py-5 text-sm flex justify-center items-center">
+            <p class="mr-6">N° {{ i + 1 }}</p>
             <button
               (click)="
                 getPostulation(conference.postulation_id); handleModal(true)

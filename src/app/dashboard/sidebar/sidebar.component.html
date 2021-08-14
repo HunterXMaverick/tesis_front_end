@@ -1,7 +1,13 @@
 <div class="flex overflow-hidden">
-  <nav id="menu" class="flex flex-col h-screen bg-gray-200 w-full px-12 py-4 rounded-r ">
+  <nav
+    id="menu"
+    class="flex flex-col h-screen bg-gray-200 w-full px-12 py-4 rounded-r"
+  >
     <div class="flex justify-center items-center py-2">
-      <img class="h-12 w-12 rounded-full object-cover mr-3" src="/assets/img/dot-logo.png" />
+      <img
+        class="h-12 w-12 rounded-full object-cover mr-3"
+        src="/assets/img/dot-logo.png"
+      />
       <span class="text-lg font-semibold capitalize text-gray-800"> SOCV </span>
     </div>
 
@@ -12,10 +18,13 @@
       <h2 class="my-2 text-lg text-gray-700 font-extrabold">
         {{ dataUser.last_names }} {{ dataUser.names }}
       </h2>
-      <div *ngIf="
+      <div
+        *ngIf="
           (dataUser.rol == 'Organizador' || dataUser.rol == 'Ponente') &&
           profile_picture_url !== ''
-        " class="flex mt-4 w-full justify-center">
+        "
+        class="flex mt-4 w-full justify-center"
+      >
         <img [src]="profile_picture_url" class="w-32" alt="Foto de Perfil" />
       </div>
       <span class="text-sm font-semibold text-green-600">
@@ -25,47 +34,69 @@
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Organizador'">
       <div id="item" class="flex flex-col py-2">
-        <a routerLink="../congresses" class="flex items-center hover:text-green-700">
+        <a
+          routerLink="../congresses"
+          class="flex items-center hover:text-green-700"
+        >
           <i class="fa fa-university"></i>
           <span class="ml-2 capitalize font-medium"> Congreso </span>
         </a>
 
         <div id="desple" class="ml-6 py-2 flex flex-col items-center">
-          <a routerLink="../create-congress" class="flex items-center hover:text-green-700 py-2">
+          <a
+            routerLink="../create-congress"
+            class="flex items-center hover:text-green-700 py-2"
+          >
             <i class="fas fa-plus-square"></i>
             <span class="ml-2 capitalize font-medium"> Crear congreso </span>
           </a>
 
-          <a *ngIf="congressEnabled == 'Habilitado'" routerLink="../new-reviewer"
-            class="flex items-center hover:text-green-700 py-2">
-            <i class="fas fa-user-plus"></i>
-            <span class="ml-2 capitalize font-medium"> Crear Revisor </span>
-          </a>
-
-          <a *ngIf="congressCreated == true && reviewersCreated == true" routerLink="../assignment"
-            class="flex hover:text-green-700 py-2 items-center">
-            <i class="fas fa-map-signs"></i>
-            <span class="ml-2 capitalize font-medium"> Asignación </span>
-          </a>
-
-          <button *ngIf="
+          <button
+            *ngIf="
               congressCreated == true &&
               rubricCreated == false &&
               congressEnabled == 'Habilitado'
-            " routerLink="/dashboard/rubric" class="flex hover:text-green-700 py-2 items-center">
+            "
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
             <i class="fas fa-user-plus"></i>
             <span class="ml-2 capitalize font-medium"> Crear Rúbrica </span>
           </button>
 
-          <button *ngIf="congressCreated == true && rubricCreated == true" routerLink="/dashboard/rubric"
-            class="flex hover:text-green-700 py-2 items-center">
+          <button
+            *ngIf="congressCreated == true && rubricCreated == true"
+            routerLink="/dashboard/rubric"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
             <i class="fas fa-eye"></i>
             <span class="ml-2 capitalize font-medium"> Ver Rúbrica </span>
           </button>
+
+          <a
+            *ngIf="congressEnabled == 'Habilitado'"
+            routerLink="../new-reviewer"
+            class="flex items-center hover:text-green-700 py-2"
+          >
+            <i class="fas fa-user-plus"></i>
+            <span class="ml-2 capitalize font-medium"> Crear Revisor </span>
+          </a>
+
+          <a
+            *ngIf="congressCreated == true && reviewersCreated == true"
+            routerLink="../assignment"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
+            <i class="fas fa-map-signs"></i>
+            <span class="ml-2 capitalize font-medium"> Asignación </span>
+          </a>
         </div>
       </div>
 
-      <a routerLink="../postulations" class="flex items-center hover:text-green-700 py-2">
+      <a
+        routerLink="../postulations"
+        class="flex items-center hover:text-green-700 py-2"
+      >
         <i class="fa fa-tasks"></i>
         <span class="ml-2 capitalize font-medium"> Postulaciones </span>
       </a>
@@ -76,24 +107,40 @@
           <span class="ml-2 capitalize font-medium"> Usuarios </span>
         </a>
 
-        <div id="desple" class="ml-6 py-2 flex flex-col items-center" *ngIf="congressEnabled == 'Habilitado'">
-          <a routerLink="../participants" class="flex items-center hover:text-green-700 py-2">
+        <div
+          id="desple"
+          class="ml-6 py-2 flex flex-col items-center"
+          *ngIf="congressEnabled == 'Habilitado'"
+        >
+          <a
+            routerLink="../participants"
+            class="flex items-center hover:text-green-700 py-2"
+          >
             <i class="fas fa-user"></i>
             <span class="ml-2 capitalize font-medium"> Participantes </span>
           </a>
 
-          <a routerLink="../speakers" class="flex items-center hover:text-green-700 py-2">
+          <a
+            routerLink="../speakers"
+            class="flex items-center hover:text-green-700 py-2"
+          >
             <i class="fas fa-user"></i>
             <span class="ml-2 capitalize font-medium"> Ponentes </span>
           </a>
 
-          <a routerLink="../reviewer" class="flex items-center hover:text-green-700 py-2">
+          <a
+            routerLink="../reviewer"
+            class="flex items-center hover:text-green-700 py-2"
+          >
             <i class="fas fa-user"></i>
             <span class="ml-2 capitalize font-medium"> Revisor </span>
           </a>
         </div>
       </div>
-      <a routerLink="../list-conference" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../list-conference"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="far fa-list-alt"></i>
         <span class="ml-2 capitalize font-medium">
           Listado de Conferencia
@@ -118,21 +165,33 @@
         <span class="ml-2 capitalize font-medium"> Enlaces </span>
       </a> -->
 
-      <a routerLink="../congresses" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../congresses"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-university"></i>
         <span class="ml-2 capitalize font-medium"> Información General </span>
       </a>
-      <a routerLink="../list-topics" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../list-topics"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fas fa-bars"></i>
         <span class="ml-2 capitalize font-medium"> Listado de Ponencias </span>
       </a>
-      <a routerLink="../list-conference" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../list-conference"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-tasks"></i>
         <span class="ml-2 capitalize font-medium">
           Listado de Conferencia
         </span>
       </a>
-      <a routerLink="../list-postulation" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../list-postulation"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fas fa-link"></i>
         <span class="ml-2 capitalize font-medium"> Ponencias Aprobadas</span>
       </a>
@@ -144,24 +203,40 @@
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Ponente'">
-      <a routerLink="../congresses" class="flex items-center hover:text-green-700 py-2">
+      <a
+        routerLink="../congresses"
+        class="flex items-center hover:text-green-700 py-2"
+      >
         <i class="fa fa-university"></i>
         <span class="ml-2 capitalize font-medium"> Congreso </span>
       </a>
 
-      <a routerLink="../postulations" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../postulations"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-tasks"></i>
         <span class="ml-2 capitalize font-medium"> Postular </span>
       </a>
 
       <div id="item" class="flex flex-col py-2">
-        <a routerLink="../conference" class="flex hover:text-green-700 items-center">
+        <a
+          routerLink="../conference"
+          class="flex hover:text-green-700 items-center"
+        >
           <i class="fas fa-clipboard-list"></i>
           <span class="ml-2 capitalize font-medium">Conferencia </span>
         </a>
 
-        <div id="desple" class="ml-6 py-2 flex flex-col items-center" *ngIf="congressEnabled == 'Habilitado'">
-          <a routerLink="../post-conference" class="flex hover:text-green-700 py-2 items-center">
+        <div
+          id="desple"
+          class="ml-6 py-2 flex flex-col items-center"
+          *ngIf="congressEnabled == 'Habilitado'"
+        >
+          <a
+            routerLink="../post-conference"
+            class="flex hover:text-green-700 py-2 items-center"
+          >
             <i class="fas fa-list-alt"></i>
             <span class="ml-2 capitalize font-medium">
               Generar Conferencia
@@ -185,12 +260,19 @@
     </div>
 
     <div class="my-2 text-gray-700" *ngIf="dataUser.rol == 'Revisor'">
-      <a id="item" routerLink="../congresses" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        id="item"
+        routerLink="../congresses"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-university"></i>
         <span class="ml-2 capitalize font-medium"> Congreso </span>
       </a>
 
-      <a routerLink="../postulations" class="flex hover:text-green-700 py-2 items-center">
+      <a
+        routerLink="../postulations"
+        class="flex hover:text-green-700 py-2 items-center"
+      >
         <i class="fa fa-tasks"></i>
         <span class="ml-2 capitalize font-medium"> Postulaciones </span>
       </a>
@@ -205,18 +287,26 @@
     </div>
 
     <div class="flex flex-col py-2">
-      <a *ngIf="congressEnabled == 'Habilitado'" routerLink="/dashboard/put-user/{{ dataUser._id }}"
-        class="flex items-center text-blue-800 py-2"><i class="fa fa-user-edit"></i>
-        <span class="ml-2 font-medium">Editar perfil</span></a>
+      <a
+        *ngIf="congressEnabled == 'Habilitado'"
+        routerLink="/dashboard/put-user/{{ dataUser._id }}"
+        class="flex items-center text-blue-800 py-2"
+        ><i class="fa fa-user-edit"></i>
+        <span class="ml-2 font-medium">Editar perfil</span></a
+      >
 
-      <a href="http://localhost:4200/home" class="flex items-center text-red-700 py-2">
+      <a
+        href="http://localhost:4200/home"
+        class="flex items-center text-red-700 py-2"
+      >
         <i class="fas fa-sign-out-alt"></i>
         <span class="ml-2 font-medium">Cerrar Sesión</span>
       </a>
     </div>
   </nav>
 
-  <div class="
+  <div
+    class="
       h-screen
       p-0.5
       rounded
@@ -225,8 +315,11 @@
       flex
       -ml-1
       overflow-hidden
-    ">
-    <i *ngIf="showSidebar == true" class="
+    "
+  >
+    <i
+      *ngIf="showSidebar == true"
+      class="
         fas
         fa-chevron-left
         cursor-pointer
@@ -236,9 +329,13 @@
         absolute
         -ml-2
         animate-pulse
-      " (click)="handleSidebar()"></i>
+      "
+      (click)="handleSidebar()"
+    ></i>
 
-    <i *ngIf="showSidebar == false" class="
+    <i
+      *ngIf="showSidebar == false"
+      class="
         fas
         fa-chevron-right
         cursor-pointer
@@ -247,6 +344,8 @@
         p-1
         absolute
         animate-pulse
-      " (click)="handleSidebar()"></i>
+      "
+      (click)="handleSidebar()"
+    ></i>
   </div>
 </div>

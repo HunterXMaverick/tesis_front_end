@@ -15,12 +15,13 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
-  congressEnabled: boolean = true;
+  congressEnabled: boolean = false;
   congressSelected: any;
   profile_picture_url: string = '';
   remarks: Array<any> = [];
   showPostulations: boolean = true;
   postulations: Array<any> = [];
+  postulationsOrganizer: Array<any> = [];
   assignments: any = '';
   knowledge_areas: any = [];
   userById: any = [];
@@ -35,6 +36,7 @@ export class PostulationsComponent implements OnInit {
   nameSpeakerTemp: string = '';
   knowledge_area: Array<string> = [];
   congress: any = [];
+  rubricCreated: boolean = false;
 
   constructor(
     private postulationService: PostulationService,
@@ -53,9 +55,24 @@ export class PostulationsComponent implements OnInit {
   ngOnInit() {
     this.handleModal(false);
     this.handleModalRemark(false);
+    this.getRubric();
     this.getPostulations();
+    this.getPostulationsOrganizer();
     this.getKnowledge();
     this.getCongress();
+  }
+
+  getRubric() {
+    return this.rubricService.getRubrics().subscribe(
+      async (res: any) => {
+        if ((await res.data.length) == 0) {
+          this.rubricCreated = false;
+        } else if ((await res.data.length) >= 1) {
+          this.rubricCreated = true;
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   getUserById(id: string) {
@@ -114,6 +131,23 @@ export class PostulationsComponent implements OnInit {
           });
           this.showPostulations = true;
         }
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  getPostulationsOrganizer() {
+    return this.postulationService.getPostulations().subscribe(
+      (res: any) => {
+        res.data.forEach((element: any) => {
+          if (element.congress_id == this.congressSelected) {
+            this.postulationsOrganizer.push(element);
+            // this.getUserById(element.person_id);
+            // if (element.person_id == this.dataUser._id) {
+            //   this.projectsSpeaker.push(element);
+            // }
+          }
+        });
       },
       (err) => console.error(err)
     );
@@ -199,6 +233,10 @@ export class PostulationsComponent implements OnInit {
 
   getPostulationsByAreaOfKnowledge() {
     if (this.selected_knowledge_area == '') {
+      this.postulations = [];
+      this.postulationsOrganizer = [];
+
+      this.getPostulationsOrganizer();
       return this.getPostulations();
     } else {
       return this.postulationService
@@ -206,6 +244,7 @@ export class PostulationsComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.postulations = [];
+            this.postulationsOrganizer = [];
 
             res.data.forEach((element: any) => {
               this.getSpeakerName(element.person_id);
