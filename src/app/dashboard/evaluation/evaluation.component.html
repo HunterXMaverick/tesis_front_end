@@ -2,29 +2,40 @@
   <app-sidebar></app-sidebar>
 
   <div class="w-full p-2">
-    <h2 class="py-4  text-2xl font-semibold text-gray-800 border-b">
+    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
       Calificar
 
-      <button class="tooltip appearance-none  px-7 font-semibold text-gray-800 border-b" (click)="handleModal(true)"
-        id="btn">
-        <p class="text-red-800">Ayuda
+      <button
+        class="
+          tooltip
+          appearance-none
+          px-7
+          font-semibold
+          text-gray-800
+          border-b
+        "
+        (click)="handleModal(true)"
+        id="btn"
+      >
+        <p class="text-red-800">
+          Ayuda
           <i class="fas fa-question font-semibold text-red-800 border-b"></i>
         </p>
       </button>
-
     </h2>
-    <div class="block md:flex items-center">
+    <!-- <div class="block md:flex items-center">
       <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
         Calificación Final | {{ sumreviewersRatings }} / 100
       </h2>
-    </div>
+    </div> -->
 
     <div class="py-6">
       <form class="form-horizontal mx-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b-2 border-gray-200 bg-gray-200">.
-              <br>
+            <tr class="border-b-2 border-gray-200 bg-gray-200">
+              .
+              <br />
               <th class="px-5 py-3 text-left text-sm text-gray-600">Nota</th>
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 Observacion
@@ -36,9 +47,10 @@
           </thead>
           <tbody>
             <tr class="border-b border-gray-200 hover:bg-gray-200">
-              <br>
+              <br />
               <th class="px-5 py-3 text-left text-sm text-gray-600">
-                <input class="
+                <input
+                  class="
                     focus:border-blue-500
                     appearance-none
                     border
@@ -49,10 +61,15 @@
                     text-gray-700
                     leading-tight
                     focus:outline-none
-                  " type="number" [(ngModel)]="inputreviewersRating" name="inputreviewersRating" />
+                  "
+                  type="number"
+                  [(ngModel)]="inputreviewersRating"
+                  name="inputreviewersRating"
+                />
               </th>
               <th class="px-5 py-3 text-left text-sm text-gray-600">
-                <input class="
+                <input
+                  class="
                     focus:border-blue-500
                     appearance-none
                     border
@@ -63,7 +80,11 @@
                     text-gray-700
                     leading-tight
                     focus:outline-none
-                  " type="text" [(ngModel)]="inputremark" name="inputremark" />
+                  "
+                  type="text"
+                  [(ngModel)]="inputremark"
+                  name="inputremark"
+                />
               </th>
               <th class="px-5 py-3 text-left text-sm text-gray-600">
                 <button (click)="addQuality()" class="w-full">Add</button>
@@ -76,7 +97,7 @@
             Parametros a calificar:
           </h2>
         </div>
-        <br>
+        <br />
         <table class="w-full">
           <thead>
             <tr class="border-b-2 border-gray-200 bg-blue-200">
@@ -84,7 +105,7 @@
                 Parametros
               </th>
               <td *ngFor="let parametro of parameters; let i = index">
-                {{i+1}}: {{ parametro }}
+                {{ i + 1 }}: {{ parametro }}
               </td>
             </tr>
             <tr>
@@ -105,7 +126,9 @@
         </table>
 
         <div class="block md:flex items-center justify-between">
-          <button (click)="postQualification()" class="
+          <button
+            (click)="postQualification()"
+            class="
               align-middle
               bg-blue-500
               hover:bg-blue-600
@@ -118,24 +141,28 @@
               inline-block
               shadow-lg
               focus:outline-none
-            ">
+            "
+          >
             Guardar
           </button>
         </div>
       </form>
 
       <!-- MODAL -->
-      <div id="modal" class="
-  flex
-  items-center
-  justify-center
-  fixed
-  left-0
-  bottom-0
-  w-full
-  h-full
-  bg-gray-800 bg-opacity-75
-">
+      <div
+        id="modal"
+        class="
+          flex
+          items-center
+          justify-center
+          fixed
+          left-0
+          bottom-0
+          w-full
+          h-full
+          bg-gray-800 bg-opacity-75
+        "
+      >
         <div class="h-auto pb-5 pl-2 text-2xl bg-white">
           <div class="flex w-full px-3 items-center justify-between">
             <div class="h-auto text-2xl">
@@ -144,25 +171,39 @@
             </div>
 
             <div class="text-2xl">
-              <i (click)="handleModal(false)" class="fas fa-window-close text-red-700 text-2xl cursor-pointer"></i>
+              <i
+                (click)="handleModal(false)"
+                class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
+              ></i>
             </div>
           </div>
 
-          <div class="
-      flex
-      w-full
-      h-auto
-      py-6
-      px-10
-      items-center
-      justify-between
-      bg-gray-200
-      rounded
-      text-gray-800
-    ">
-            <div class="w-full h-full items-center bg-gray-200 rounded text-gray-800">
+          <div
+            class="
+              flex
+              w-full
+              h-auto
+              py-6
+              px-10
+              items-center
+              justify-between
+              bg-gray-200
+              rounded
+              text-gray-800
+            "
+          >
+            <div
+              class="
+                w-full
+                h-full
+                items-center
+                bg-gray-200
+                rounded
+                text-gray-800
+              "
+            >
               <div class="flex">
-                <img src="/assets/img/ayuda.png" alt="">
+                <img src="/assets/img/ayuda.png" alt="" />
               </div>
             </div>
           </div>

@@ -166,7 +166,7 @@
       <tbody *ngIf="dataUser.rol == 'Organizador'">
         <tr
           *ngFor="
-            let postulation of postulations
+            let postulation of postulationsOrganizer
               | paginate: { itemsPerPage: 5, currentPage: page }
           "
           class="border-b border-gray-200 hover:bg-gray-100"
@@ -399,7 +399,8 @@
             *ngIf="
               dataUser.rol !== 'Ponente' &&
               dataUser.rol !== 'Organizador' &&
-              congressEnabled
+              congressEnabled &&
+              rubricCreated
             "
             class="px-5 py-5 flex-1 text-sm text-center"
           >
