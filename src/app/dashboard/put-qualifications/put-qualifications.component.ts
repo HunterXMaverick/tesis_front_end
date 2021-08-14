@@ -129,7 +129,7 @@ export class PutQualificationsComponent implements OnInit {
           postulation_id: this.postulations_id,
           reviewersRating: this.reviewersRatings,
           remark: this.remarks,
-          qualificaty: this.sumreviewersRatings,
+          qualificaty: Math.round(this.sumreviewersRatings),
           person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
           congress_id: this.congressSelected,
         },
