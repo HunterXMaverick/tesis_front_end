@@ -15,7 +15,7 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
-  congressEnabled: boolean = true;
+  congressEnabled: boolean = false;
   congressSelected: any;
   profile_picture_url: string = '';
   remarks: Array<any> = [];
