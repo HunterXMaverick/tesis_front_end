@@ -184,6 +184,21 @@
         text-gray-800
       "
     >
+      <!-- <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Nombres:</h2>
+          <p>{{ userData.names }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Apellidos:</h2>
+          <p>{{ userData.last_names }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Rol:</h2>
+          <p>{{ userData.rol }}</p>
+        </div>
+      </div> -->
+
       <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Nombres:</h2>
@@ -196,6 +211,30 @@
         <div class="flex py-2">
           <h2 class="font-bold mr-3">Rol:</h2>
           <p>{{ userData.rol }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
+          <p>{{ userData.type_dni }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Número de identificación:</h2>
+          <p>{{ userData.dni }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Nivel académico:</h2>
+          <p>{{ userData.level_academy }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Titulo:</h2>
+          <p>{{ userData.title }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Teléfono:</h2>
+          <p>{{ userData.phone }}</p>
+        </div>
+        <div class="flex py-2">
+          <h2 class="font-bold mr-3">Correo electrónico:</h2>
+          <p>{{ userData.email }}</p>
         </div>
       </div>
 
