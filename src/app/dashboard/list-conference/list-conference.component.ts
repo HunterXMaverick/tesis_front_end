@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PostulationService } from '../../services/postulation.service';
 import { ConferenceService } from '../../services/conference.service';
 import { PersonService } from 'src/app/services/person.service';
@@ -10,7 +10,7 @@ import { PostulationPasticipantsService } from 'src/app/services/postulationPast
   templateUrl: './list-conference.component.html',
   styleUrls: ['./list-conference.component.scss'],
 })
-export class ListConferenceComponent implements OnInit {
+export class ListConferenceComponent {
   profile_picture_url: string = '';
   dataUser: any = [];
   postulationData: any = [];
@@ -21,6 +21,8 @@ export class ListConferenceComponent implements OnInit {
   // personId: any;
   userData: any = '';
   // profile_picture_url: string = '';
+  showModal: boolean = false;
+  showModalSpeaker: boolean = false;
 
   constructor(
     private postulationService: PostulationService,
@@ -31,11 +33,6 @@ export class ListConferenceComponent implements OnInit {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
     this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getPostulationParticipantService();
-  }
-
-  ngOnInit(): void {
-    this.handleModal(false);
-    this.handleModalSpeaker(false);
   }
 
   getPostulationParticipantService() {
@@ -90,23 +87,11 @@ export class ListConferenceComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   handleModalSpeaker(showModal: boolean) {
-    let modal: any = document.getElementById('modal-speaker');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModalSpeaker = showModal;
   }
 
   getUserById(id: string) {

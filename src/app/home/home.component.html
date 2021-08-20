@@ -111,105 +111,7 @@
   </div>
 </div>
 
-<!-- MODAL -->
-<div
-  *ngIf="showModal"
-  class="
-    flex
-    items-center
-    justify-center
-    fixed
-    left-0
-    bottom-0
-    w-full
-    h-full
-    bg-gray-800 bg-opacity-75
-    z-50
-  "
->
-  <div class="flex flex-col w-1/3 h-auto p-3 bg-white rounded">
-    <h1 class="w-full h-full text-center uppercase py-3 font-bold text-md">
-      Selecciona el rol que desempeñaras
-    </h1>
-
-    <hr />
-
-    <div class="w-full h-auto py-6 justify-center items-center text-center">
-      <div class="w-full md:w-full px-3 mb-4">
-        <button
-          (click)="signUpAssitant()"
-          class="
-            appearance-none
-            w-full
-            border border-black
-            text-black
-            hover:bg-blue-700 hover:text-white
-            rounded-lg
-            py-3
-            px-3
-            leading-tight
-            focus:outline-none
-            flex
-            items-center
-            justify-center
-          "
-        >
-          <i class="fas fa-user-plus mr-1"></i>
-          Participante
-        </button>
-      </div>
-      <div class="w-full md:w-full px-3">
-        <button
-          (click)="signUpSpeaker()"
-          class="
-            appearance-none
-            w-full
-            border border-black
-            text-black
-            hover:bg-blue-700 hover:text-white
-            rounded-lg
-            py-3
-            px-3
-            leading-tight
-            focus:outline-none
-            flex
-            items-center
-            justify-center
-          "
-        >
-          <i class="fas fa-user-plus mr-1"></i>
-          Ponente
-        </button>
-      </div>
-    </div>
-    <hr />
-    <div class="py-2 w-full flex justify-end">
-      <button
-        (click)="handleModal(false)"
-        class="
-          align-middle
-          bg-red-500
-          hover:bg-red-600
-          text-center
-          py-1
-          px-4
-          text-white text-sm
-          font-semibold
-          rounded-lg
-          shadow-lg
-          focus:outline-none
-          flex
-          items-center
-        "
-      >
-        <i class="fas fa-window-close mr-1"></i>
-        Cancelar
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Drawer -->
+<!-- Sidebar -->
 <div
   *ngIf="showSidebar"
   class="
@@ -225,8 +127,30 @@
   "
 >
   <div class="fixed top-0 right-0 w-1/4 h-full" id="menu">
-    <nav class="flex flex-col h-full bg-blue-800 w-full px-4 py-4 rounded-l">
-      <div class="flex justify-center items-center pb-5">
+    <nav class="flex flex-col h-full bg-white w-full px-4 py-4 rounded-l">
+      <div class="flex justify-between items-center pb-5">
+        <button
+          class="
+            align-middle
+            bg-blue-500
+            hover:bg-blue-600
+            text-center
+            py-1
+            px-4
+            text-white text-sm
+            font-semibold
+            rounded-lg
+            shadow-lg
+            focus:outline-none
+            flex
+            items-center
+            animate-pulse
+          "
+          (click)="logIn()"
+        >
+          <i class="fas fa-user mr-1"></i>Iniciar sesión
+        </button>
+
         <button
           class="
             align-middle
@@ -245,50 +169,14 @@
           "
           (click)="handleSidebar(false)"
         >
-          <i class="fas fa-window-close mr-1"></i>
-          Cancelar
+          <i class="fas fa-undo-alt mr-1"></i>
+          Regresar
         </button>
       </div>
 
       <hr />
 
-      <div class="flex flex-col items-center text-white py-2">
-        <button
-          (click)="logIn()"
-          class="
-            rounded
-            bg-blue-500
-            hover:bg-blue-600 hover:text-gray-100 hover:font-medium
-            py-2
-            px-3
-            my-1
-            md:mx-2
-            w-full
-          "
-        >
-          <i class="fas fa-user py-2 mr-2"></i>Iniciar sesión
-        </button>
-
-        <button
-          (click)="handleModal(true)"
-          class="
-            rounded
-            bg-blue-500
-            hover:bg-blue-600 hover:text-gray-100 hover:font-medium
-            py-2
-            px-3
-            my-1
-            md:mx-2
-            w-full
-          "
-        >
-          <i class="fas fa-home py-2 mr-2"></i>Regístrate
-        </button>
-      </div>
-
-      <hr />
-
-      <div class="flex flex-col text-white py-4 justify-between h-full">
+      <div class="flex flex-col py-4 justify-between h-full">
         <h1 class="text-center uppercase font-bold">
           Información del congreso.
         </h1>
@@ -314,7 +202,7 @@
         <div class="flex flex-col">
           <b>Reglamento:</b>
           <iframe
-            class="text-xl text-justify w-full text-white"
+            class="text-xl text-justify w-full"
             srcdoc="{{ congress_habilitado.regulations }}"
           ></iframe>
         </div>

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CongressService } from '../services/congress.service';
+import { FilesService } from '../services/files.service';
 
 @Component({
   selector: 'app-home',
@@ -12,12 +13,11 @@ export class HomeComponent {
   congress_pendientes: any = [];
   congress: any;
   showSidebar: boolean = false;
-  showModal: boolean = false;
   see_logo: string = '';
-  loading: boolean = true;
 
   constructor(
     private congressService: CongressService,
+    private filesService: FilesService,
     private router: Router
   ) {
     sessionStorage.clear();
@@ -39,15 +39,10 @@ export class HomeComponent {
               this.congress_pendientes.push(element);
             }
           });
-          this.loading = false;
         }
       },
       (err) => console.error(err)
     );
-  }
-
-  handleModal(showModal: boolean) {
-    this.showModal = showModal;
   }
 
   handleSidebar(showSidebar: boolean) {

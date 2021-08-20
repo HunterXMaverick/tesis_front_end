@@ -95,17 +95,40 @@
       <table class="rounded border-2 w-full">
         <thead class="bg-gray-200">
           <tr>
-            <td class="w-1/2 text-center">Revisor</td>
-            <td class="w-1/2 text-center">Área de conocimiento</td>
+            <td class="w-auto text-center">Revisor</td>
+            <td class="w-auto text-center">Área de conocimiento</td>
+            <td class="w-auto text-center">Acciones</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of assignmentReviewers; let i = index">
-            <td class="w-1/2 px-2 text-center">
+            <td class="w-auto px-2 text-center">
               {{ data.reviewer_name }}
             </td>
-            <td class="w-1/2 px-2 text-center">
+            <td class="w-auto px-2 text-center">
               {{ data.knowledge_area }}
+            </td>
+            <td class="w-auto px-2 text-center flex justify-center">
+              <button
+                class="
+                  align-middle
+                  bg-red-500
+                  hover:bg-red-600
+                  text-center
+                  py-1
+                  px-4
+                  text-white text-sm
+                  font-semibold
+                  rounded-lg
+                  shadow-lg
+                  focus:outline-none
+                  flex
+                  items-center
+                "
+                (click)="deleteAssignment(data._id)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
         </tbody>

@@ -77,51 +77,47 @@
     >
       <thead>
         <tr class="border-b-2 border-gray-200 bg-gray-200">
-          <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Título del Proyecto
-          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Título del Proyecto</th>
           <th
             *ngIf="dataUser.rol == 'Ponente'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Resumen
           </th>
           <th
             *ngIf="dataUser.rol == 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Resumen
           </th>
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Datos del Autor
           </th>
-          <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Área de Conocimiento
-          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Área de Conocimiento</th>
           <th
             *ngIf="dataUser.rol == 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Datos del Autor
           </th>
           <th
             *ngIf="dataUser.rol == 'Ponente'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Archivo
           </th>
           <th
             *ngIf="dataUser.rol !== 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Estado
           </th>
           <th
             *ngIf="dataUser.rol == 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Observaciones
           </th>
@@ -131,20 +127,20 @@
               dataUser.rol !== 'Revisor' &&
               congressEnabled
             "
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Asignación de Participantes
           </th>
           <!-- ESTADO PARA REVISOR CALIFICACIONES -->
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Estado
           </th>
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Nota Final
           </th>
@@ -154,7 +150,7 @@
               dataUser.rol !== 'Organizador' &&
               congressEnabled
             "
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Calificar
           </th>
@@ -636,13 +632,12 @@
         </div>
       </div>
 
-      <div
-        class="flex w-1/2 justify-center"
-        *ngIf="
-          (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
-          profile_picture_url !== ''
-        "
-      >
+      <!-- *ngIf="
+      (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
+      profile_picture_url !== ''
+    " -->
+
+      <div class="flex w-1/2 justify-center" *ngIf="profile_picture_url !== ''">
         <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
       </div>
     </div>

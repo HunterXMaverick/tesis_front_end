@@ -83,6 +83,24 @@ export class AssignmentComponent implements OnInit {
     );
   }
 
+  deleteAssignment(id: string) {
+    console.log(id);
+
+    return this.assignmentService.deleteAssignment(id).subscribe(
+      () => {
+        this.getAssignments();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Asignación eliminada.',
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      },
+      (err) => console.error(err)
+    );
+  }
+
   postAssignment() {
     let continueProcess: boolean = true;
 

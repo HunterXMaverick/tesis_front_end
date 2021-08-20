@@ -18,7 +18,8 @@ export class AssignmentService {
       this.server.obtainHeaders()
     );
   }
-    getAssignmentsName(reviewer_name: string) {
+
+  getAssignmentsName(reviewer_name: string) {
     return this.http.get(
       `${this.url}/getAssigmentsByReviewer/${reviewer_name}`,
       this.server.obtainHeaders()
@@ -26,7 +27,7 @@ export class AssignmentService {
   }
 
   deleteAssignment(id: string) {
-    return this.http.put(
+    return this.http.delete(
       `${this.url}/deleteAssigment/${id}`,
       this.server.obtainHeaders()
     );

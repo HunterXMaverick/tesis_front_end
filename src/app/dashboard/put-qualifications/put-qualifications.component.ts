@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RubricService } from '../../services/rubric.service';
 import { PostulationService } from '../../services/postulation.service';
 import { QualificationService } from '../../services/qualification';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './put-qualifications.component.html',
   styleUrls: ['./put-qualifications.component.scss'],
 })
-export class PutQualificationsComponent implements OnInit {
+export class PutQualificationsComponent {
   rubrics: any = [];
   editQuailification: string = '';
   parameters: any = [];
@@ -24,6 +24,7 @@ export class PutQualificationsComponent implements OnInit {
   sumreviewersRatings: number = 0;
   remarks: Array<string> = [];
   qualificaty: number = 0;
+  showModal: boolean = true;
 
   constructor(
     private rubricsService: RubricService,
@@ -37,20 +38,10 @@ export class PutQualificationsComponent implements OnInit {
     this.getQualifications();
   }
 
-  ngOnInit(): void {
-    this.handleModal(true);
-  }
-
-  
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
+
   getQualifications() {
     return this.qualificationService
       .getQualificationById(this.postulations_id)
