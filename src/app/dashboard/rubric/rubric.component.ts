@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CongressService } from 'src/app/services/congress.service';
 import { RubricService } from 'src/app/services/rubric.service';
 import Swal from 'sweetalert2';
 
@@ -9,60 +8,19 @@ import Swal from 'sweetalert2';
   templateUrl: './rubric.component.html',
   styleUrls: ['./rubric.component.scss'],
 })
-export class RubricComponent implements OnInit {
-  congress: any;
-  congressEnabled: boolean = true;
-  congressCreated: boolean = false;
+export class RubricComponent {
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
   rubric: any = null;
   rubricsHistory: Array<any> = [];
   congressSelected: any;
+  showModal: boolean = false;
   dataUser: any;
 
-  constructor(
-    private rubricService: RubricService,
-    private router: Router,
-    private congressService: CongressService
-  ) {
+  constructor(private rubricService: RubricService, private router: Router) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
     this.congressSelected = sessionStorage.getItem('activeCongress');
-    this.getCongress();
-  }
-
-  ngOnInit() {
-    this.handleModal(false);
     this.getRubrics();
-    Swal.fire({
-      position: 'center',
-      icon: 'info',
-      title: 'Solo puedes agregar un máximo de 5 criterios.',
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  }
-
-  getCongress() {
-    return this.congressService.getCongress().subscribe(
-      (res: any) => {
-        if (res.data.length == 0) {
-          this.congressCreated = false;
-        } else {
-          res.data.forEach((element: any) => {
-            if (
-              // element.person_id == this.dataUser._id &&
-              element._id == this.congressSelected &&
-              element.status_congress == 'Habilitado'
-            ) {
-              this.congress = element;
-              this.congressCreated = true;
-              this.congressEnabled = element.status_congress;
-            }
-          });
-        }
-      },
-      (err) => console.error(err)
-    );
   }
 
   addQualificationCriteria() {
@@ -109,14 +67,14 @@ export class RubricComponent implements OnInit {
       } else {
         res.data.forEach((element: any) => {
           if (
-            element.congress_id == this.congress._id &&
+            element.congress_id == this.congressSelected &&
             element.state == true
           ) {
             this.rubric = element;
           }
 
           if (
-            element.congress_id == this.congress._id &&
+            element.congress_id == this.congressSelected &&
             element.state == false
           ) {
             this.rubricsHistory.push(element);
@@ -140,7 +98,7 @@ export class RubricComponent implements OnInit {
       rubric: {
         qualificationCriteria: this.qualificationCriterias,
         state: true,
-        congress_id: this.congress._id,
+        congress_id: this.congressSelected,
       },
     };
 
@@ -173,12 +131,6 @@ export class RubricComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 }

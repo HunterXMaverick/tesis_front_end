@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CongressService } from 'src/app/services/congress.service';
 import { PersonService } from 'src/app/services/person.service';
 import { PostulationService } from 'src/app/services/postulation.service';
@@ -9,7 +9,7 @@ import { RubricService } from 'src/app/services/rubric.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   congressEnabled: string = 'Pendiente';
   congressSelected: any;
   dataUser: any;
@@ -31,10 +31,17 @@ export class SidebarComponent {
     this.congressSelected = sessionStorage.getItem('activeCongress');
     this.showSidebar = true;
     this.getUserProfilePic();
-    this.getCongress();
     this.getRubric();
     this.getReviewers();
     // this.getPostulations();
+  }
+
+  ngOnInit() {
+    if (this.dataUser.rol == 'Organizador') {
+      this.getCongressOrganizer();
+    } else {
+      this.getCongress();
+    }
   }
 
   handleSidebar() {
@@ -47,6 +54,28 @@ export class SidebarComponent {
       sidebar.classList.remove('hidden');
       this.showSidebar = true;
     }
+  }
+
+  getCongressOrganizer() {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.congressCreated = false;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congressCreated = true;
+              this.congressEnabled = element.status_congress;
+            }
+          });
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   getCongress() {
@@ -77,7 +106,11 @@ export class SidebarComponent {
         if ((await res.data.length) == 0) {
           this.rubricCreated = false;
         } else if ((await res.data.length) >= 1) {
-          this.rubricCreated = true;
+          res.data.forEach((element: any) => {
+            if (element.congress_id == this.congressSelected && element.state) {
+              this.rubricCreated = true;
+            }
+          });
         }
       },
       (err) => console.error(err)

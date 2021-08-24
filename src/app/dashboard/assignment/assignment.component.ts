@@ -46,7 +46,7 @@ export class AssignmentComponent implements OnInit {
         } else {
           res.data.forEach((element: any) => {
             if (
-              // element.person_id == this.dataUser._id &&
+              element.person_id == this.dataUser._id &&
               element._id == this.congressSelected &&
               element.status_congress == 'Habilitado'
             ) {
@@ -64,8 +64,13 @@ export class AssignmentComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
+        console.log(res.data);
+
         res.data.forEach((element: any) => {
-          if (element.rol == 'Revisor') {
+          if (
+            element.rol == 'Revisor' &&
+            element.congress_id == this.congressSelected
+          ) {
             this.users.push(element);
           }
         });
@@ -77,17 +82,21 @@ export class AssignmentComponent implements OnInit {
   getAssignments() {
     return this.assignmentService.getAssignments().subscribe(
       (res: any) => {
-        this.assignmentReviewers = res.data;
+        this.assignmentReviewers = [];
+
+        res.data.forEach((element: any) => {
+          if (element.congress_id == this.congressSelected) {
+            this.assignmentReviewers.push(element);
+          }
+        });
       },
       (err) => console.error(err)
     );
   }
 
   deleteAssignment(id: string) {
-    console.log(id);
-
     return this.assignmentService.deleteAssignment(id).subscribe(
-      () => {
+      (res: any) => {
         this.getAssignments();
         Swal.fire({
           position: 'center',

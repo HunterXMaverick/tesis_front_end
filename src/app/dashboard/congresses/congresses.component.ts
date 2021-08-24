@@ -25,7 +25,34 @@ export class CongressesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCongress();
+    if (this.dataUser.rol == 'Organizador') {
+      this.getCongressOrganizer();
+    } else {
+      this.getCongress();
+    }
+  }
+
+  getCongressOrganizer() {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressEnabled = element.status_congress;
+              this.see_logo = `http://localhost:3500/api/file/${element.logo}`;
+            }
+          });
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   getCongress() {
