@@ -106,7 +106,7 @@ export class RubricComponent {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Rúbrica creada exitosamente',
+        title: 'Creada exitosamente',
         showConfirmButton: false,
         timer: 1500,
       }).then(() => this.router.navigate(['/dashboard/congresses']));

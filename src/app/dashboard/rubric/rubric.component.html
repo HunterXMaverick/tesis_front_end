@@ -150,7 +150,7 @@
   <div class="w-full p-2" *ngIf="rubric">
     <div class="py-4 text-gray-600 font-bold text-4xl flex items-center">
       <i class="fas fa-user py-2 mr-5"></i>
-      <h1>Rúbrica</h1>
+      <h1>Criterios</h1>
     </div>
 
     <hr />
@@ -172,10 +172,7 @@
       </tbody>
     </table>
 
-    <div
-      class="w-full py-3 flex justify-center"
-      *ngIf="congressSelected.status_congress"
-    >
+    <div class="w-full py-3 flex justify-center">
       <button
         (click)="deleteRubric()"
         class="

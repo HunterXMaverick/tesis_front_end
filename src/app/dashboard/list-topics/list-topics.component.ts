@@ -29,6 +29,7 @@ export class ListTopicsComponent implements OnInit {
   selected_knowledge_area: string = '';
   nameSpeakerTemp: string = '';
   page: number = 1;
+  showModal: boolean = false;
 
   modelParticipation: Participation = {
     attend: '',
@@ -191,13 +192,7 @@ export class ListTopicsComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   postParticipation(postulation_id: string) {

@@ -54,7 +54,7 @@
         </div>
 
         <div
-          *ngIf="logUser.rol !== 'Participante'"
+          *ngIf="idUser.rol !== 'Participante'"
           class="flex flex-col mt-4 px-4"
         >
           <label class="font-thin text-xl mr-5"> Teléfono: </label>
@@ -79,7 +79,7 @@
         </div>
 
         <div
-          *ngIf="logUser.rol !== 'Participante'"
+          *ngIf="idUser.rol !== 'Participante'"
           class="flex flex-col mt-4 px-4"
         >
           <label class="font-thin text-xl mr-5"> Contraseña: </label>
@@ -105,7 +105,7 @@
 
       <div class="w-1/2 p-2">
         <div
-          *ngIf="logUser.rol == 'Organizador' || logUser.rol == 'Ponente'"
+          *ngIf="idUser.rol == 'Organizador' || idUser.rol == 'Ponente'"
           class="flex flex-col mt-4 px-4"
         >
           <label class="font-thin text-xl mr-5"> Foto de Perfil: </label>
@@ -128,7 +128,7 @@
         </div>
 
         <div
-          *ngIf="logUser.rol !== 'Participante' && profile_picture_url !== ''"
+          *ngIf="idUser.rol !== 'Participante' && profile_picture_url !== ''"
           class="flex mt-4 w-full justify-center"
         >
           <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />

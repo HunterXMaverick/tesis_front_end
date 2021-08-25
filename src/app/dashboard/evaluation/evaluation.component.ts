@@ -24,6 +24,7 @@ export class EvaluationComponent implements OnInit {
   remarks: Array<string> = [];
   qualificaty: number = 0;
   //person_id: string = "";
+  showModal: boolean = true;
 
   constructor(
     private rubricsService: RubricService,
@@ -41,13 +42,7 @@ export class EvaluationComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   getRubrics() {
