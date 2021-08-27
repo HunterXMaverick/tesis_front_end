@@ -8,7 +8,7 @@
 
     <form
       *ngIf="congressEnabled"
-      class="w-full py-6 flex lg:flex-row md:flex-row flex-col items-center"
+      class="w-full py-6 flex lg:flex-row md:flex-row flex-col items-center justify-center"
     >
       <div class="lg:w-1/3 md:w-1/3 w-full flex flex-col px-3 py-2">
         <label class="font-thin text-xl">Revisor</label>
@@ -63,31 +63,28 @@
         </select>
       </div>
 
-      <div class="lg:w-1/3 md:w-1/3 w-full flex flex-col px-3 py-2">
         <button
           routerLink="/dashboard/assignment"
           class="
-            focus:outline-none
-            py-1
-            px-4
-            rounded-lg
-            shadow-sm
-            text-center text-gray-700
-            bg-white
-            hover:bg-blue-400 hover:text-white
-            font-medium
-            border
-            mr-2
-            flex
-            items-center
-            justify-center
+          focus:outline-none
+          border border-transparent
+          py-1
+          px-4
+          rounded-lg
+          shadow-sm
+          text-center text-white
+          bg-blue-500
+          hover:bg-blue-600
+          font-medium
+          mx-3
+          flex
+          items-center
           "
           (click)="postAssignment()"
         >
           <i class="fas fa-save mr-1"></i>
-          Grabar
+          Guardar
         </button>
-      </div>
     </form>
 
     <div class="py-8 w-full">
