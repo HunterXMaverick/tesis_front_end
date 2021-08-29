@@ -10,30 +10,34 @@
     </h2>
 
     <div
-      class="flex border-b justify-between px-3"
+      class="flex items-center border-b justify-between px-3"
       *ngIf="dataUser.rol == 'Ponente'"
     >
-      <div>
-        <h2 class="py-4 text-2xl font-semibold text-gray-800">
-          Postulaciones Realizadas
-        </h2>
-      </div>
-      <div>
-        <button
-          *ngIf="congressEnabled"
-          routerLink="../post-postulation"
-          class="
-            focus:outline-none
-            py-5
-            text-center text-gray-700
-            bg-white
-            hover:text-black
-            font-medium
-          "
-        >
-          <i class="fa fa-plus pr-2"></i>Nueva Postulación
-        </button>
-      </div>
+      <h2 class="py-4 text-2xl font-semibold text-gray-800">
+        Postulaciones Realizadas
+      </h2>
+      <button
+        *ngIf="congressEnabled"
+        routerLink="../post-postulation"
+        class="
+          focus:outline-none
+          border border-transparent
+          py-1
+          px-4
+          rounded-lg
+          shadow-sm
+          text-center text-white
+          bg-blue-500
+          hover:bg-blue-600
+          font-medium
+          flex
+          items-center
+          mx-2
+        "
+      >
+        <i class="fas fa-plus mr-1"></i>
+        Nueva Postulación
+      </button>
     </div>
 
     <div
@@ -398,7 +402,7 @@
               congressEnabled &&
               rubricCreated
             "
-            class="px-5 py-5 flex-1 text-sm text-center"
+            class="px-5 py-5 flex text-sm text-center"
           >
             <div>
               <button

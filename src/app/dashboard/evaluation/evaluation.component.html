@@ -2,27 +2,26 @@
   <app-sidebar></app-sidebar>
 
   <div class="w-full p-2">
-    <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
-      Calificar
+    <div class="flex items-center">
+      <h2 class="py-4 text-2xl font-semibold text-gray-800 mr-2">Calificar</h2>
 
       <button
         class="
-          tooltip
           appearance-none
           px-7
           font-semibold
-          text-gray-800
-          border-b
+          text-red-500
+          hover:text-red-600
+          text-sm
+          flex
         "
         (click)="handleModal(true)"
-        id="btn"
       >
-        <p class="text-red-800">
-          Ayuda
-          <i class="fas fa-question font-semibold text-red-800 border-b"></i>
-        </p>
+        <p class="mr-1">Ayuda</p>
+        <i class="fas fa-question font-semibold"></i>
       </button>
-    </h2>
+    </div>
+
     <!-- <div class="block md:flex items-center">
       <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
         Calificación Final | {{ sumreviewersRatings }} / 100
@@ -33,22 +32,15 @@
       <form class="form-horizontal mx-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b-2 border-gray-200 bg-gray-200">
-              .
-              <br />
-              <th class="px-5 py-3 text-left text-sm text-gray-600">Nota</th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
-                Observacion
-              </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
-                Calificar
-              </th>
+            <tr class="border-b-2 border-gray-200 bg-gray-200 text-center">
+              <th class="px-5 py-3 text-sm text-gray-600">Nota</th>
+              <th class="px-5 py-3 text-sm text-gray-600">Observacion</th>
+              <th class="px-5 py-3 text-sm text-gray-600">Calificar</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b border-gray-200 hover:bg-gray-200">
-              <br />
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
+            <tr class="border-b border-gray-200">
+              <td class="px-5 py-3 text-left text-sm text-gray-600">
                 <input
                   class="
                     focus:border-blue-500
@@ -66,8 +58,8 @@
                   [(ngModel)]="inputreviewersRating"
                   name="inputreviewersRating"
                 />
-              </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
+              </td>
+              <td class="px-5 py-3 text-left text-sm text-gray-600">
                 <input
                   class="
                     focus:border-blue-500
@@ -85,19 +77,49 @@
                   [(ngModel)]="inputremark"
                   name="inputremark"
                 />
-              </th>
-              <th class="px-5 py-3 text-left text-sm text-gray-600">
-                <button (click)="addQuality()" class="w-full">Add</button>
-              </th>
+              </td>
+              <td
+                class="
+                  px-5
+                  py-3
+                  text-left text-sm text-gray-600
+                  flex
+                  justify-center
+                "
+              >
+                <button
+                  (click)="addQuality()"
+                  class="
+                    focus:outline-none
+                    border border-transparent
+                    py-1
+                    px-4
+                    rounded-lg
+                    shadow-sm
+                    text-center text-white
+                    bg-blue-500
+                    hover:bg-blue-600
+                    font-medium
+                    flex
+                    items-center
+                    mx-2
+                  "
+                >
+                  <i class="fas fa-chevron-down mr-1"></i> Añadir
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
+
         <div class="block md:flex items-center">
-          <h2 class="py-4 text-2xl font-semibold text-gray-800 border-b">
+          <h2 class="py-4 text-2xl font-semibold text-gray-800">
             Parametros a calificar:
           </h2>
         </div>
+
         <br />
+
         <table class="w-full">
           <thead>
             <tr class="border-b-2 border-gray-200 bg-blue-200">
@@ -125,7 +147,7 @@
           </thead>
         </table>
 
-        <div class="block md:flex items-center justify-between">
+        <div class="block md:flex items-center justify-center">
           <button
             (click)="postQualification()"
             class="
@@ -143,6 +165,7 @@
               focus:outline-none
             "
           >
+            <i class="fas fa-save mr-1"></i>
             Guardar
           </button>
         </div>
