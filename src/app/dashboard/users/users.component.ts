@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../../services/person.service';
+import { CongressService } from 'src/app/services/congress.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,24 +9,59 @@ import Swal from 'sweetalert2';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
+  congressEnabled: boolean = true;
+  congressCreated: boolean = false;
+  congressSelected: any;
   photo: any = '';
-  users: any = [];
+  users: Array<any> = [];
   status: boolean = false;
   page: number = 1;
 
-  dataUserLog: any = [];
-
-  constructor(private personService: PersonService) {}
+  constructor(
+    private personService: PersonService,
+    private congressService: CongressService
+  ) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
+    this.getCongress();
+  }
 
   ngOnInit() {
     this.getUsers();
-    this.getPersonByEmail();
+  }
+
+  getCongress() {
+    return this.congressService.getCongress().subscribe(
+      (res: any) => {
+        if (res.data.length == 0) {
+          this.congressCreated = false;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congressCreated = true;
+              this.congressEnabled = element.status_congress;
+            }
+          });
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data;
+        if (res.data.length == 0) {
+          this.users = [];
+        } else {
+          res.data.forEach((element: any) => {
+            if (element.congress_id == this.congressSelected) {
+              this.users.push(element);
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );
@@ -54,13 +90,5 @@ export class UsersComponent implements OnInit {
         });
       }
     });
-  }
-
-  getPersonByEmail() {
-    return this.personService
-      .getUserByEmail(this.personService.email)
-      .then((res) => {
-        this.dataUserLog = res.data;
-      });
   }
 }

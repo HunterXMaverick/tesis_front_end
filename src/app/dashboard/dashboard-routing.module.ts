@@ -18,11 +18,13 @@ import { RubricComponent } from "./rubric/rubric.component";
 import { AssignmentComponent } from './assignment/assignment.component';
 import { ListTopicsComponent } from './list-topics/list-topics.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { PutQualificationsComponent } from './put-qualifications/put-qualifications.component';
 import { AssistantsParticipantsComponent } from './assistants-participants/assistants-participants.component';
 import { ConferenceComponent } from './conference/conference.component';
 import { PostConferenceComponent } from './conference/post-conference/post-conference.component';
 import { ListConferenceComponent } from './list-conference/list-conference.component';
 import { ListPostulationComponent } from './list-postulation/list-postulation.component';
+import { GeneralHistoryComponent } from './general-history/general-history.component'; 
 
 const routes: Routes = [
   { path: "users", component: UsersComponent },
@@ -48,6 +50,8 @@ const routes: Routes = [
   { path: "post-conference", component: PostConferenceComponent },
   { path: "list-conference", component: ListConferenceComponent },
   { path: "list-postulation", component: ListPostulationComponent },
+  {path:  "put-qualifications", component: PutQualificationsComponent},
+  {path:  "general-history", component: GeneralHistoryComponent},
 ];
 
 @NgModule({

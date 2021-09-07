@@ -17,12 +17,15 @@
       <p>Crear Congreso</p>
     </div>
 
-    <form class="w-full flex lg:flex-row md:flex-row flex-col">
+    <form
+      [formGroup]="congressForm"
+      class="w-full flex lg:flex-row md:flex-row flex-col"
+    >
       <div class="lg:w-1/2 md:w-1/2 w-full m-2 p-2 flex flex-col">
         <div class="flex flex-col py-2">
           <label class="font-thin text-md"> Nombre del congreso: </label>
           <input
-            [(ngModel)]="modelCongress.name"
+            formControlName="name"
             class="
               focus:border-blue-500
               appearance-none
@@ -36,14 +39,13 @@
               focus:outline-none
             "
             type="text"
-            name="name"
           />
         </div>
 
         <!-- <div class="flex flex-col py-2">
           <label class="font-thin text-md"> Dirección web: </label>
           <input
-            [(ngModel)]="modelCongress.address_web"
+          formControlName="address_web"
             class="
               focus:border-blue-500
               appearance-none
@@ -57,15 +59,14 @@
               focus:outline-none
             "
             type="text"
-            name="address_web"
           />
         </div> -->
 
         <div class="flex py-2">
-          <div class="w-1/2 mx-2 flex flex-col">
+          <div class="w-1/2 mr-2 flex flex-col">
             <label class="font-thin text-md"> Fecha inicio: </label>
             <input
-              [(ngModel)]="modelCongress.start_date"
+              formControlName="start_date"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -79,15 +80,14 @@
                 focus:outline-none
               "
               type="date"
-              name="start_date"
               min="{{ today }}"
             />
           </div>
 
-          <div class="w-1/2 mx-2 flex flex-col">
+          <div class="w-1/2 ml-2 flex flex-col">
             <label class="font-thin text-md"> Fecha finalización: </label>
             <input
-              [(ngModel)]="modelCongress.end_date"
+              formControlName="end_date"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -101,17 +101,16 @@
                 focus:outline-none
               "
               type="date"
-              name="end_date"
               min="{{ today }}"
             />
           </div>
         </div>
 
         <div class="flex py-2">
-          <div class="w-1/2 mx-2 flex flex-col">
+          <div class="w-1/2 mr-2 flex flex-col">
             <label class="font-thin text-md"> Capacidad de ponentes: </label>
             <input
-              [(ngModel)]="modelCongress.capacity_speakers"
+              formControlName="capacity_speakers"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -126,16 +125,15 @@
               "
               type="number"
               min="1"
-              name="capacity_speakers"
             />
           </div>
 
-          <div class="w-1/2 mx-2 flex flex-col">
+          <div class="w-1/2 ml-2 flex flex-col">
             <label class="font-thin text-md">
               Capacidad de participantes:
             </label>
             <input
-              [(ngModel)]="modelCongress.capacity_participants"
+              formControlName="capacity_participants"
               class="
                 focus:border-blue-500
                 appearance-none
@@ -150,7 +148,6 @@
               "
               type="number"
               min="1"
-              name="capacity_participants"
             />
           </div>
         </div>
@@ -161,7 +158,7 @@
             <p class="text-sm">(Separa cada área con una coma)</p>
           </label>
           <input
-            [(ngModel)]="modelCongress.knowledge_area"
+            formControlName="knowledge_area"
             class="
               focus:border-blue-500
               appearance-none
@@ -174,9 +171,31 @@
               leading-tight
               focus:outline-none
             "
-            type="array"
-            name="knowledge_area"
+            type="text"
           />
+        </div>
+
+        <div class="flex flex-col py-2 w-full">
+          <label class="font-thin text-md flex"> Portada: </label>
+          <input
+            class="
+              focus:border-blue-500
+              appearance-none
+              border
+              rounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              leading-tight
+              focus:outline-none
+            "
+            type="file"
+            (change)="handleFileInput($event)"
+          />
+          <div class="w-full flex justify-center">
+            <img class="w-64" [src]="imagePreview" />
+          </div>
         </div>
       </div>
 
@@ -185,8 +204,7 @@
           <label class="font-thin text-md"> Reglamento: </label>
           <ckeditor
             [editor]="Editor"
-            [(ngModel)]="modelCongress.regulations"
-            name="regulations"
+            formControlName="regulations"
             class="
               focus:border-blue-500
               appearance-none
@@ -221,7 +239,7 @@
             "
           >
             <i class="fas fa-undo mr-1"></i>
-            Cancelar
+            Regresar
           </button>
 
           <button
@@ -242,7 +260,7 @@
             "
           >
             <i class="fas fa-save mr-1"></i>
-            Grabar
+            Guardar
           </button>
         </div>
       </div>

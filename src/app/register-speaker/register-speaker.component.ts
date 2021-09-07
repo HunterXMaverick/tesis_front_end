@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PersonService } from '../services/person.service';
 import { Person } from '../models/person';
 import { Router } from '@angular/router';
@@ -9,7 +9,9 @@ import Swal from 'sweetalert2';
   templateUrl: './register-speaker.component.html',
   styleUrls: ['./register-speaker.component.scss'],
 })
-export class RegisterSpeakerComponent implements OnInit {
+export class RegisterSpeakerComponent {
+  congresses: Array<any> = [];
+  congressSelected: any;
   viewPassword = true;
   person: Person = {
     rol: 'Ponente',
@@ -24,13 +26,14 @@ export class RegisterSpeakerComponent implements OnInit {
     email: '',
     password: '',
     status: true,
+    congress_id: '',
   };
 
-  constructor(private personService: PersonService, private router: Router) {}
+  constructor(private personService: PersonService, private router: Router) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
+  }
 
-  ngOnInit() {}
-
-  postPerson(ci: any) {
+  postPerson() {
     if (
       this.person.type_dni &&
       this.person.dni &&
@@ -43,9 +46,12 @@ export class RegisterSpeakerComponent implements OnInit {
       this.person.email &&
       this.person.password
     ) {
+      this.person.congress_id = this.congressSelected;
+
       let dataPerson = {
         person: this.person,
       };
+
       let pathEmail =
         /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
       let pathOnlyLetters = /^[ñA-ZñÑáéíóúÁÉÍÓÚa-z _]*$/;
@@ -57,30 +63,38 @@ export class RegisterSpeakerComponent implements OnInit {
         dataPerson.person.last_names
       );
       let validateIntegers = pathPhone.test(dataPerson.person.phone!);
-      let validateCI = this.validationDniCI(ci);
+      let validateCI = this.validationDniCI(this.person.dni);
       if (validateNames && validateLastNames) {
         if (validateIntegers) {
           if (validateEmail) {
             if (this.person.type_dni == 'Cédula') {
               if (validateCI) {
                 this.personService.postPerson(dataPerson).subscribe(
-                  (res) => {
+                  () => {
                     Swal.fire({
-                      position: 'top-end',
+                      position: 'center',
                       icon: 'success',
-                      title: 'Registro Exitoso',
+                      title:
+                        'Registrado exitosamente, inicia sesión para continuar',
                       showConfirmButton: false,
-                      timer: 1500,
-                    });
-                    this.router.navigate(['/login']);
+                      timer: 2000,
+                    }).then(() => this.router.navigate(['/login']));
                   },
                   (err) => {
-                    console.error(err);
+                    if (err.error.info.keyPattern.dni == 1) {
+                      Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: 'Cédula duplicada.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                    }
                   }
                 );
               } else {
                 Swal.fire({
-                  position: 'top-end',
+                  position: 'center',
                   icon: 'warning',
                   title: 'Por favor, ingrese una cédula válida',
                   showConfirmButton: false,
@@ -93,15 +107,15 @@ export class RegisterSpeakerComponent implements OnInit {
               );
               if (validatePassport) {
                 this.personService.postPerson(dataPerson).subscribe(
-                  (res) => {
+                  () => {
                     Swal.fire({
-                      position: 'top-end',
+                      position: 'center',
                       icon: 'success',
-                      title: 'Registro Exitoso',
+                      title:
+                        'Registrado exitosamente, inicia sesión para continuar',
                       showConfirmButton: false,
-                      timer: 1500,
-                    });
-                    this.router.navigate(['/login']);
+                      timer: 2000,
+                    }).then(() => this.router.navigate(['/login']));
                   },
                   (err) => {
                     console.error(err);
@@ -109,7 +123,7 @@ export class RegisterSpeakerComponent implements OnInit {
                 );
               } else {
                 Swal.fire({
-                  position: 'top-end',
+                  position: 'center',
                   icon: 'warning',
                   title: 'Por favor, ingrese un pasaporte válido',
                   showConfirmButton: false,
@@ -119,16 +133,16 @@ export class RegisterSpeakerComponent implements OnInit {
             }
           } else {
             Swal.fire({
-              position: 'top-end',
+              position: 'center',
               icon: 'warning',
-              title: 'Por favor, ingrese un correo válido',
+              title: 'Por favor, ingrese un correo electrónico válido',
               showConfirmButton: false,
               timer: 1500,
             });
           }
         } else {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'warning',
             title: 'Por favor, ingrese un teléfono válido',
             showConfirmButton: false,
@@ -137,7 +151,7 @@ export class RegisterSpeakerComponent implements OnInit {
         }
       } else {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'warning',
           title: 'Por favor, ingresar solo letras en nombres y apellidos',
           showConfirmButton: false,
@@ -146,9 +160,9 @@ export class RegisterSpeakerComponent implements OnInit {
       }
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
-        title: 'Por favor, completar todos los datos',
+        title: 'Por favor, completa todos los campos para continuar.',
         showConfirmButton: false,
         timer: 1500,
       });

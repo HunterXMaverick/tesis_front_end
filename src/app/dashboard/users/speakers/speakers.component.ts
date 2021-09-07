@@ -8,12 +8,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./speakers.component.scss'],
 })
 export class SpeakersComponent implements OnInit {
+  congressSelected: any;
   photo: any = '';
   users: any = [];
   // status: boolean;
   page: number = 1;
 
-  constructor(private personService: PersonService) {}
+  constructor(private personService: PersonService) {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
+  }
 
   ngOnInit() {
     this.getUsers();
@@ -22,7 +25,18 @@ export class SpeakersComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data;
+        if (res.data.length == 0) {
+          this.users = [];
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element.congress_id == this.congressSelected &&
+              element.rol == 'Ponente'
+            ) {
+              this.users.push(element);
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );

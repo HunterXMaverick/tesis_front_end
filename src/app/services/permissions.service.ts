@@ -28,6 +28,7 @@ export class PermissionsService {
 
   decodeToken(token: string): boolean {
     const decoded: any = jwt_decode(token);
+
     if (decoded) {
       let userData = {
         _id: decoded._id,

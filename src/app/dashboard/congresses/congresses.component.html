@@ -1,17 +1,19 @@
-<div class="flex overflow-hidden">
+<div class="flex">
   <app-sidebar></app-sidebar>
 
-  <div class="w-full p-2" *ngIf="congress">
+  <div class="w-full h-full" *ngIf="congress">
     <!-- Organizador -->
     <div
       *ngIf="dataUser.rol == 'Organizador'"
-      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full p-2 rounded shadow-lg"
     >
-      <div
-        class="w-full h-1/3 bg-top bg-cover rounded-t"
-        style="background-image: url(/assets/img/congresos.jpg)"
-      ></div>
-      <div class="flex flex-col w-full h-2/3 md:flex-row">
+      <img
+        class="bg-top bg-cover w-full h-60 rounded-t"
+        [src]="see_logo"
+        alt="congress.name"
+      />
+
+      <div class="flex flex-col w-full h-auto md:flex-row">
         <div
           class="
             flex flex-row
@@ -117,7 +119,200 @@
             <div class="flex flex-col w-1/2">
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == true"
+                *ngIf="congress.status_congress == 'Habilitado'"
+              >
+                <b>Estado: </b
+                ><i
+                  class="
+                    fas
+                    fa-check-circle
+                    text-1xl
+                    mr-2
+                    text-green-700
+                    font-thin
+                  "
+                >
+                  Habilitado</i
+                >
+              </label>
+              <!-- <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == false"
+              >
+                <b>Estado: </b
+                ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
+                  Finalizado</i
+                >
+              </label> -->
+            </div>
+
+            <div class="w-1/2 flex justify-end" *ngIf="congressEnabled">
+              <button
+                (click)="disableCongress(congress._id)"
+                class="
+                  align-middle
+                  bg-red-500
+                  hover:bg-red-600
+                  text-center
+                  py-1
+                  px-4
+                  mx-1
+                  text-white text-sm
+                  font-semibold
+                  rounded-lg
+                  shadow-lg
+                  focus:outline-none
+                  flex
+                  items-center
+                "
+              >
+                Finalizar Congreso
+              </button>
+
+              <button
+                routerLink="/dashboard/put-congresses"
+                class="
+                  align-middle
+                  bg-blue-500
+                  hover:bg-blue-600
+                  text-center
+                  py-1
+                  px-4
+                  mx-1
+                  text-white text-sm
+                  font-semibold
+                  rounded-lg
+                  shadow-lg
+                  focus:outline-none
+                  flex
+                  items-center
+                "
+              >
+                Editar Congreso
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ponentes -->
+    <div
+      *ngIf="dataUser.rol == 'Ponente'"
+      class="flex flex-col w-full h-full p-2 rounded shadow-lg"
+    >
+      <img
+        class="bg-top bg-cover w-full h-60 rounded-t"
+        [src]="see_logo"
+        alt="congress.name"
+      />
+
+      <div class="flex flex-col w-full h-auto md:flex-row">
+        <div
+          class="
+            flex flex-row
+            justify-around
+            p-4
+            font-bold
+            leading-none
+            text-gray-800
+            uppercase
+            bg-blue-500
+            rounded
+            md:flex-col md:items-center md:justify-center md:w-1/4
+          "
+        >
+          <div class="flex flex-col items-center justify-center h-1/2 w-full">
+            <div class="md:text-xl text-center">Fecha de Inicio</div>
+            <div class="md:text-2xl">
+              {{ congress.start_date | date: "dd/MM/yyyy" }}
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center h-1/2 w-full">
+            <div class="md:text-xl text-center">Fecha de Finalización</div>
+            <div class="md:text-2xl">
+              {{ congress.end_date | date: "dd/MM/yyyy" }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            p-4
+            font-normal
+            text-gray-800
+            md:w-3/4
+            flex flex-col
+            justify-between
+          "
+        >
+          <h1
+            class="
+              mb-4
+              text-4xl
+              font-bold
+              leading-none
+              tracking-tight
+              text-gray-800
+            "
+          >
+            Congreso: {{ congress.name }}
+          </h1>
+
+          <div class="leading-normal flex items-center">
+            <b>Reglamento:</b>
+            <iframe
+              class="text-xl text-justify w-full"
+              srcdoc="{{ congress.regulations }}"
+            ></iframe>
+          </div>
+
+          <!-- <div class="leading-normal flex items-center">
+            <b class="mr-2">Dirección Web:</b
+            ><a
+              class="text-blue-800 hover:text-blue-500 text-xl"
+              href="{{ congress.address_web }}"
+              target="_blank"
+            >
+              {{ congress.address_web }}</a
+            >
+          </div> -->
+
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Capacidad de Ponentes:</b>
+            <p>
+              {{ congress.capacity_speakers }}
+            </p>
+          </div>
+
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Capacidad de Participantes:</b>
+            <p>
+              {{ congress.capacity_participants }}
+            </p>
+          </div>
+
+          <div class="leading-normal flex items-center">
+            <b class="mr-2">Áreas de Conocimiento:</b>
+            <p>
+              {{ congress.knowledge_area }}
+            </p>
+          </div>
+
+          <div
+            class="
+              flex
+              lg:flex-row
+              md:flex-row
+              flex-col
+              items-center
+              mt-4
+              text-gray-700
+            "
+          >
+            <div class="flex flex-col w-1/2">
+              <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == 'Habilitado'"
               >
                 <b>Estado: </b
                 ><i
@@ -135,141 +330,14 @@
               </label>
               <label
                 class="font-thin text-xl mr-5"
-                *ngIf="congress.status_congress == false"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
               >
                 <b>Estado: </b
                 ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
-                  Inhabilitado</i
+                  Finalizado</i
                 >
               </label>
             </div>
-
-            <div class="w-1/2 flex justify-end">
-              <button
-                routerLink="/dashboard/put-congresses"
-                class="
-                  focus:outline-none
-                  py-1
-                  px-4
-                  rounded-lg
-                  shadow-sm
-                  text-center text-gray-700
-                  bg-white
-                  hover:bg-blue-400 hover:text-white
-                  font-medium
-                  mr-2
-                  border
-                  flex
-                  items-center
-                "
-              >
-                <i class="fas fa-edit mr-1"></i>
-                Editar Congreso
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ponentes -->
-    <div
-      *ngIf="dataUser.rol == 'Ponente'"
-      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
-    >
-      <div
-        class="w-full h-1/3 bg-top bg-cover rounded-t"
-        style="background-image: url(/assets/img/congresos.jpg)"
-      ></div>
-      <div class="flex flex-col w-full h-2/3 md:flex-row">
-        <div
-          class="
-            flex flex-row
-            justify-around
-            p-4
-            font-bold
-            leading-none
-            text-gray-800
-            uppercase
-            bg-blue-500
-            rounded
-            md:flex-col md:items-center md:justify-center md:w-1/4
-          "
-        >
-          <div class="flex flex-col items-center justify-center h-1/2 w-full">
-            <div class="md:text-xl text-center">Fecha de Inicio</div>
-            <div class="md:text-2xl">
-              {{ congress.start_date | date: "dd/MM/yyyy" }}
-            </div>
-          </div>
-          <div class="flex flex-col items-center justify-center h-1/2 w-full">
-            <div class="md:text-xl text-center">Fecha de Finalización</div>
-            <div class="md:text-2xl">
-              {{ congress.end_date | date: "dd/MM/yyyy" }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="
-            p-4
-            font-normal
-            text-gray-800
-            md:w-3/4
-            flex flex-col
-            justify-between
-          "
-        >
-          <h1
-            class="
-              mb-4
-              text-4xl
-              font-bold
-              leading-none
-              tracking-tight
-              text-gray-800
-            "
-          >
-            Congreso: {{ congress.name }}
-          </h1>
-
-          <div class="leading-normal flex items-center">
-            <b>Reglamento:</b>
-            <iframe
-              class="text-xl text-justify w-full"
-              srcdoc="{{ congress.regulations }}"
-            ></iframe>
-          </div>
-
-          <!-- <div class="leading-normal flex items-center">
-            <b class="mr-2">Dirección Web:</b
-            ><a
-              class="text-blue-800 hover:text-blue-500 text-xl"
-              href="{{ congress.address_web }}"
-              target="_blank"
-            >
-              {{ congress.address_web }}</a
-            >
-          </div> -->
-
-          <div class="leading-normal flex items-center">
-            <b class="mr-2">Capacidad de Ponentes:</b>
-            <p>
-              {{ congress.capacity_speakers }}
-            </p>
-          </div>
-
-          <div class="leading-normal flex items-center">
-            <b class="mr-2">Capacidad de Participantes:</b>
-            <p>
-              {{ congress.capacity_participants }}
-            </p>
-          </div>
-
-          <div class="leading-normal flex items-center">
-            <b class="mr-2">Áreas de Conocimiento:</b>
-            <p>
-              {{ congress.knowledge_area }}
-            </p>
           </div>
         </div>
       </div>
@@ -278,13 +346,15 @@
     <!-- Revisor -->
     <div
       *ngIf="dataUser.rol == 'Revisor'"
-      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full p-2 rounded shadow-lg"
     >
-      <div
-        class="w-full h-1/3 bg-top bg-cover rounded-t"
-        style="background-image: url(/assets/img/congresos.jpg)"
-      ></div>
-      <div class="flex flex-col w-full h-2/3 md:flex-row">
+      <img
+        class="bg-top bg-cover w-full h-60 rounded-t"
+        [src]="see_logo"
+        alt="congress.name"
+      />
+
+      <div class="flex flex-col w-full h-auto md:flex-row">
         <div
           class="
             flex flex-row
@@ -374,6 +444,48 @@
               {{ congress.knowledge_area }}
             </p>
           </div>
+
+          <div
+            class="
+              flex
+              lg:flex-row
+              md:flex-row
+              flex-col
+              items-center
+              mt-4
+              text-gray-700
+            "
+          >
+            <div class="flex flex-col w-1/2">
+              <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == 'Habilitado'"
+              >
+                <b>Estado: </b
+                ><i
+                  class="
+                    fas
+                    fa-check-circle
+                    text-1xl
+                    mr-2
+                    text-green-700
+                    font-thin
+                  "
+                >
+                  Habilitado</i
+                >
+              </label>
+              <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
+              >
+                <b>Estado: </b
+                ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
+                  Finalizado</i
+                >
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -381,13 +493,15 @@
     <!-- Participante -->
     <div
       *ngIf="dataUser.rol == 'Participante'"
-      class="flex flex-col w-full h-full bg-white rounded shadow-lg"
+      class="flex flex-col w-full h-full p-2 rounded shadow-lg"
     >
-      <div
-        class="w-full h-1/3 bg-top bg-cover rounded-t"
-        style="background-image: url(/assets/img/congresos.jpg)"
-      ></div>
-      <div class="flex flex-col w-full h-2/3 md:flex-row">
+      <img
+        class="bg-top bg-cover w-full h-60 rounded-t"
+        [src]="see_logo"
+        alt="congress.name"
+      />
+
+      <div class="flex flex-col w-full h-auto md:flex-row">
         <div
           class="
             flex flex-row
@@ -477,12 +591,56 @@
               {{ congress.knowledge_area }}
             </p>
           </div>
+
+          <div
+            class="
+              flex
+              lg:flex-row
+              md:flex-row
+              flex-col
+              items-center
+              mt-4
+              text-gray-700
+            "
+          >
+            <div class="flex flex-col w-1/2">
+              <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == 'Habilitado'"
+              >
+                <b>Estado: </b
+                ><i
+                  class="
+                    fas
+                    fa-check-circle
+                    text-1xl
+                    mr-2
+                    text-green-700
+                    font-thin
+                  "
+                >
+                  Habilitado</i
+                >
+              </label>
+              <label
+                class="font-thin text-xl mr-5"
+                *ngIf="congress.status_congress == 'Inhabilitado'"
+              >
+                <b>Estado: </b
+                ><i class="fas fa-times-circle text-1xl mr-2 text-red-700">
+                  Finalizado</i
+                >
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="w-full p-2 flex justify-center self-center" *ngIf="!congress">
-    <p class="text-2xl font-bold uppercase">No hay congresos disponibles.</p>
+    <p class="text-2xl font-bold uppercase">
+      No hay congresos activos en este momento.
+    </p>
   </div>
 </div>

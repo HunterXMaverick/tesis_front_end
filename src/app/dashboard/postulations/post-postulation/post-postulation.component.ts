@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Postulation } from '../../../models/postulation';
 import { PostulationService } from '../../../services/postulation.service';
-import { PersonService } from '../../../services/person.service';
 import { CongressService } from 'src/app/services/congress.service';
 import { FilesService } from 'src/app/services/files.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,18 +14,19 @@ import Swal from 'sweetalert2';
 export class PostPostulationComponent implements OnInit {
   postulation: FormGroup;
   dataUser: any = [];
+  congressSelected: any;
   congress: any = [];
   knowledge_area: Array<string> = [];
 
   constructor(
     private postulationService: PostulationService,
-    private personService: PersonService,
     private congressService: CongressService,
     private filesService: FilesService,
     private router: Router,
     public fb: FormBuilder
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.postulation = this.fb.group({
       title_project: ['', [Validators.required]],
       summary_project: ['', [Validators.required]],
@@ -36,30 +35,31 @@ export class PostPostulationComponent implements OnInit {
       person_id: ['', [Validators.required]],
       status: ['Pendiente'],
       status_quelification: [false],
+      congress_id: [this.congressSelected],
     });
   }
 
   ngOnInit() {
-    // this.getPersonByEmail();
     this.getCongress();
   }
-
-  // getPersonByEmail() {
-  //   return this.personService
-  //     .getUserByEmail(this.personService.email)
-  //     .subscribe(
-  //       (res: any) => {
-  //         this.dataUser = res.data;
-  //       },
-  //       (err) => console.error(err)
-  //     );
-  // }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        this.congress = res.data[0];
-        this.knowledge_area = this.congress.knowledge_area.split(',');
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.knowledge_area = this.congress.knowledge_area.split(',');
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );
@@ -118,7 +118,7 @@ export class PostPostulationComponent implements OnInit {
               this.postulationService
                 .postPostulation(dataPostulation)
                 .subscribe(
-                  (res) => {
+                  () => {
                     this.router.navigate(['/dashboard/postulations']);
                   },
                   (error) => {
@@ -126,7 +126,7 @@ export class PostPostulationComponent implements OnInit {
                   }
                 );
               Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'success',
                 title: '¡Registro Exitoso!',
                 showConfirmButton: false,
@@ -137,7 +137,7 @@ export class PostPostulationComponent implements OnInit {
       });
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Por favor, completar todos los datos',
         showConfirmButton: false,

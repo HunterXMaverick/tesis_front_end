@@ -11,7 +11,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./assignment.component.scss'],
 })
 export class AssignmentComponent implements OnInit {
+  congressEnabled: boolean = true;
   postulation: FormGroup | undefined;
+  congressSelected: any;
+  dataUser: any;
   users: any = [];
   congress: any = [];
   knowledge_area: Array<string> = [];
@@ -24,19 +27,35 @@ export class AssignmentComponent implements OnInit {
     private congressService: CongressService,
     private assignmentService: AssignmentService,
     public fb: FormBuilder
-  ) {}
-
-  ngOnInit(): void {
+  ) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getCongress();
     this.getUsers();
+  }
+
+  ngOnInit(): void {
     this.getAssignments();
   }
 
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        this.congress = res.data[0];
-        this.knowledge_area = this.congress.knowledge_area.split(',');
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressEnabled = element.status_congress;
+              this.knowledge_area = this.congress.knowledge_area.split(',');
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );
@@ -45,8 +64,13 @@ export class AssignmentComponent implements OnInit {
   getUsers() {
     return this.personService.getUsers().subscribe(
       (res: any) => {
+        console.log(res.data);
+
         res.data.forEach((element: any) => {
-          if (element.rol == 'Revisor') {
+          if (
+            element.rol == 'Revisor' &&
+            element.congress_id == this.congressSelected
+          ) {
             this.users.push(element);
           }
         });
@@ -58,7 +82,29 @@ export class AssignmentComponent implements OnInit {
   getAssignments() {
     return this.assignmentService.getAssignments().subscribe(
       (res: any) => {
-        this.assignmentReviewers = res.data;
+        this.assignmentReviewers = [];
+
+        res.data.forEach((element: any) => {
+          if (element.congress_id == this.congressSelected) {
+            this.assignmentReviewers.push(element);
+          }
+        });
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  deleteAssignment(id: string) {
+    return this.assignmentService.deleteAssignment(id).subscribe(
+      (res: any) => {
+        this.getAssignments();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Asignación eliminada.',
+          showConfirmButton: false,
+          timer: 1000,
+        });
       },
       (err) => console.error(err)
     );
@@ -80,18 +126,19 @@ export class AssignmentComponent implements OnInit {
           assigment: {
             reviewer_name: this.selected_reviewer,
             knowledge_area: this.selected_knowledge_area,
+            congress_id: this.congress._id,
           },
         };
 
         this.assignmentService.postAssignment(dataAssignment).subscribe(
-          (res: any) => {
+          () => {
             this.getAssignments();
             Swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Revisor asignado correctamente.',
+              title: 'Asignado correctamente.',
               showConfirmButton: false,
-              timer: 1500,
+              timer: 1000,
             });
           },
           (err) => console.error(err)

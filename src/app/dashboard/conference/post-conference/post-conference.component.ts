@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class PostConferenceComponent implements OnInit {
   conference: FormGroup;
+  congressSelected: any;
   dataUser: any = [];
   postulations: any = [];
   today = new Date().toISOString().split('T')[0];
@@ -23,12 +24,14 @@ export class PostConferenceComponent implements OnInit {
     public fb: FormBuilder
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.conference = this.fb.group({
       link: ['', [Validators.required]],
       date: ['', [Validators.required]],
       hour: [null, [Validators.required]],
       postulation_id: ['', [Validators.required]],
       reviewer_id: [this.dataUser._id, [Validators.required]],
+      congress_id: [this.congressSelected],
     });
   }
 
@@ -41,7 +44,8 @@ export class PostConferenceComponent implements OnInit {
       res.data.forEach((element: any) => {
         if (
           element.status == 'Aprobado' &&
-          element.person_id == this.dataUser._id
+          element.person_id == this.dataUser._id &&
+          element.congress_id == this.congressSelected
         ) {
           this.postulations.push(element);
         }
@@ -58,26 +62,24 @@ export class PostConferenceComponent implements OnInit {
       let dataConference = {
         conference: this.conference.value,
       };
-      console.log(dataConference);
 
       this.conferenceService.postConference(dataConference).subscribe(
         () => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Creación exitosa',
             showConfirmButton: false,
             timer: 1500,
-          });
-          this.router.navigate(['/dashboard/conference']);
+          }).then(() => this.router.navigate(['/dashboard/conference']));
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       );
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Completa todos los campos para continuar.',
         showConfirmButton: false,

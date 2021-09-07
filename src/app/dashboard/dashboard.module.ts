@@ -29,6 +29,8 @@ import { ConferenceComponent } from './conference/conference.component';
 import { PostConferenceComponent } from './conference/post-conference/post-conference.component';
 import { ListConferenceComponent } from './list-conference/list-conference.component';
 import { ListPostulationComponent } from './list-postulation/list-postulation.component'; 
+import { PutQualificationsComponent } from './put-qualifications/put-qualifications.component';
+import { GeneralHistoryComponent } from './general-history/general-history.component'; 
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { ListPostulationComponent } from './list-postulation/list-postulation.co
     PostConferenceComponent,
     ListConferenceComponent,
     ListPostulationComponent,
+    PutQualificationsComponent,
+    GeneralHistoryComponent,
   ],
   exports: [SidebarComponent],
   imports: [

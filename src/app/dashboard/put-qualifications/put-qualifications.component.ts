@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RubricService } from '../../services/rubric.service';
 import { PostulationService } from '../../services/postulation.service';
 import { QualificationService } from '../../services/qualification';
@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-put-qualifications',
   templateUrl: './put-qualifications.component.html',
-  styleUrls: ['./put-qualifications.component.scss']
+  styleUrls: ['./put-qualifications.component.scss'],
 })
-export class PutQualificationsComponent implements OnInit {
+export class PutQualificationsComponent {
   rubrics: any = [];
   editQuailification: string = '';
   parameters: any = [];
 
+  congressSelected: any;
   inputreviewersRating: number = 0;
   inputremark: string = '';
   postulations_id: string = '';
@@ -23,6 +24,8 @@ export class PutQualificationsComponent implements OnInit {
   sumreviewersRatings: number = 0;
   remarks: Array<string> = [];
   qualificaty: number = 0;
+  showModal: boolean = true;
+
   constructor(
     private rubricsService: RubricService,
     private qualificationService: QualificationService,
@@ -30,20 +33,21 @@ export class PutQualificationsComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
-   }
-
-  ngOnInit(): void {
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getRubrics();
     this.getQualifications();
   }
 
-  getQualifications(){
-  return this.qualificationService
-  .getQualificationById(this.postulations_id).subscribe((res:any)=>{
-    this.editQuailification = res.data[0]._id;
-    console.log(this.editQuailification);
-    console.log(res.data);
-  })
+  handleModal(showModal: boolean) {
+    this.showModal = showModal;
+  }
+
+  getQualifications() {
+    return this.qualificationService
+      .getQualificationById(this.postulations_id)
+      .subscribe((res: any) => {
+        this.editQuailification = res.data[0]._id;
+      });
   }
 
   getRubrics() {
@@ -93,7 +97,7 @@ export class PutQualificationsComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: 'Máximo 5 observaciones.',
+          title: `Máximo ${this.parameters.length} observaciones.`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -116,27 +120,29 @@ export class PutQualificationsComponent implements OnInit {
           postulation_id: this.postulations_id,
           reviewersRating: this.reviewersRatings,
           remark: this.remarks,
-          qualificaty: this.sumreviewersRatings,
+          qualificaty: Math.round(this.sumreviewersRatings),
           person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+          congress_id: this.congressSelected,
         },
       };
 
       this.qualificationService
-        .putQualification(this.editQuailification,qualificationData)
-        .subscribe((response) => {
+        .putQualification(this.editQuailification, qualificationData)
+        .subscribe(() => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Calificado exitosamente.',
             showConfirmButton: false,
             timer: 1800,
-          }).then;
-          this.putStateQualification();
-          this.router.navigate(['/dashboard/postulations']);
+          }).then(() => {
+            this.putStateQualification();
+            this.router.navigate(['/dashboard/postulations']);
+          });
         });
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Califique todos los criterios para continuar.',
         showConfirmButton: false,
@@ -146,12 +152,10 @@ export class PutQualificationsComponent implements OnInit {
   }
 
   putStateQualification() {
-    let percentage: number =
-        (this.sumreviewersRatings * 100) /
-        Number(this.parameters.length + '00'),
-      postulationData;
-console.log(percentage)
-    if (percentage >= 70 || percentage <= 100) {
+    let postulationData,
+      rate = Math.trunc(this.sumreviewersRatings);
+
+    if (rate <= 100 && rate >= 70) {
       postulationData = {
         postulation: { status_quelification: true, status: 'Aprobado' },
       };
@@ -160,11 +164,11 @@ console.log(percentage)
         postulation: { status_quelification: true, status: 'Reprobado' },
       };
     }
-console.log(postulationData)
+    console.log(postulationData);
     this.postulationService
       .putPostulation(this.postulations_id, postulationData)
       .subscribe((res) => {
-console.log(res)
+        console.log(res);
         console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
       });
   }

@@ -10,29 +10,34 @@
     </h2>
 
     <div
-      class="flex border-b justify-between px-3"
+      class="flex items-center border-b justify-between px-3"
       *ngIf="dataUser.rol == 'Ponente'"
     >
-      <div>
-        <h2 class="py-4 text-2xl font-semibold text-gray-800">
-          Postulaciones Realizadas
-        </h2>
-      </div>
-      <div>
-        <button
-          routerLink="../post-postulation"
-          class="
-            focus:outline-none
-            py-5
-            text-center text-gray-700
-            bg-white
-            hover:text-black
-            font-medium
-          "
-        >
-          <i class="fa fa-plus pr-2"></i>Nueva Postulacion
-        </button>
-      </div>
+      <h2 class="py-4 text-2xl font-semibold text-gray-800">
+        Postulaciones Realizadas
+      </h2>
+      <button
+        *ngIf="congressEnabled"
+        routerLink="../post-postulation"
+        class="
+          focus:outline-none
+          border border-transparent
+          py-1
+          px-4
+          rounded-lg
+          shadow-sm
+          text-center text-white
+          bg-blue-500
+          hover:bg-blue-600
+          font-medium
+          flex
+          items-center
+          mx-2
+        "
+      >
+        <i class="fas fa-plus mr-1"></i>
+        Nueva Postulación
+      </button>
     </div>
 
     <div
@@ -76,76 +81,80 @@
     >
       <thead>
         <tr class="border-b-2 border-gray-200 bg-gray-200">
-          <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Título del proyecto
-          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Título del Proyecto</th>
           <th
             *ngIf="dataUser.rol == 'Ponente'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Resumen
           </th>
           <th
             *ngIf="dataUser.rol == 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Resumen
           </th>
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Datos del Autor
           </th>
-          <th class="px-5 py-3 text-left text-sm text-gray-600">
-            Área de conocimiento
-          </th>
+          <th class="px-5 py-3 text-sm text-gray-600">Área de Conocimiento</th>
           <th
             *ngIf="dataUser.rol == 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Datos del Autor
           </th>
           <th
             *ngIf="dataUser.rol == 'Ponente'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Archivo
           </th>
           <th
             *ngIf="dataUser.rol !== 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Estado
           </th>
           <th
             *ngIf="dataUser.rol == 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Observaciones
           </th>
           <th
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Revisor'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Revisor' &&
+              congressEnabled
+            "
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Asignación de Participantes
           </th>
           <!-- ESTADO PARA REVISOR CALIFICACIONES -->
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Estado
           </th>
           <th
             *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Nota Final
           </th>
           <th
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-3 text-left text-sm text-gray-600"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Organizador' &&
+              congressEnabled
+            "
+            class="px-5 py-3 text-sm text-gray-600"
           >
             Calificar
           </th>
@@ -157,7 +166,7 @@
       <tbody *ngIf="dataUser.rol == 'Organizador'">
         <tr
           *ngFor="
-            let postulation of postulations
+            let postulation of postulationsOrganizer
               | paginate: { itemsPerPage: 5, currentPage: page }
           "
           class="border-b border-gray-200 hover:bg-gray-100"
@@ -175,7 +184,7 @@
               class="tooltip appearance-none focus:outline-none mr-2"
             >
               <i class="fas fa-address-book text-blue-800 text-xl"></i>
-              <span class="tooltiptext">Datos del autor</span>
+              <span class="tooltiptext">Datos del Autor</span>
             </button>
           </td>
           <td class="px-5 py-5e text-sm text-center">
@@ -262,6 +271,7 @@
             class="px-5 py-5 flex justify-center text-sm"
           >
             <button
+              *ngIf="congressEnabled"
               (click)="assignParticipants(postulation._id)"
               class="
                 align-middle
@@ -316,14 +326,14 @@
               class="tooltip appearance-none focus:outline-none mr-2"
             >
               <i class="fas fa-address-book text-blue-800 text-xl"></i>
-              <span class="tooltiptext">Datos del autor</span>
+              <span class="tooltiptext">Datos del Autor</span>
             </button>
             <button
               (click)="getFile(knowledge_area.files)"
               class="tooltip appearance-none focus:outline-none ml-2"
             >
               <i class="fas fa-file-invoice text-green-700 text-xl"></i>
-              <span class="tooltiptext">Archivo adjunto</span>
+              <span class="tooltiptext">Archivo Adjunto</span>
             </button>
           </td>
           <td
@@ -359,7 +369,7 @@
                     mr-2
                     tooltiptext
                   "
-                  >Por calificar</span
+                  >Por Calificar</span
                 >
               </button>
             </div>
@@ -381,13 +391,18 @@
                   mr-2
                   tooltiptext
                 "
-                >Ver nota</span
+                >Ver Nota</span
               >
             </button>
           </td>
           <td
-            *ngIf="dataUser.rol !== 'Ponente' && dataUser.rol !== 'Organizador'"
-            class="px-5 py-5 flex-1 text-sm text-center"
+            *ngIf="
+              dataUser.rol !== 'Ponente' &&
+              dataUser.rol !== 'Organizador' &&
+              congressEnabled &&
+              rubricCreated
+            "
+            class="px-5 py-5 flex text-sm text-center"
           >
             <div>
               <button
@@ -402,7 +417,7 @@
               <button
                 *ngIf="knowledge_area.status_quelification != false"
                 (click)="create(knowledge_area)"
-                routerLink="../evaluation"
+                routerLink="../put-qualifications"
                 class="tooltip appearance-none focus:outline-none ml-2"
               >
                 <i class="fas fa-edit text-blue-600 text-xl"></i>
@@ -448,7 +463,7 @@
               (click)="getFile(project.files)"
             >
               <i class="fas fa-file-invoice text-green-700 text-xl"></i>
-              <span class="tooltiptext">Elegir PDF</span>
+              <span class="tooltiptext">Ver PDF</span>
             </button>
           </td>
           <td
@@ -532,6 +547,7 @@
     >
       <p class="font-thin">No hay proyectos para mostrar</p>
     </div>
+
     <div class="w-full flex justify-center">
       <pagination-controls
         class="flex text-center"
@@ -546,7 +562,7 @@
 
 <!-- MODAL -->
 <div
-  id="modal"
+  *ngIf="showModal"
   class="
     flex
     items-center
@@ -557,22 +573,15 @@
     w-full
     h-full
     bg-gray-800 bg-opacity-75
+    z-50
   "
 >
-  <div class="flex flex-col w-2/3 bg-white">
-    <div class="flex w-full px-3 items-center justify-between">
-      <div class="h-auto text-2xl">
-        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Datos del autor
-      </div>
+  <div class="flex flex-col w-2/3 h-auto p-3 bg-white rounded">
+    <h1 class="w-full h-full text-center uppercase py-3 font-bold text-md">
+      Datos del Autor
+    </h1>
 
-      <div class="text-2xl">
-        <i
-          (click)="handleModal(false)"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
-      </div>
-    </div>
+    <hr />
 
     <div
       class="
@@ -590,58 +599,82 @@
     >
       <div class="flex flex-col w-1/2 justify-center" *ngIf="userData">
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nombres:</h2>
-          <p>{{ userData.names }}</p>
+          <h2 class="font-bold w-1/2">Nombres:</h2>
+          <p class="w-1/2">{{ userData.names }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Apellidos:</h2>
-          <p>{{ userData.last_names }}</p>
+          <h2 class="font-bold w-1/2">Apellidos:</h2>
+          <p class="w-1/2">{{ userData.last_names }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Rol:</h2>
-          <p>{{ userData.rol }}</p>
+          <h2 class="font-bold w-1/2">Rol:</h2>
+          <p class="w-1/2">{{ userData.rol }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Tipo de identificación:</h2>
-          <p>{{ userData.type_dni }}</p>
+          <h2 class="font-bold w-1/2">Tipo de Identificación:</h2>
+          <p class="w-1/2">{{ userData.type_dni }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Número de identificación:</h2>
-          <p>{{ userData.dni }}</p>
+          <h2 class="font-bold w-1/2">Número de identificación:</h2>
+          <p class="w-1/2">{{ userData.dni }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Nivel académico:</h2>
-          <p>{{ userData.level_academy }}</p>
+          <h2 class="font-bold w-1/2">Nivel académico:</h2>
+          <p class="w-1/2">{{ userData.level_academy }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Titulo:</h2>
-          <p>{{ userData.title }}</p>
+          <h2 class="font-bold w-1/2">Titulo Académico:</h2>
+          <p class="w-1/2">{{ userData.title }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Teléfono:</h2>
-          <p>{{ userData.phone }}</p>
+          <h2 class="font-bold w-1/2">Teléfono:</h2>
+          <p class="w-1/2">{{ userData.phone }}</p>
         </div>
         <div class="flex py-2">
-          <h2 class="font-bold mr-3">Correo electrónico:</h2>
-          <p>{{ userData.email }}</p>
+          <h2 class="font-bold w-1/2">Correo Electrónico:</h2>
+          <p class="w-1/2">{{ userData.email }}</p>
         </div>
       </div>
 
-      <div
-        class="flex w-1/2 justify-center"
-        *ngIf="
-          (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
-          profile_picture_url !== ''
-        "
-      >
+      <!-- *ngIf="
+      (dataUser.rol == 'Organizador' || dataUser.rol == 'Participante') &&
+      profile_picture_url !== ''
+    " -->
+
+      <div class="flex w-1/2 justify-center" *ngIf="profile_picture_url !== ''">
         <img [src]="profile_picture_url" class="w-64" alt="Foto de Perfil" />
       </div>
+    </div>
+
+    <hr />
+    <div class="py-2 w-full flex justify-end">
+      <button
+        (click)="handleModal(false)"
+        class="
+          align-middle
+          bg-red-500
+          hover:bg-red-600
+          text-center
+          py-1
+          px-4
+          text-white text-sm
+          font-semibold
+          rounded-lg
+          shadow-lg
+          focus:outline-none
+          flex
+          items-center
+        "
+      >
+        <i class="fas fa-window-close mr-1"></i>
+        Cancelar
+      </button>
     </div>
   </div>
 </div>
 
 <div
-  id="modal-remark"
+  *ngIf="showModalRemark"
   class="
     flex
     items-center
@@ -652,22 +685,15 @@
     w-full
     h-full
     bg-gray-800 bg-opacity-75
+    z-50
   "
 >
-  <div class="flex flex-col w-1/3 bg-white">
-    <div class="flex w-full px-3 items-center justify-between">
-      <div class="h-auto text-2xl">
-        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Observaciones
-      </div>
+  <div class="flex flex-col w-2/3 h-auto p-3 bg-white rounded">
+    <h1 class="w-full h-full text-center uppercase py-3 font-bold text-md">
+      Observaciones
+    </h1>
 
-      <div class="text-2xl">
-        <i
-          (click)="handleModalRemark(false)"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
-      </div>
-    </div>
+    <hr />
 
     <div
       class="
@@ -683,12 +709,46 @@
         text-gray-800
       "
     >
-      <div class="flex flex-col justify-center w-full" *ngIf="remarks">
-        <div *ngFor="let remark of remarks" class="flex">
-          <p class="px-2 w-1/2">{{ remark.criteria }}</p>
-          <p class="px-2 w-1/2">{{ remark.remark }}</p>
-        </div>
-      </div>
+      <table class="w-full" *ngIf="remarks">
+        <thead class="bg-blue-500">
+          <tr class="flex w-full text-center">
+            <th class="border border-black w-1/2">Criterio</th>
+            <th class="border border-black w-1/2">Observación</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="flex w-full" *ngFor="let remark of remarks">
+            <td class="border border-black p-2 w-1/2">{{ remark.criteria }}</td>
+            <td class="border border-black p-2 w-1/2">{{ remark.remark }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr />
+    <div class="py-2 w-full flex justify-end">
+      <button
+        (click)="handleModalRemark(false)"
+        class="
+          align-middle
+          bg-red-500
+          hover:bg-red-600
+          text-center
+          py-1
+          px-4
+          text-white text-sm
+          font-semibold
+          rounded-lg
+          shadow-lg
+          focus:outline-none
+          flex
+          items-center
+        "
+      >
+        <i class="fas fa-window-close mr-1"></i>
+        Cancelar
+      </button>
     </div>
   </div>
 </div>

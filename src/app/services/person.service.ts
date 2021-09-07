@@ -34,6 +34,14 @@ export class PersonService {
     );
   }
 
+  putPersonNoPass(id: string, person: object) {
+    return this.http.put(
+      `${this.url}/putPersonNoPass/${id}`,
+      person,
+      this.server.obtainHeaders()
+    );
+  }
+
   getUserById(id: string) {
     return this.http.get(
       `${this.url}/getPersonById/${id}`,
@@ -66,7 +74,10 @@ export class PersonService {
     );
   }
 
-  getReviewers(){
-    return this.http.get(`${this.url}/getReviewers`, this.server.obtainHeaders());
+  getReviewers() {
+    return this.http.get(
+      `${this.url}/getReviewers`,
+      this.server.obtainHeaders()
+    );
   }
 }

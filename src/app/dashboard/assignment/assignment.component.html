@@ -7,7 +7,17 @@
     </h2>
 
     <form
-      class="w-full py-6 flex lg:flex-row md:flex-row flex-col items-center"
+      *ngIf="congressEnabled"
+      class="
+        w-full
+        py-6
+        flex
+        lg:flex-row
+        md:flex-row
+        flex-col
+        items-center
+        justify-center
+      "
     >
       <div class="lg:w-1/3 md:w-1/3 w-full flex flex-col px-3 py-2">
         <label class="font-thin text-xl">Revisor</label>
@@ -62,49 +72,71 @@
         </select>
       </div>
 
-      <div class="lg:w-1/3 md:w-1/3 w-full flex flex-col px-3 py-2">
+      <div class="lg:w-1/3 md:w-1/3 w-full flex justify-center px-3 py-2">
         <button
           routerLink="/dashboard/assignment"
           class="
             focus:outline-none
+            border border-transparent
             py-1
             px-4
             rounded-lg
             shadow-sm
-            text-center text-gray-700
-            bg-white
-            hover:bg-blue-400 hover:text-white
+            text-center text-white
+            bg-blue-500
+            hover:bg-blue-600
             font-medium
-            border
-            mr-2
+            mx-3
             flex
             items-center
-            justify-center
           "
           (click)="postAssignment()"
         >
           <i class="fas fa-save mr-1"></i>
-          Grabar
+          Guardar
         </button>
       </div>
     </form>
 
     <div class="py-8 w-full">
-      <h2 class="text-center py-2 text-2xl">Lista de Asignados</h2>
+      <h2 class="text-center py-2 text-2xl">Lista de Revisores</h2>
       <table class="rounded border-2 w-full">
         <thead class="bg-gray-200">
           <tr>
-            <td class="w-1/2 text-center">Revisor</td>
-            <td class="w-1/2 text-center">Área de conocimiento</td>
+            <td class="w-auto text-center">Revisor</td>
+            <td class="w-auto text-center">Área de conocimiento</td>
+            <td class="w-auto text-center">Acciones</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of assignmentReviewers; let i = index">
-            <td class="w-1/2 px-2 text-center">
+            <td class="w-auto px-2 text-center">
               {{ data.reviewer_name }}
             </td>
-            <td class="w-1/2 px-2 text-center">
+            <td class="w-auto px-2 text-center">
               {{ data.knowledge_area }}
+            </td>
+            <td class="w-auto px-2 text-center flex justify-center">
+              <button
+                class="
+                  align-middle
+                  bg-red-500
+                  hover:bg-red-600
+                  text-center
+                  py-1
+                  px-4
+                  text-white text-sm
+                  font-semibold
+                  rounded-lg
+                  shadow-lg
+                  focus:outline-none
+                  flex
+                  items-center
+                "
+                (click)="deleteAssignment(data._id)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </td>
           </tr>
         </tbody>

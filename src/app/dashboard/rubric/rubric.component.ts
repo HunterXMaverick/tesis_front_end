@@ -11,9 +11,15 @@ import Swal from 'sweetalert2';
 export class RubricComponent {
   qualificationCriterias: Array<string> = [];
   inputCriteria: string = '';
-  rubric: any;
+  rubric: any = null;
+  rubricsHistory: Array<any> = [];
+  congressSelected: any;
+  showModal: boolean = false;
+  dataUser: any;
 
   constructor(private rubricService: RubricService, private router: Router) {
+    this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
     this.getRubrics();
   }
 
@@ -58,10 +64,32 @@ export class RubricComponent {
     this.rubricService.getRubrics().subscribe((res: any) => {
       if (res.data.length == 0) {
         this.rubric = null;
-      } else if (res.data.length >= 1) {
-        this.rubric = res.data[0];
+      } else {
+        res.data.forEach((element: any) => {
+          if (
+            element.congress_id == this.congressSelected &&
+            element.state == true
+          ) {
+            this.rubric = element;
+          }
+
+          if (
+            element.congress_id == this.congressSelected &&
+            element.state == false
+          ) {
+            this.rubricsHistory.push(element);
+          }
+        });
+
+        if (this.rubric == null) {
+          Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Recuerda que tienes un máximo de 5 criterios por rúbrica.',
+            showConfirmButton: true,
+          });
+        }
       }
-      console.log(res);
     });
   }
 
@@ -69,35 +97,40 @@ export class RubricComponent {
     let rubricData = {
       rubric: {
         qualificationCriteria: this.qualificationCriterias,
-        ratingRange: '0-100',
-        reviewersRating: '',
+        state: true,
+        congress_id: this.congressSelected,
       },
     };
 
-    this.rubricService.postRubric(rubricData).subscribe((response) => {
+    this.rubricService.postRubric(rubricData).subscribe(() => {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
-        title: 'Creación exitosa',
+        title: 'Creada exitosamente',
         showConfirmButton: false,
         timer: 1500,
-      });
-      this.router.navigate(['/dashboard/congresses']);
+      }).then(() => this.router.navigate(['/dashboard/congresses']));
     });
   }
 
   deleteRubric() {
-    this.rubricService
-      .deleteRubric(this.rubric._id)
-      .subscribe((response: any) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Eliminado exitosamente',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.router.navigate(['/dashboard/congresses']);
-      });
+    let dataRubric = {
+      rubric: {
+        state: false,
+      },
+    };
+    this.rubricService.putRubric(this.rubric._id, dataRubric).subscribe(() => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Inhabilitado exitosamente.',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => this.router.navigate(['/dashboard/congresses']));
+    });
+  }
+
+  handleModal(showModal: boolean) {
+    this.showModal = showModal;
   }
 }

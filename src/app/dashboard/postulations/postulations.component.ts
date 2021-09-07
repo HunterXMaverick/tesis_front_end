@@ -15,10 +15,13 @@ import { RubricService } from 'src/app/services/rubric.service';
   styleUrls: ['./postulations.component.scss'],
 })
 export class PostulationsComponent implements OnInit {
+  congressEnabled: boolean = false;
+  congressSelected: any;
   profile_picture_url: string = '';
   remarks: Array<any> = [];
   showPostulations: boolean = true;
-  postulations: any = [];
+  postulations: Array<any> = [];
+  postulationsOrganizer: Array<any> = [];
   assignments: any = '';
   knowledge_areas: any = [];
   userById: any = [];
@@ -33,6 +36,9 @@ export class PostulationsComponent implements OnInit {
   nameSpeakerTemp: string = '';
   knowledge_area: Array<string> = [];
   congress: any = [];
+  rubricCreated: boolean = false;
+  showModal: boolean = false;
+  showModalRemark: boolean = false;
 
   constructor(
     private postulationService: PostulationService,
@@ -45,14 +51,28 @@ export class PostulationsComponent implements OnInit {
     private router: Router
   ) {
     this.dataUser = JSON.parse(sessionStorage.getItem('_user-data')!);
+    this.congressSelected = sessionStorage.getItem('activeCongress');
   }
 
   ngOnInit() {
-    this.handleModal(false);
-    this.handleModalRemark(false);
+    this.getRubric();
     this.getPostulations();
+    this.getPostulationsOrganizer();
     this.getKnowledge();
     this.getCongress();
+  }
+
+  getRubric() {
+    return this.rubricService.getRubrics().subscribe(
+      async (res: any) => {
+        if ((await res.data.length) == 0) {
+          this.rubricCreated = false;
+        } else if ((await res.data.length) >= 1) {
+          this.rubricCreated = true;
+        }
+      },
+      (err) => console.error(err)
+    );
   }
 
   getUserById(id: string) {
@@ -60,7 +80,12 @@ export class PostulationsComponent implements OnInit {
       (res: any) => {
         this.userById.push(res.data);
         this.userData = res.data;
-        this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        if (res.data.profile_picture) {
+          this.profile_picture_url = `http://localhost:3500/api/file/${res.data.profile_picture}`;
+        } else {
+          this.profile_picture_url =
+            'https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png';
+        }
       },
       (err) => console.error(err)
     );
@@ -90,18 +115,39 @@ export class PostulationsComponent implements OnInit {
   getPostulations() {
     return this.postulationService.getPostulations().subscribe(
       (res: any) => {
-        this.postulations = res.data;
-        if (this.postulations.length == 0) {
+        if (res.data.length == 0) {
           this.showPostulations = false;
         } else {
-          this.postulations.forEach((element: any) => {
+          this.postulations = [];
+          res.data.forEach((element: any) => {
             this.getUserById(element.person_id);
-            if (element.person_id == this.dataUser._id) {
+            if (
+              element.congress_id == this.congressSelected &&
+              this.dataUser._id == element.person_id
+            ) {
+              this.postulations.push(element);
               this.projectsSpeaker.push(element);
             }
           });
           this.showPostulations = true;
         }
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  getPostulationsOrganizer() {
+    return this.postulationService.getPostulations().subscribe(
+      (res: any) => {
+        res.data.forEach((element: any) => {
+          if (element.congress_id == this.congressSelected) {
+            this.postulationsOrganizer.push(element);
+            // this.getUserById(element.person_id);
+            // if (element.person_id == this.dataUser._id) {
+            //   this.projectsSpeaker.push(element);
+            // }
+          }
+        });
       },
       (err) => console.error(err)
     );
@@ -138,7 +184,7 @@ export class PostulationsComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.ok == true) {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Ponente Aceptado',
             showConfirmButton: false,
@@ -146,7 +192,7 @@ export class PostulationsComponent implements OnInit {
           });
         } else {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Ponente Rechazado',
             showConfirmButton: false,
@@ -157,23 +203,11 @@ export class PostulationsComponent implements OnInit {
   }
 
   handleModal(showModal: boolean) {
-    let modal: any = document.getElementById('modal');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModal = showModal;
   }
 
   handleModalRemark(showModal: boolean) {
-    let modal: any = document.getElementById('modal-remark');
-
-    if (showModal) {
-      modal.classList.remove('hidden');
-    } else {
-      modal.classList.add('hidden');
-    }
+    this.showModalRemark = showModal;
   }
 
   getSpeakerName(id: string) {
@@ -187,6 +221,10 @@ export class PostulationsComponent implements OnInit {
 
   getPostulationsByAreaOfKnowledge() {
     if (this.selected_knowledge_area == '') {
+      this.postulations = [];
+      this.postulationsOrganizer = [];
+
+      this.getPostulationsOrganizer();
       return this.getPostulations();
     } else {
       return this.postulationService
@@ -194,11 +232,15 @@ export class PostulationsComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this.postulations = [];
+            this.postulationsOrganizer = [];
 
             res.data.forEach((element: any) => {
               this.getSpeakerName(element.person_id);
-              element.speakerName = this.nameSpeakerTemp;
-              this.postulations.push(element);
+              if (element.congress_id == this.congressSelected) {
+                element.speakerName = this.nameSpeakerTemp;
+                this.postulations.push(element);
+                this.postulationsOrganizer.push(element);
+              }
             });
           },
           (err) => console.error(err)
@@ -209,8 +251,21 @@ export class PostulationsComponent implements OnInit {
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
-        this.congress = res.data[0];
-        this.knowledge_area = this.congress.knowledge_area.split(',');
+        if (res.data.length == 0) {
+          this.congress = null;
+        } else {
+          res.data.forEach((element: any) => {
+            if (
+              // element.person_id == this.dataUser._id &&
+              element._id == this.congressSelected &&
+              element.status_congress == 'Habilitado'
+            ) {
+              this.congress = element;
+              this.congressEnabled = element.status_congress;
+              this.knowledge_area = element.knowledge_area.split(',');
+            }
+          });
+        }
       },
       (err) => console.error(err)
     );

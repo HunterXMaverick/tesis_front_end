@@ -14,6 +14,7 @@ export class EvaluationComponent implements OnInit {
   rubrics: any = [];
   parameters: any = [];
 
+  congressSelected: any;
   inputreviewersRating: number = 0;
   inputremark: string = '';
   postulations_id: string = '';
@@ -23,6 +24,7 @@ export class EvaluationComponent implements OnInit {
   remarks: Array<string> = [];
   qualificaty: number = 0;
   //person_id: string = "";
+  showModal: boolean = true;
 
   constructor(
     private rubricsService: RubricService,
@@ -31,10 +33,16 @@ export class EvaluationComponent implements OnInit {
     private router: Router
   ) {
     this.postulations_id = sessionStorage.getItem('postulationdata')!;
+    this.congressSelected = sessionStorage.getItem('activeCongress');
+    this.getRubrics();
   }
 
   ngOnInit(): void {
-    this.getRubrics();
+    this.handleModal(true);
+  }
+
+  handleModal(showModal: boolean) {
+    this.showModal = showModal;
   }
 
   getRubrics() {
@@ -42,7 +50,9 @@ export class EvaluationComponent implements OnInit {
       (res: any) => {
         this.rubrics = res.data;
         this.rubrics.forEach((element: any) => {
-          this.parameters = element.qualificationCriteria;
+          if (element.congress_id == this.congressSelected) {
+            this.parameters = element.qualificationCriteria;
+          }
         });
       },
       (err) => {
@@ -84,7 +94,7 @@ export class EvaluationComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'warning',
-          title: 'Máximo 5 observaciones.',
+          title: `Máximo ${this.parameters.length} observaciones.`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -107,16 +117,17 @@ export class EvaluationComponent implements OnInit {
           postulation_id: this.postulations_id,
           reviewersRating: this.reviewersRatings,
           remark: this.remarks,
-          qualificaty: this.sumreviewersRatings,
+          qualificaty: Math.round(this.sumreviewersRatings),
           person_id: JSON.parse(sessionStorage.getItem('_user-data')!)._id,
+          congress_id: this.congressSelected,
         },
       };
 
       this.qualificationService
         .postQualification(qualificationData)
-        .subscribe((response) => {
+        .subscribe(() => {
           Swal.fire({
-            position: 'top-end',
+            position: 'center',
             icon: 'success',
             title: 'Calificado exitosamente.',
             showConfirmButton: false,
@@ -127,7 +138,7 @@ export class EvaluationComponent implements OnInit {
         });
     } else {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'warning',
         title: 'Califique todos los criterios para continuar.',
         showConfirmButton: false,
@@ -137,12 +148,10 @@ export class EvaluationComponent implements OnInit {
   }
 
   putStateQualification() {
-    let percentage: number =
-        (this.sumreviewersRatings * 100) /
-        Number(this.parameters.length + '00'),
-      postulationData;
+    let postulationData,
+      rate = Math.trunc(this.sumreviewersRatings);
 
-    if (percentage >= 70 || percentage <= 100) {
+    if (rate <= 100 && rate >= 70) {
       postulationData = {
         postulation: { status_quelification: true, status: 'Aprobado' },
       };
@@ -154,7 +163,7 @@ export class EvaluationComponent implements OnInit {
 
     this.postulationService
       .putPostulation(this.postulations_id, postulationData)
-      .subscribe((res) => {
+      .subscribe(() => {
         console.log(JSON.stringify(sessionStorage.getItem('postulationdata')));
       });
   }

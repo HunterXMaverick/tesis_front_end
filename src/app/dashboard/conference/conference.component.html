@@ -22,10 +22,11 @@
 
       <tbody>
         <tr
-          *ngFor="let conference of conferences"
+          *ngFor="let conference of conferences; let i = index"
           class="border-b border-gray-200 hover:bg-gray-100"
         >
-          <td class="px-1 py-5 text-sm flex justify-center">
+          <td class="px-1 py-5 text-sm flex justify-center items-center">
+            <p class="mr-6">N° {{ i + 1 }}</p>
             <button
               (click)="
                 getPostulation(conference.postulation_id); handleModal(true)
@@ -59,7 +60,9 @@
             </a>
           </td>
           <td class="px-5 py-5e text-sm text-center">
-            <p class="text-gray-900">{{ conference.date }}</p>
+            <p class="text-gray-900">
+              {{ conference.date | date: "dd/MM/yyyy" }}
+            </p>
           </td>
           <td class="px-5 py-5e text-sm text-center">{{ conference.hour }}</td>
         </tr>
@@ -74,7 +77,7 @@
 
 <!-- MODAL -->
 <div
-  id="modal"
+  *ngIf="showModal"
   class="
     flex
     items-center
@@ -85,22 +88,15 @@
     w-full
     h-full
     bg-gray-800 bg-opacity-75
+    z-50
   "
 >
-  <div class="flex flex-col w-1/3 bg-white">
-    <div class="flex w-full px-3 items-center justify-between">
-      <div class="h-auto text-2xl">
-        <i class="fas fa-user-circle text-blue-800 text-2xl mr-2"></i>
-        Ponencia
-      </div>
+  <div class="flex flex-col w-2/3 h-auto p-3 bg-white rounded">
+    <h1 class="w-full h-full text-center uppercase py-3 font-bold text-md">
+      Información de Ponencia
+    </h1>
 
-      <div class="text-2xl">
-        <i
-          (click)="handleModal(false)"
-          class="fas fa-window-close text-red-700 text-2xl cursor-pointer"
-        ></i>
-      </div>
-    </div>
+    <hr />
 
     <div
       class="
@@ -116,20 +112,57 @@
         text-gray-800
       "
     >
-      <div class="flex flex-col w-full justify-center" *ngIf="postulationData">
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3 w-1/2">Título:</h2>
-          <p class="w-1/2">{{ postulationData.title_project }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3 w-1/2">Resumen:</h2>
-          <p class="w-1/2">{{ postulationData.summary_project }}</p>
-        </div>
-        <div class="flex py-2">
-          <h2 class="font-bold mr-3 w-1/2">Área de conocimiento:</h2>
-          <p class="w-1/2">{{ postulationData.knowledge_area }}</p>
-        </div>
-      </div>
+      <table class="w-full">
+        <thead>
+          <tr class="flex w-full text-center">
+            <th class="border border-black w-1/2 px-2 bg-blue-500">Título</th>
+            <th class="border border-black w-1/2 px-2">
+              {{ postulationData.title_project }}
+            </th>
+          </tr>
+
+          <tr class="flex w-full text-center">
+            <th class="border border-black w-1/2 px-2 bg-blue-500">Resumen</th>
+            <th class="border border-black w-1/2 px-2">
+              {{ postulationData.summary_project }}
+            </th>
+          </tr>
+
+          <tr class="flex w-full text-center">
+            <th class="border border-black w-1/2 px-2 bg-blue-500">
+              Área de conocimiento
+            </th>
+            <th class="border border-black w-1/2 px-2">
+              {{ postulationData.knowledge_area }}
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <hr />
+    <div class="py-2 w-full flex justify-end">
+      <button
+        (click)="handleModal(false)"
+        class="
+          align-middle
+          bg-red-500
+          hover:bg-red-600
+          text-center
+          py-1
+          px-4
+          text-white text-sm
+          font-semibold
+          rounded-lg
+          shadow-lg
+          focus:outline-none
+          flex
+          items-center
+        "
+      >
+        <i class="fas fa-undo-alt mr-1"></i>
+        Regresar
+      </button>
     </div>
   </div>
 </div>

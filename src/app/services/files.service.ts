@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebService } from "./web.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { WebService } from './web.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FilesService {
   private url: string;
@@ -11,10 +11,6 @@ export class FilesService {
   constructor(private http: HttpClient, private server: WebService) {
     this.url = this.server.obtainUrl();
   }
-
-  /**
-   * UPDATE FILE
-   */
 
   /**
    * Función para mostrar archivos alojados en el servidor
