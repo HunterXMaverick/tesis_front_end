@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CongressService } from '../services/congress.service';
-import { FilesService } from '../services/files.service';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +10,11 @@ import { FilesService } from '../services/files.service';
 export class HomeComponent {
   congress_habilitado: any;
   congress_pendientes: any = [];
-  congress: any;
   showSidebar: boolean = false;
   see_logo: string = '';
 
   constructor(
     private congressService: CongressService,
-    private filesService: FilesService,
     private router: Router
   ) {
     sessionStorage.clear();
@@ -27,10 +24,15 @@ export class HomeComponent {
   getCongress() {
     return this.congressService.getCongress().subscribe(
       (res: any) => {
+        console.log(res);
+
         if (res.data.length == 0) {
-          this.congress = null;
+          this.congress_habilitado = false;
+          // this.congress_pendientes = null;
         } else {
           res.data.forEach((element: any) => {
+            console.log(element);
+
             if (element.status_congress == 'Habilitado') {
               this.congress_habilitado = element;
               this.see_logo = `http://localhost:3500/api/file/${element.logo}`;
@@ -40,6 +42,7 @@ export class HomeComponent {
             }
           });
         }
+        console.log(this.congress_habilitado);
       },
       (err) => console.error(err)
     );
